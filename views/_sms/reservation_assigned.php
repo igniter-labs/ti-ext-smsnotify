@@ -1,0 +1,1 @@
+You've been assigned reservation {reservation_id} at {location_name} for {reservation_guest_no} person(s) on {reservation_date} at {reservation_time}

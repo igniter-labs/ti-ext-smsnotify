@@ -1,0 +1,1 @@
+New table reservation at {location_name} by [{first_name} {last_name}] for {reservation_guest_no} person(s) on {reservation_date} at {reservation_time}

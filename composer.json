@@ -1,0 +1,14 @@
+{
+  "name": "igniterlabs/smsnotify",
+  "type": "igniter-extension",
+  "keywords": ["tastyigniter", "notify", "notification"],
+  "license": "MIT",
+  "require": {
+    "php": ">=7.1",
+    "laravel/nexmo-notification-channel": "~2.0",
+    "laravel-notification-channels/twilio": "~2.0",
+    "laravel-notification-channels/clickatell": "~0.1",
+    "laravel-notification-channels/plivo": "~2.0"
+  },
+  "minimum-stability": "dev"
+}

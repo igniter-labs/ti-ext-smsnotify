@@ -1,0 +1,1 @@
+{first_name}, your reservation {reservation_number} at {location_name} has been booked for {reservation_guest_no} person(s) on {reservation_date} at {reservation_time}.

@@ -1,0 +1,1 @@
+{first_name}, your order has been confirmed and will be with you shortly. To view your order progress, use the URL below: {order_view_url}

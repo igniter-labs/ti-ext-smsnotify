@@ -1,0 +1,1 @@
+You've been assigned an order {order_id} at {location_name}
