@@ -59,9 +59,9 @@ class SendSmsNotification extends BaseAction
         (new Notifier)->notifyNow($telephoneNo, $notification, $params);
     }
 
-    public function getNotificationOptions()
+    public function getTemplateOptions()
     {
-        return Template::isEnabled()->pluck('name', 'code');
+        return Template::get()->pluck('name', 'code');
     }
 
     public function getSendToOptions()
