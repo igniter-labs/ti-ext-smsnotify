@@ -14,6 +14,9 @@ return [
 
     'help_template' => 'To customize SMS Templates, go to Design -> SMS Templates.',
 
+    'component_name' => 'OTP Verify Component',
+    'component_desc' => 'Add OTP verification to forms on your pages',
+
     'nexmo' => [
         'text_title' => 'Nexmo SMS Channel',
         'text_desc' => 'Sending SMS notifications using Nexmo.',
@@ -76,5 +79,27 @@ return [
         'button_test_message' => 'Send Test Message',
 
         'alert_test_message_sent' => 'Test SMS message successfully sent to %s',
+    ],
+
+    'settings' => [
+        'text_title' => 'SMS Notify Settings',
+        'text_desc' => 'Configure OTP verification settings',
+
+        'label_enable_otp_registration' => 'Activate OTP on customer registration',
+        'label_enable_otp_login' => 'Activate OTP on customer login',
+        'label_enable_otp_password_reset' => 'Activate OTP on customer password reset',
+        'label_enable_otp_checkout' => 'Activate OTP on guest/customer checkout',
+        'label_enable_otp_booking' => 'Activate OTP on table bookings',
+        'label_resend_timer' => 'Resend Timer',
+        'label_max_allowed_resend' => 'Maximum resend allowed',
+    ],
+
+    'otpverify' => [
+        'label_telephone' => 'We\'ll send a One-Time Password to your mobile number',
+        'label_verify_code' => 'Enter the 6 digits One-Time Password we\'ve sent to: %s',
+
+        'button_request_code' => 'Request Verification',
+        'button_verify_code' => 'Verify Phone',
+        '' => '',
     ],
 ];

@@ -2,6 +2,7 @@
 
 use Event;
 use IgniterLabs\SmsNotify\Classes\Manager;
+use IgniterLabs\SmsNotify\Classes\OtpManager;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Notifications\Events\NotificationFailed;
 use Illuminate\Notifications\Events\NotificationSending;
@@ -35,9 +36,38 @@ class Extension extends BaseExtension
      */
     public function boot()
     {
-//        $this->extendSettingsFormField();
-//
         $this->bindNotificationEvents();
+
+        $this->bindRegisterEvents();
+    }
+
+    /**
+     * Registers any front-end components implemented in this extension.
+     *
+     * @return array
+     */
+    public function registerComponents()
+    {
+        return [
+            'IgniterLabs\SmsNotify\Components\OTPVerify' => [
+                'code' => 'otpVerify',
+                'name' => 'igniterlabs.smsnotify::default.component_name',
+                'description' => 'igniterlabs.smsnotify::default.component_desc',
+            ],
+        ];
+    }
+
+    public function registerSettings()
+    {
+        return [
+            'settings' => [
+                'label' => 'igniterlabs.smsnotify::default.settings.text_title',
+                'description' => 'igniterlabs.smsnotify::default.settings.text_desc',
+                'icon' => 'fa fa-search-plus',
+                'model' => 'IgniterLabs\SmsNotify\Models\Settings',
+                'permissions' => ['IgniterLabs.SmsNotify.*'],
+            ],
+        ];
     }
 
     /**
@@ -142,6 +172,20 @@ class Extension extends BaseExtension
 
         Event::listen(NotificationFailed::class, function ($event) {
             \Log::error(array_get($event->data, 'message'));
+        });
+    }
+
+    protected function bindRegisterEvents()
+    {
+        Event::listen('igniter.user.beforeRegister', function ($data) {
+            Manager::instance()->applyNotificationConfigValues();
+        });
+    }
+
+    protected function bindOtpVerificationEvents()
+    {
+        Event::listen('igniter.user.beforeAuthenticate', function ($component, $credentials) {
+            OtpManager::instance()->beforeUserAuthenticate($credentials);
         });
     }
 }
