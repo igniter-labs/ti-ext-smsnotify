@@ -137,8 +137,10 @@ class Channel extends \Model
             return FALSE;
         }
 
+        $this->timestamps = FALSE;
+        $this->newQuery()->where('is_default', '!=', 0)->update(['is_default' => 0]);
         $this->newQuery()->where('id', $this->id)->update(['is_default' => 1]);
-        $this->newQuery()->where('id', '<>', $this->id)->update(['is_default' => 0]);
+        $this->timestamps = TRUE;
     }
 
     public static function getDefault($id = null)
@@ -150,8 +152,7 @@ class Channel extends \Model
         $defaultChannel = self::whereIsEnabled()->where('is_default', TRUE)->first();
 
         if (!$defaultChannel) {
-            $defaultChannel = self::whereIsEnabled()->first();
-            if ($defaultChannel) {
+            if ($defaultChannel = self::whereIsEnabled()->first()) {
                 $defaultChannel->makeDefault();
             }
         }

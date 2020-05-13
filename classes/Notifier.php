@@ -3,6 +3,7 @@
 namespace IgniterLabs\SmsNotify\Classes;
 
 use ApplicationException;
+use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\Models\Template;
 use Illuminate\Contracts\Notifications\Dispatcher;
@@ -33,7 +34,9 @@ class Notifier
     {
         $notifiable = new AnonymousNotifiable;
 
-        $defaultChannel = Channel::getDefault();
+        if (!$defaultChannel = Channel::getDefault())
+            throw new SystemException('Default SMS channel not found.');
+
         $notifiable->route($defaultChannel->code, $to);
 
         return $notifiable;
