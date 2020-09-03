@@ -7,7 +7,7 @@ use Igniter\Automation\Classes\BaseAction;
 use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\SmsNotify\Classes\Notifier;
 use IgniterLabs\SmsNotify\Models\Template;
-use IgniterLabs\SmsNotify\Notifications\AnonymousNotification;
+use IgniterLabs\SmsNotify\SmSNotifications\AnonymousNotification;
 
 class SendSmsNotification extends BaseAction
 {
@@ -48,15 +48,15 @@ class SendSmsNotification extends BaseAction
     public function triggerAction($params)
     {
         $templateCode = $this->model->template;
-        $recipient = $this->getRecipientAddress($params);
+        $sendToNumber = $this->getRecipientAddress($params);
 
-        if (!$recipient OR !$templateCode)
+        if (!$sendToNumber OR !$templateCode)
             throw new ApplicationException('Send SMS event rule is missing a valid send to or template value');
 
-        $telephoneNo = Locations_model::getDefault()->location_telephone;
+        $fromNo = Locations_model::getDefault()->location_telephone;
         $notification = (new AnonymousNotification())->template($templateCode);
 
-        (new Notifier)->notifyNow($telephoneNo, $notification, $params);
+        (new Notifier)->notifyNow($sendToNumber, $notification, $params);
     }
 
     public function getTemplateOptions()

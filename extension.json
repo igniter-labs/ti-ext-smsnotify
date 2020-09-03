@@ -1,7 +1,7 @@
 {
   "code": "igniterlabs.smsnotify",
   "name": "SMS Notify",
-  "description": "Send SMS notifications to both restaurant and customer about an order or reservation, including OTP verification.",
+  "description": "Send SMS notifications to both restaurant and customer about an order or reservation.",
   "version": "1.0.0",
   "author": "Igniter Labs",
   "icon": {

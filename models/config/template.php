@@ -72,6 +72,16 @@ return [
                 'content' => [
                     'tab' => 'igniterlabs.smsnotify::default.template.label_content',
                     'type' => 'textarea',
+                    'span' => 'left',
+                    'cssClass' => 'col-md-8 pl-0',
+                ],
+                '_variables' => [
+                    'tab' => 'igniterlabs.smsnotify::default.template.label_content',
+                    'type' => 'partial',
+                    'path' => '~/app/system/views/mailtemplates/form/variables',
+                    'span' => 'right',
+                    'cssClass' => 'col-md-4 pr-0',
+                    'options' => [\System\Models\Mail_templates_model::class, 'getVariableOptions'],
                 ],
             ],
         ],

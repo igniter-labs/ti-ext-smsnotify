@@ -1,6 +1,6 @@
 <?php
 
-namespace IgniterLabs\SmsNotify\Notifications\Channels;
+namespace IgniterLabs\SmsNotify\SmsNotifications\Channels;
 
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use NotificationChannels\Clickatell\ClickatellChannel;
@@ -21,14 +21,13 @@ class Clickatell extends BaseChannel
     {
         return [
             'fields' => [
+                'setup' => [
+                    'type' => 'partial',
+                    'path' => '$/igniterlabs/smsnotify/smsnotifications/channels/clickatell/info',
+                ],
                 'api_key' => [
                     'label' => 'API Key',
                     'type' => 'text',
-                ],
-                'setup' => [
-                    'type' => 'partial',
-                    'path' => '$/igniterlabs/smsnotify/notifications/channels/clickatell/info',
-                    'tab' => 'Setup',
                 ],
             ],
         ];

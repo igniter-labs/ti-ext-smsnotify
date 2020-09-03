@@ -1,21 +1,17 @@
 ## SMS Notification channels and messages for TastyIgniter
 
-This extension allows admins to configure sms notifications to be sent out when certain events happen in TastyIgniter. This also includes OTP verification
+This extension allows admins to configure sms notifications to be sent out when certain events happen in TastyIgniter. 
 
 ## Features
-- Receive SMS notifications whenever a new order is placed, a product is out of stock, and much more
+- Receive SMS notifications whenever a new order has been placed, a menu item is out of stock, and much more
 - SMS alert to your customers about their order or reservation status
-- OTP Verification for login and registration
-- Customizable SMS Templates
-- Add your own admin/customer notification.
-
-**TO-DO:**
-- Bulk SMS campaigns & target marketing
+- Customizable SMS Messages
+- Add your own custom SMS notification.
 
 ### Admin Panel
 
-In the admin go to **System > Settings > SMS Notify Settings** to manage related settings.
-Notification channels are managed in the admin panel by navigating to **Tools > SMS Channels**.
+Go to **System > Settings > SMS Notify Settings** to manage related settings.
+Notification channels are managed in the admin panel by navigating to **System > Settings > Configure SMS Channels**.
 Notification messages are managed in the admin panel by navigating to **Design > SMS Templates**.
 
 Use the `SendSmsNotification` Automation rule action to send out notification when certain events happen by navigating to **Tools > Automations**.

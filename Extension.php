@@ -2,9 +2,10 @@
 
 use Event;
 use IgniterLabs\SmsNotify\Classes\Manager;
+use IgniterLabs\SmsNotify\Models\MessageLog;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Notifications\Events\NotificationFailed;
-use Illuminate\Notifications\Events\NotificationSending;
+use Illuminate\Notifications\Events\NotificationSent;
 use System\Classes\BaseExtension;
 
 /**
@@ -35,8 +36,6 @@ class Extension extends BaseExtension
      */
     public function boot()
     {
-//        $this->extendSettingsFormField();
-//
         $this->bindNotificationEvents();
     }
 
@@ -69,16 +68,18 @@ class Extension extends BaseExtension
                     ],
                 ],
             ],
-            'tools' => [
-                'child' => [
-                    'notification_channels' => [
-                        'priority' => 999,
-                        'class' => 'notification_channels',
-                        'href' => admin_url('igniterlabs/smsnotify/channels'),
-                        'title' => lang('igniterlabs.smsnotify::default.channel.text_title'),
-                        'permission' => 'IgniterLabs.SmsNotify.Manage',
-                    ],
-                ],
+        ];
+    }
+
+    public function registerSettings()
+    {
+        return [
+            'settings' => [
+                'label' => 'igniterlabs.smsnotify::default.setting_title',
+                'description' => 'igniterlabs.smsnotify::default.setting_desc',
+                'icon' => 'fa fa-sms',
+                'permission' => 'IgniterLabs.SmsNotify.Manage',
+                'url' => admin_url('igniterlabs/smsnotify/channels'),
             ],
         ];
     }
@@ -110,10 +111,10 @@ class Extension extends BaseExtension
     {
         return [
             'channels' => [
-                'twilio' => \IgniterLabs\SmsNotify\Notifications\Channels\Twilio::class,
-                'nexmo' => \IgniterLabs\SmsNotify\Notifications\Channels\Nexmo::class,
-                'clickatell' => \IgniterLabs\SmsNotify\Notifications\Channels\Clickatell::class,
-                'plivo' => \IgniterLabs\SmsNotify\Notifications\Channels\Plivo::class,
+                'twilio' => \IgniterLabs\SmsNotify\SmsNotifications\Channels\Twilio::class,
+                'nexmo' => \IgniterLabs\SmsNotify\SmsNotifications\Channels\Nexmo::class,
+                'clickatell' => \IgniterLabs\SmsNotify\SmsNotifications\Channels\Clickatell::class,
+                'plivo' => \IgniterLabs\SmsNotify\SmsNotifications\Channels\Plivo::class,
             ],
             'templates' => [
                 'igniterlabs.smsnotify::_sms.new_order' => 'igniterlabs.smsnotify::default.template.text_order_placed',
@@ -134,14 +135,12 @@ class Extension extends BaseExtension
             Manager::instance()->applyNotificationConfigValues();
         });
 
-        Event::listen(NotificationSending::class, function ($event) {
-//            $channel = Settings::findChannelByName($event->channel);
-//
-//            return $channel ? $channel->isEnabled() : TRUE;
+        Event::listen(NotificationFailed::class, function ($event) {
+            MessageLog::createLogFromEvent($event, FALSE);
         });
 
-        Event::listen(NotificationFailed::class, function ($event) {
-            \Log::error(array_get($event->data, 'message'));
+        Event::listen(NotificationSent::class, function ($event) {
+            MessageLog::createLogFromEvent($event);
         });
     }
 }

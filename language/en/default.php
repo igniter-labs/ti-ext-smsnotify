@@ -8,6 +8,9 @@ return [
     'text_send_to_order_tel' => 'Order phone number (if available)',
     'text_send_to_custom_tel' => 'Specific phone number',
 
+    'setting_title' => 'SMS Channels Settings',
+    'setting_desc' => 'Configure twilio, plivo, nexmo or clickatell settings.',
+
     'label_template' => 'SMS Template',
     'label_send_to' => 'Send To',
     'label_send_to_custom' => 'Send To Phone number',
@@ -71,7 +74,7 @@ return [
         'column_updated_at' => 'Updated At',
         'column_created_at' => 'Created At',
 
-        'label_content' => 'Content',
+        'label_content' => 'Message',
 
         'button_test_message' => 'Send Test Message',
 

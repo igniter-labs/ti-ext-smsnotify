@@ -52,7 +52,7 @@ class Channels extends AdminController
     {
         parent::__construct();
 
-        AdminMenu::setContext('notification_channels', 'tools');
+        AdminMenu::setContext('settings', 'system');
     }
 
     public function index()

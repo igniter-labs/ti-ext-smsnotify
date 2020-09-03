@@ -35,7 +35,7 @@ class CreateSmsNotifyTables extends Migration
         Schema::create('igniterlabs_smsnotify_logs', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('from')->nullable();
+            $table->string('channel')->nullable();
             $table->string('to')->nullable();
             $table->string('message')->nullable();
             $table->string('status')->nullable();

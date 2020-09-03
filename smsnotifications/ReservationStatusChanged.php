@@ -1,6 +1,6 @@
 <?php
 
-namespace IgniterLabs\SmsNotify\Notifications;
+namespace IgniterLabs\SmsNotify\SmsNotifications;
 
 use IgniterLabs\SmsNotify\Classes\BaseNotification;
 

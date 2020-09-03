@@ -9,7 +9,7 @@ use AdminMenu;
 use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\SmsNotify\Classes\Notifier;
 use IgniterLabs\SmsNotify\Models\Template;
-use IgniterLabs\SmsNotify\Notifications\AnonymousNotification;
+use IgniterLabs\SmsNotify\SmSNotifications\AnonymousNotification;
 
 class Templates extends AdminController
 {

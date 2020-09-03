@@ -1,6 +1,6 @@
 <?php
 
-namespace IgniterLabs\SmsNotify\Notifications\Channels;
+namespace IgniterLabs\SmsNotify\SmsNotifications\Channels;
 
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use NotificationChannels\Twilio\TwilioChannel;
@@ -21,6 +21,10 @@ class Twilio extends BaseChannel
     {
         return [
             'fields' => [
+                'setup' => [
+                    'type' => 'partial',
+                    'path' => '$/igniterlabs/smsnotify/smsnotifications/channels/twilio/info',
+                ],
                 'account_sid' => [
                     'label' => 'Account SID',
                     'type' => 'text',
@@ -32,11 +36,6 @@ class Twilio extends BaseChannel
                 'from' => [
                     'label' => 'Send From Number',
                     'type' => 'text',
-                ],
-                'setup' => [
-                    'type' => 'partial',
-                    'path' => '$/igniterlabs/smsnotify/notifications/channels/twilio/info',
-                    'tab' => 'Setup',
                 ],
             ],
         ];
