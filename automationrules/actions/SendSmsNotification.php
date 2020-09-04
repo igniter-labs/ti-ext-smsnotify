@@ -2,7 +2,6 @@
 
 namespace IgniterLabs\SmsNotify\AutomationRules\Actions;
 
-use Admin\Models\Locations_model;
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\SmsNotify\Classes\Notifier;
@@ -53,7 +52,6 @@ class SendSmsNotification extends BaseAction
         if (!$sendToNumber OR !$templateCode)
             throw new ApplicationException('Send SMS event rule is missing a valid send to or template value');
 
-        $fromNo = Locations_model::getDefault()->location_telephone;
         $notification = (new AnonymousNotification())->template($templateCode);
 
         (new Notifier)->notifyNow($sendToNumber, $notification, $params);

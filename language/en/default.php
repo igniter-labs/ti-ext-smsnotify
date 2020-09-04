@@ -8,7 +8,7 @@ return [
     'text_send_to_order_tel' => 'Order phone number (if available)',
     'text_send_to_custom_tel' => 'Specific phone number',
 
-    'setting_title' => 'SMS Channels Settings',
+    'setting_title' => 'Configure SMS Channels',
     'setting_desc' => 'Configure twilio, plivo, nexmo or clickatell settings.',
 
     'label_template' => 'SMS Template',
