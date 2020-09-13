@@ -13,7 +13,7 @@ abstract class BaseNotification extends Notification
 {
     protected $host;
 
-    protected $templateCode;
+    public $templateCode;
 
     protected $supportedChannels = ['twilio', 'nexmo', 'clickatell', 'plivo'];
 

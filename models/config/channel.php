@@ -59,6 +59,11 @@ return [
     'form' => [
         'toolbar' => [
             'buttons' => [
+                'back' => [
+                    'label' => 'lang:admin::lang.button_icon_back',
+                    'class' => 'btn btn-default',
+                    'href' => 'igniterlabs/smsnotify/channels',
+                ],
                 'save' => ['label' => 'lang:admin::lang.button_save', 'class' => 'btn btn-primary', 'data-request' => 'onSave'],
                 'saveClose' => [
                     'label' => 'lang:admin::lang.button_save_close',

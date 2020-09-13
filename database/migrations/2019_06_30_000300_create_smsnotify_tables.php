@@ -36,8 +36,10 @@ class CreateSmsNotifyTables extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('channel')->nullable();
+            $table->string('template')->nullable();
+            $table->string('from')->nullable();
             $table->string('to')->nullable();
-            $table->string('message')->nullable();
+            $table->text('message')->nullable();
             $table->string('status')->nullable();
             $table->integer('short_status')->default(0);
             $table->timestamps();

@@ -3,6 +3,7 @@
 namespace IgniterLabs\SmsNotify\Models;
 
 use IgniterLabs\SmsNotify\Classes\BaseNotification;
+use Illuminate\Notifications\Events\NotificationSent;
 
 class MessageLog extends \Model
 {
@@ -26,27 +27,20 @@ class MessageLog extends \Model
         'short_status' => 'integer',
     ];
 
-    public static function createLogFromEvent($event, $isSuccess = TRUE)
+    public static function createLogFromEvent($event)
     {
         if (!$event->notification instanceof BaseNotification)
             return;
 
-        return self::createLog(
-            $event->channel,
-            array_get($event->notifiable->routes, $event->channel),
-            array_get($event->data, 'message'),
-            $isSuccess,
-            $isSuccess
-        );
-    }
+        $isSuccess = $event instanceof NotificationSent;
 
-    public static function createLog($channel, $to, $message, $status)
-    {
         $record = new static;
-        $record->channel = $channel;
-        $record->to = $to;
-        $record->message = $message;
-        $record->status = $status;
+        $record->channel = $event->channel;
+        $record->template = $event->notification->templateCode;
+        $record->from = array_get($event->notifiable->routes, $event->channel);
+        $record->to = array_get($event->notifiable->routes, $event->channel);
+        $record->message = array_get($event->data, 'message');
+        $record->status = $isSuccess;
 
         return $record->save();
     }

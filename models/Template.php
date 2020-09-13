@@ -93,7 +93,7 @@ class Template extends \Model
      */
     public static function syncAll()
     {
-        $templates = (array)Manager::instance()->getRegistered('templates');
+        $templates = (array)Manager::instance()->getRegisteredTemplates();
         $dbTemplates = self::pluck('is_custom', 'code')->all();
         $newTemplates = array_diff_key($templates, $dbTemplates);
 

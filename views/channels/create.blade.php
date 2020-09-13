@@ -4,10 +4,12 @@
         id="form-widget"
         accept-charset="utf-8"
         method="POST"
-        action="<?= current_url(); ?>">
+        action="{{ current_url() }}">
 
-        <?= $this->renderForm(); ?>
+        @csrf
 
-        <?= form_close(); ?>
+        {!! $this->renderForm() !!}
+
+    </form>
 </div>
 

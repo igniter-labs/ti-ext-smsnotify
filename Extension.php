@@ -107,25 +107,27 @@ class Extension extends BaseExtension
         ];
     }
 
-    public function registerSmsNotifications()
+    public function registerSmsChannels()
     {
         return [
-            'channels' => [
-                'twilio' => \IgniterLabs\SmsNotify\SmsNotifications\Channels\Twilio::class,
-                'nexmo' => \IgniterLabs\SmsNotify\SmsNotifications\Channels\Nexmo::class,
-                'clickatell' => \IgniterLabs\SmsNotify\SmsNotifications\Channels\Clickatell::class,
-                'plivo' => \IgniterLabs\SmsNotify\SmsNotifications\Channels\Plivo::class,
-            ],
-            'templates' => [
-                'igniterlabs.smsnotify::_sms.new_order' => 'igniterlabs.smsnotify::default.template.text_order_placed',
-                'igniterlabs.smsnotify::_sms.new_reservation' => 'igniterlabs.smsnotify::default.template.text_new_reservation',
-                'igniterlabs.smsnotify::_sms.order_assigned' => 'igniterlabs.smsnotify::default.template.text_order_assigned',
-                'igniterlabs.smsnotify::_sms.order_confirmed' => 'igniterlabs.smsnotify::default.template.text_order_confirmed',
-                'igniterlabs.smsnotify::_sms.order_status_changed' => 'igniterlabs.smsnotify::default.template.text_order_status_changed',
-                'igniterlabs.smsnotify::_sms.reservation_assigned' => 'igniterlabs.smsnotify::default.template.text_reservation_assigned',
-                'igniterlabs.smsnotify::_sms.reservation_confirmed' => 'igniterlabs.smsnotify::default.template.text_reservation_confirmed',
-                'igniterlabs.smsnotify::_sms.reservation_status_changed' => 'igniterlabs.smsnotify::default.template.text_reservation_status_changed',
-            ],
+            'twilio' => \IgniterLabs\SmsNotify\SmsChannels\Twilio::class,
+            'nexmo' => \IgniterLabs\SmsNotify\SmsChannels\Nexmo::class,
+            'clickatell' => \IgniterLabs\SmsNotify\SmsChannels\Clickatell::class,
+            'plivo' => \IgniterLabs\SmsNotify\SmsChannels\Plivo::class,
+        ];
+    }
+
+    public function registerSmsTemplates()
+    {
+        return [
+            'igniterlabs.smsnotify::_sms.new_order' => 'igniterlabs.smsnotify::default.template.text_order_placed',
+            'igniterlabs.smsnotify::_sms.new_reservation' => 'igniterlabs.smsnotify::default.template.text_new_reservation',
+            'igniterlabs.smsnotify::_sms.order_assigned' => 'igniterlabs.smsnotify::default.template.text_order_assigned',
+            'igniterlabs.smsnotify::_sms.order_confirmed' => 'igniterlabs.smsnotify::default.template.text_order_confirmed',
+            'igniterlabs.smsnotify::_sms.order_status_changed' => 'igniterlabs.smsnotify::default.template.text_order_status_changed',
+            'igniterlabs.smsnotify::_sms.reservation_assigned' => 'igniterlabs.smsnotify::default.template.text_reservation_assigned',
+            'igniterlabs.smsnotify::_sms.reservation_confirmed' => 'igniterlabs.smsnotify::default.template.text_reservation_confirmed',
+            'igniterlabs.smsnotify::_sms.reservation_status_changed' => 'igniterlabs.smsnotify::default.template.text_reservation_status_changed',
         ];
     }
 
@@ -136,7 +138,7 @@ class Extension extends BaseExtension
         });
 
         Event::listen(NotificationFailed::class, function ($event) {
-            MessageLog::createLogFromEvent($event, FALSE);
+            MessageLog::createLogFromEvent($event);
         });
 
         Event::listen(NotificationSent::class, function ($event) {

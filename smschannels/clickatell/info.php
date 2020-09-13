@@ -1,7 +1,8 @@
 <div class="alert text-reset">
     <h4>Setting up the clickatell channel</h4>
     <ol class="pl-3">
-        <li>First, go to Clickatell's website (https://www.clickatell.com/signup/) and create an account if you haven't
+        <li>First, go to <a href="https://www.clickatell.com/signup/" target="_blank">Clickatell's website</a> and
+            create an account if you haven't
             already.
         </li>
         <li>Once you've signed up you will receive an API ID.</li>

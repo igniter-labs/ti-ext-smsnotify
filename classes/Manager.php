@@ -81,7 +81,7 @@ class Manager
         if (!is_null($this->channelCache))
             return $this->channelCache;
 
-        foreach ($this->getRegistered('channels') as $channelCode => $className) {
+        foreach ($this->getRegisteredChannels() as $channelCode => $className) {
             if (!class_exists($className))
                 continue;
 
@@ -118,7 +118,7 @@ class Manager
         if (!is_null($this->templateCache))
             return $this->templateCache;
 
-        $templates = (array)$this->getRegistered('templates');
+        $templates = (array)$this->getRegisteredTemplates();
         foreach ($templates as $code => $name) {
             $this->templateCache[$code] = $name;
         }
@@ -135,14 +135,19 @@ class Manager
         return array_get($this->listTemplates(), $code);
     }
 
-    public function getRegistered($key)
+    public function getRegisteredChannels()
     {
-        return array_get($this->loadRegistered(), $key);
+        return $this->loadRegistered('registerSmsChannels');
+    }
+
+    public function getRegisteredTemplates()
+    {
+        return $this->loadRegistered('registerSmsTemplates');
     }
 
     public function resolveTemplateCode(string $codeOrClass)
     {
-        $templates = (array)$this->getRegistered('templates');
+        $templates = (array)$this->getRegisteredTemplates();
         if (isset($templates[$codeOrClass]))
             return $templates[$codeOrClass];
 
@@ -151,26 +156,15 @@ class Manager
             return $codeOrClass;
     }
 
-    protected function loadRegistered()
+    protected function loadRegistered(string $methodName)
     {
         $results = [];
         $manager = ExtensionManager::instance();
-        $notifications = $manager->getRegistrationMethodValues('registerSmsNotifications');
-        foreach ($notifications as $extension => $definitions) {
-            foreach ($definitions as $key => $values) {
-                if (!$values)
-                    continue;
-
-                if (!is_array($values))
-                    $values = [$values];
-
-                foreach ($values as $index => $value) {
-                    if (is_string($index)) {
-                        $results[$key][$index] = $value;
-                    }
-                    else {
-                        $results[$key][] = $value;
-                    }
+        $bundles = $manager->getRegistrationMethodValues($methodName);
+        foreach ($bundles as $owner => $definitions) {
+            foreach ($definitions as $index => $value) {
+                if (is_string($index)) {
+                    $results[$index] = $value;
                 }
             }
         }

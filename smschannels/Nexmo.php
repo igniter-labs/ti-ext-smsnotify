@@ -1,6 +1,6 @@
 <?php
 
-namespace IgniterLabs\SmsNotify\SmsNotifications\Channels;
+namespace IgniterLabs\SmsNotify\SmsChannels;
 
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use Illuminate\Notifications\Channels\NexmoSmsChannel;
@@ -23,7 +23,7 @@ class Nexmo extends BaseChannel
             'fields' => [
                 'setup' => [
                     'type' => 'partial',
-                    'path' => '$/igniterlabs/smsnotify/smsnotifications/channels/nexmo/info',
+                    'path' => '$/igniterlabs/smsnotify/smschannels/nexmo/info',
                 ],
                 'key' => [
                     'label' => 'API Key',

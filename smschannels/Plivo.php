@@ -1,6 +1,6 @@
 <?php
 
-namespace IgniterLabs\SmsNotify\SmsNotifications\Channels;
+namespace IgniterLabs\SmsNotify\SmsChannels;
 
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use NotificationChannels\Plivo\PlivoChannel;
@@ -23,7 +23,7 @@ class Plivo extends BaseChannel
             'fields' => [
                 'setup' => [
                     'type' => 'partial',
-                    'path' => '$/igniterlabs/smsnotify/smsnotifications/channels/plivo/info',
+                    'path' => '$/igniterlabs/smsnotify/smschannels/plivo/info',
                 ],
                 'auth_id' => [
                     'label' => 'Auth ID',
