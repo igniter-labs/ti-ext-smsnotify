@@ -7,6 +7,7 @@ use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\SmsNotify\Classes\Notifier;
 use IgniterLabs\SmsNotify\Models\Template;
 use IgniterLabs\SmsNotify\SmSNotifications\AnonymousNotification;
+use Illuminate\Database\Eloquent\Model;
 
 class SendSmsNotification extends BaseAction
 {
@@ -46,6 +47,9 @@ class SendSmsNotification extends BaseAction
 
     public function triggerAction($params)
     {
+        if (!$this->shouldTrigger($params))
+            return;
+
         $templateCode = $this->model->template;
         $sendToNumber = $this->getRecipientAddress($params);
 
@@ -72,28 +76,29 @@ class SendSmsNotification extends BaseAction
         ];
     }
 
+    protected function shouldTrigger($params)
+    {
+        $object = array_get($params, 'order', array_get($params, 'reservation'));
+
+        return $object instanceof Model;
+    }
+
     protected function getRecipientAddress($params)
     {
         $mode = $this->model->send_to;
+
+        $object = array_get($params, 'order', array_get($params, 'reservation'));
 
         switch ($mode) {
             case 'custom':
                 return $this->model->custom;
             case 'location':
-                $location = array_get($params, 'location');
-
-                return !empty($location->location_telephone)
-                    ? $location->location_telephone : null;
+                return optional($object->location)->location_telephone;
             case 'customer':
-                $customer = array_get($params, 'customer');
-
-                return !empty($customer->telephone)
-                    ? $customer->telephone : null;
+                return optional($object->customer)->telephone;
             case 'order':
-                $order = array_get($params, 'order');
-
-                return !empty($order->telephone)
-                    ? $order->telephone : null;
+            case 'reservation':
+                return $object->telephone;
         }
     }
 }
