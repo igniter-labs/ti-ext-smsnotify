@@ -3,10 +3,10 @@
 This extension allows admins to configure sms notifications to be sent out when certain events happen in TastyIgniter. 
 
 ## Features
-- Receive SMS notifications whenever a new order has been placed, a menu item is out of stock, and much more
+- Receive SMS notifications whenever a new order has been placed
 - SMS alert to your customers about their order or reservation status
 - Customizable SMS Messages
-- Add your own custom SMS notification.
+- Add your own custom SMS notification channel.
 
 ### Admin Panel
 
@@ -69,14 +69,5 @@ class Twilio extends \IgniterLabs\SmsNotify\Classes\BaseChannel
             ...
         ];
     }
-}
-```
-
-**Example of a Notification Message Class**
-
-```
-class OrderConfirmed extends \IgniterLabs\SmsNotify\Classes\BaseNotification
-{
-    protected $templateCode = 'igniterlabs.smsnotify::_sms.order_confirmed';
 }
 ```
