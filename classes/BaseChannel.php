@@ -11,13 +11,17 @@ abstract class BaseChannel extends ModelAction
 
     protected $configFields = [];
 
+    protected $configRules = [];
+
     public function __construct($model = null)
     {
         parent::__construct($model);
 
         $calledClass = strtolower(get_called_class());
         $this->configPath = extension_path(File::normalizePath($calledClass));
-        $this->configFields = $this->loadConfig($this->defineFormConfig(), ['fields'], 'fields');
+        $formConfig = $this->loadConfig($this->defineFormConfig(), ['fields']);
+        $this->configFields = array_get($formConfig, 'fields', []);
+        $this->configRules = array_get($formConfig, 'rules', []);
 
         if (!$model)
             return;
@@ -46,6 +50,11 @@ abstract class BaseChannel extends ModelAction
     public function getConfigFields()
     {
         return $this->configFields;
+    }
+
+    public function getConfigRules()
+    {
+        return $this->configRules;
     }
 
     /**

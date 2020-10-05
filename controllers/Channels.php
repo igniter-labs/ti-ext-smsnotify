@@ -96,8 +96,7 @@ class Channels extends AdminController
     {
         $model = $form->model;
         if ($model->exists) {
-            $configFields = $model->getConfigFields();
-            $form->addTabFields($configFields);
+            $form->addTabFields($model->getConfigFields());
         }
 
         if ($form->context != 'create') {
@@ -125,8 +124,8 @@ class Channels extends AdminController
             ['is_enabled', 'lang:admin::lang.label_status', 'required|integer'],
         ];
 
-        if (isset($form->config['rules']))
-            $rules = array_merge($rules, $form->config['rules']);
+        if ($mergeRules = $form->model->getConfigRules())
+            array_push($rules, ...$mergeRules);
 
         return $this->validatePasses($form->getSaveData(), $rules);
     }

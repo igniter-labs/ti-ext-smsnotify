@@ -72,7 +72,7 @@ class Channel extends \Model
             return;
 
         $data = [];
-        $fields = ($configFields = $this->getConfigFields()) ? $configFields : [];
+        $fields = $this->getConfigFields();
         foreach ($fields as $name => $config) {
             if (!array_key_exists($name, $this->attributes)) continue;
             $data[$name] = $this->attributes[$name];
