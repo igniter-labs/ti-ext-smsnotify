@@ -49,7 +49,7 @@ class SendSmsNotification extends BaseAction
     {
         if (!$object = $this->shouldTrigger($params))
             return;
-        
+
         $templateCode = $this->model->template;
         $sendToNumber = $this->getRecipientAddress($object);
 

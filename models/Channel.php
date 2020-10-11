@@ -102,7 +102,7 @@ class Channel extends \Model
 
     /**
      * Extends this model with the notification class
-     * @return boolean
+     * @return bool
      */
     public function applyChannelClass()
     {

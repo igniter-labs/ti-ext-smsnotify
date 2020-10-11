@@ -1,4 +1,6 @@
-<?php namespace IgniterLabs\SmsNotify;
+<?php
+
+namespace IgniterLabs\SmsNotify;
 
 use Event;
 use IgniterLabs\SmsNotify\Classes\Manager;

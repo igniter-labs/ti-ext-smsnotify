@@ -1,4 +1,6 @@
-<?php namespace IgniterLabs\SmsNotify\Database\Migrations;
+<?php
+
+namespace IgniterLabs\SmsNotify\Database\Migrations;
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
