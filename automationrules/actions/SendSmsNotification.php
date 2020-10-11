@@ -47,11 +47,9 @@ class SendSmsNotification extends BaseAction
 
     public function triggerAction($params)
     {
-        if (!$this->shouldTrigger($params))
+        if (!$object = $this->shouldTrigger($params))
             return;
-
-        $object = array_get($params, 'order', array_get($params, 'reservation'));
-
+        
         $templateCode = $this->model->template;
         $sendToNumber = $this->getRecipientAddress($object);
 
@@ -82,7 +80,7 @@ class SendSmsNotification extends BaseAction
     {
         $object = array_get($params, 'order', array_get($params, 'reservation'));
 
-        return $object instanceof Model;
+        return $object instanceof Model ? $object : FALSE;
     }
 
     protected function getRecipientAddress($object)
