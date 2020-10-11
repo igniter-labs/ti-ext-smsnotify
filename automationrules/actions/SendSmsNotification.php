@@ -50,13 +50,15 @@ class SendSmsNotification extends BaseAction
         if (!$this->shouldTrigger($params))
             return;
 
+        $object = array_get($params, 'order', array_get($params, 'reservation'));
+
         $templateCode = $this->model->template;
-        $sendToNumber = $this->getRecipientAddress($params);
+        $sendToNumber = $this->getRecipientAddress($object);
 
         if (!$sendToNumber OR !$templateCode)
             throw new ApplicationException('Send SMS event rule is missing a valid send to or template value');
 
-        $notification = (new AnonymousNotification())->template($templateCode);
+        $notification = (new AnonymousNotification($object))->template($templateCode);
 
         (new Notifier)->notifyNow($sendToNumber, $notification, $params);
     }
@@ -83,11 +85,9 @@ class SendSmsNotification extends BaseAction
         return $object instanceof Model;
     }
 
-    protected function getRecipientAddress($params)
+    protected function getRecipientAddress($object)
     {
         $mode = $this->model->send_to;
-
-        $object = array_get($params, 'order', array_get($params, 'reservation'));
 
         switch ($mode) {
             case 'custom':
