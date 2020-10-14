@@ -39,7 +39,7 @@ class MessageLog extends \Model
         $record->template = $event->notification->templateCode;
         $record->from = array_get($event->notifiable->routes, $event->channel);
         $record->to = array_get($event->notifiable->routes, $event->channel);
-        $record->message = !$isSuccess ? array_get($event->data, 'message', []) : [];
+        $record->message = !$isSuccess ? array_get($event->data, 'message') : 'Message successfully sent!';
         $record->status = $isSuccess;
 
         return $record->save();

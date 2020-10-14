@@ -11,6 +11,9 @@ class AnonymousNotification extends BaseNotification
         if (is_array($this->host))
             return $this->host;
 
+        if ($this->host->methodExists('mailGetData'))
+            return $this->host->mailGetData();
+
         return parent::getData();
     }
 }

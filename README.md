@@ -11,7 +11,7 @@ This extension allows admins to configure sms notifications to be sent out when 
 ### Admin Panel
 
 Go to **System > Settings > Configure SMS Channels** to manage notification channels.
-Notification messages are managed in the admin panel by navigating to **Design > SMS Templates**.
+Notification messages can be customized in the admin panel by navigating to **Design > SMS Templates**.
 
 Use the `SendSmsNotification` Automation rule action to send out notification when certain events happen by navigating to **Tools > Automations**.
 

@@ -66,9 +66,7 @@ abstract class BaseNotification extends Notification
 
     protected function getData()
     {
-        return method_exists($this->host, 'getMailData')
-            ? $this->host->getMailData()
-            : [];
+        return [];
     }
 
     protected function addContentToMessage($message)

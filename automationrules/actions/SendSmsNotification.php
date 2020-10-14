@@ -93,7 +93,7 @@ class SendSmsNotification extends BaseAction
             case 'location':
                 return optional($object->location)->location_telephone;
             case 'customer':
-                return optional($object->customer)->telephone;
+                return optional($object->customer)->telephone ?? $object->telephone;
             case 'order':
             case 'reservation':
                 return $object->telephone;

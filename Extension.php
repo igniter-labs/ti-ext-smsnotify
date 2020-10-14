@@ -4,10 +4,7 @@ namespace IgniterLabs\SmsNotify;
 
 use Event;
 use IgniterLabs\SmsNotify\Classes\Manager;
-use IgniterLabs\SmsNotify\Models\MessageLog;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Notifications\Events\NotificationFailed;
-use Illuminate\Notifications\Events\NotificationSent;
 use System\Classes\BaseExtension;
 
 /**
@@ -137,14 +134,6 @@ class Extension extends BaseExtension
     {
         Event::listen('notification.beforeRegister', function () {
             Manager::instance()->applyNotificationConfigValues();
-        });
-
-        Event::listen(NotificationFailed::class, function ($event) {
-            MessageLog::createLogFromEvent($event);
-        });
-
-        Event::listen(NotificationSent::class, function ($event) {
-            MessageLog::createLogFromEvent($event);
         });
     }
 }
