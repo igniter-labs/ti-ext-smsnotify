@@ -25,10 +25,13 @@ class Template extends \Model
     protected $guarded = [];
 
     public $rules = [
-        ['code', 'igniter.pages::default.menu.label_code', 'required|unique:igniterlabs_smsnotify_templates,code'],
-        ['name', 'igniter.pages::default.menu.label_title', 'max:128'],
-        ['content', 'admin::lang.label_description', 'string'],
+//        ['code', 'igniter.pages::default.menu.label_code', 'required|unique:igniterlabs_smsnotify_templates,code'],
+        ['code', 'igniter.pages::default.menu.label_code', 'required'],
+        ['name', 'igniter.pages::default.menu.label_title', 'required|max:128'],
+        ['content', 'admin::lang.label_description', 'required|string'],
     ];
+
+    protected $injectUniqueIdentifier = TRUE;
 
     public function getNameAttribute($value)
     {
