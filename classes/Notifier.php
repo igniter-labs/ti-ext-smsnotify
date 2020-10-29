@@ -37,6 +37,9 @@ class Notifier
         if (!$defaultChannel = Channel::getDefault())
             throw new SystemException('Default SMS channel not found.');
 
+        if ($defaultChannel->code == 'clickatell')
+            $to = (array)$to;
+
         $notifiable->route($defaultChannel->code, $to);
 
         return $notifiable;

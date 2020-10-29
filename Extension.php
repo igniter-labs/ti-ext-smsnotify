@@ -19,6 +19,9 @@ class Extension extends BaseExtension
      */
     public function register()
     {
+        $configPath = __DIR__.'/config/channels.php';
+        $this->mergeConfigFrom($configPath, 'services');
+
         $this->app->register(\Igniter\Flame\Notifications\NotificationServiceProvider::class);
         $this->app->register(\Illuminate\Notifications\NexmoChannelServiceProvider::class);
         $this->app->register(\NotificationChannels\Twilio\TwilioProvider::class);

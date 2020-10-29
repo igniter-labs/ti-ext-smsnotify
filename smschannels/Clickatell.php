@@ -25,8 +25,16 @@ class Clickatell extends BaseChannel
                     'type' => 'partial',
                     'path' => '$/igniterlabs/smsnotify/smschannels/clickatell/info',
                 ],
-                'api_key' => [
-                    'label' => 'API Key',
+                'user' => [
+                    'label' => 'API Username',
+                    'type' => 'text',
+                ],
+                'pass' => [
+                    'label' => 'API Password',
+                    'type' => 'password',
+                ],
+                'api_id' => [
+                    'label' => 'API ID',
                     'type' => 'text',
                 ],
             ],
