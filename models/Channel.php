@@ -2,10 +2,13 @@
 
 namespace IgniterLabs\SmsNotify\Models;
 
+use Igniter\Flame\Database\Traits\Purgeable;
 use IgniterLabs\SmsNotify\Classes\Manager;
 
 class Channel extends \Model
 {
+    use Purgeable;
+
     /**
      * @var string The database table used by the model.
      */
@@ -23,6 +26,8 @@ class Channel extends \Model
         'is_enabled' => 'boolean',
         'is_default' => 'boolean',
     ];
+
+    protected $purgeable = ['channel'];
 
     /**
      * @var self Default channel cache.
@@ -70,6 +75,9 @@ class Channel extends \Model
     {
         if (!$this->exists)
             return;
+
+        if ($this->is_default)
+            $this->makeDefault();
 
         $data = [];
         $fields = $this->getConfigFields();
@@ -133,7 +141,7 @@ class Channel extends \Model
 
     public function makeDefault()
     {
-        if (!$this->status) {
+        if (!$this->is_enabled) {
             return FALSE;
         }
 
@@ -162,9 +170,17 @@ class Channel extends \Model
 
     public static function listChannels()
     {
-        return self::whereIsEnabled()->get()->filter(function ($model) {
-            return strlen($model->class_name) > 0;
-        });
+        $result = [];
+        $manager = Manager::instance();
+        $channels = self::whereIsEnabled()->get()->keyBy('code');
+        foreach ($manager->listChannels() as $code => $className) {
+            if (!$channel = $channels->get($code))
+                continue;
+
+            $result[$code] = $channel->getName();
+        }
+
+        return $result;
     }
 
     /**

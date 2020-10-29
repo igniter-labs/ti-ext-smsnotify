@@ -50,6 +50,7 @@ return [
         'column_updated_at' => 'Updated At',
         'column_created_at' => 'Created At',
 
+        'label_channel' => 'Channel',
         'label_label' => 'Label',
         'label_code' => 'Code',
     ],

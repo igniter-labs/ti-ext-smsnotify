@@ -85,6 +85,7 @@ return [
                 'label' => 'igniterlabs.smsnotify::default.channel.label_label',
                 'type' => 'text',
                 'span' => 'left',
+                'context' => ['edit'],
             ],
             'code' => [
                 'label' => 'igniterlabs.smsnotify::default.channel.label_code',
@@ -95,6 +96,7 @@ return [
                 'label' => 'lang:admin::lang.label_description',
                 'type' => 'textarea',
                 'span' => 'left',
+                'context' => ['edit'],
             ],
             'is_default' => [
                 'label' => 'lang:admin::lang.payments.label_default',

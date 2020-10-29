@@ -31,7 +31,7 @@ class Channels extends AdminController
         'model' => 'IgniterLabs\SmsNotify\Models\Channel',
         'create' => [
             'title' => 'igniterlabs.smsnotify::default.channel.text_new_title',
-            'redirect' => 'igniterlabs/smsnotify/channels/create/{code}',
+            'redirect' => 'igniterlabs/smsnotify/channels/edit/{code}',
             'redirectClose' => 'igniterlabs/smsnotify/channels',
         ],
         'edit' => [
@@ -111,15 +111,16 @@ class Channels extends AdminController
             throw new ApplicationException('Invalid channel code selected');
 
         $model->class_name = Manager::instance()->getChannel($code);
+        $model->applyChannelClass();
     }
 
     public function formValidate($model, $form)
     {
         $rules = [
             ['channel', 'lang:admin::lang.payments.label_payments', 'sometimes|required|alpha_dash'],
-            ['name', 'lang:admin::lang.label_name', 'required|min:2|max:128'],
-            ['code', 'lang:admin::lang.payments.label_code', 'sometimes|required|alpha_dash|unique:payments,code'],
-            ['description', 'lang:admin::lang.label_description', 'required|max:255'],
+            ['name', 'lang:admin::lang.label_name', 'sometimes|required|min:2|max:128'],
+            ['code', 'lang:admin::lang.payments.label_code', 'sometimes|required|alpha_dash|unique:igniterlabs_smsnotify_channels,code'],
+            ['description', 'lang:admin::lang.label_description', 'sometimes|required|max:255'],
             ['is_default', 'lang:admin::lang.payments.label_default', 'required|integer'],
             ['is_enabled', 'lang:admin::lang.label_status', 'required|integer'],
         ];
