@@ -68,7 +68,7 @@ class Manager
             foreach ($config as $key => $value) {
                 $configKey = sprintf('services.%s.%s', $channelCode, $key);
                 Config::set($configKey, $value ?? Config::get($configKey));
-                
+
                 if ($channelCode == 'nexmo')
                     Config::set('nexmo.'.$key, $value ?? Config::get('nexmo.'.$key));
             }
