@@ -3,8 +3,11 @@
 namespace IgniterLabs\SmsNotify;
 
 use Event;
+use Exception;
+use IgniterLabs\SmsNotify\Classes\BaseNotification;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Notifications\Events\NotificationFailed;
 use System\Classes\BaseExtension;
 
 /**
@@ -137,6 +140,17 @@ class Extension extends BaseExtension
     {
         Event::listen('notification.beforeRegister', function () {
             Manager::instance()->applyNotificationConfigValues();
+        });
+
+        Event::listen(NotificationFailed::class, function ($event) {
+            if (!$event->notification instanceof BaseNotification)
+                return;
+
+            $exception = array_get($event->data, 'exception');
+            if (!$exception instanceof Exception)
+                return;
+
+            throw $exception;
         });
     }
 }
