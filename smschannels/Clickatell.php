@@ -31,7 +31,7 @@ class Clickatell extends BaseChannel
                 ],
                 'pass' => [
                     'label' => 'API Password',
-                    'type' => 'password',
+                    'type' => 'text',
                 ],
                 'api_id' => [
                     'label' => 'API ID',
