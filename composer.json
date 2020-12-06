@@ -4,7 +4,6 @@
   "keywords": ["tastyigniter", "notify", "notification"],
   "license": "MIT",
   "require": {
-    "php": ">=7.1",
     "laravel/nexmo-notification-channel": "~2.0",
     "laravel-notification-channels/twilio": "~2.0",
     "laravel-notification-channels/clickatell": "~0.1",

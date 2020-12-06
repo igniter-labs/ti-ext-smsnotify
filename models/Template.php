@@ -27,7 +27,7 @@ class Template extends \Model
     public $rules = [
         ['code', 'igniter.pages::default.menu.label_code', 'required|unique:igniterlabs_smsnotify_templates,code'],
         ['name', 'igniter.pages::default.menu.label_title', 'required|max:128'],
-        ['content', 'admin::lang.label_description', 'required|string'],
+        ['content', 'admin::lang.label_description', 'string'],
     ];
 
     protected $injectUniqueIdentifier = TRUE;
