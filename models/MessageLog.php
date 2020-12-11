@@ -19,7 +19,7 @@ class MessageLog extends \Model
      */
     protected $guarded = [];
 
-    public $casts = [
+    protected $casts = [
         'channel' => 'string',
         'to' => 'string',
         'message' => 'string',

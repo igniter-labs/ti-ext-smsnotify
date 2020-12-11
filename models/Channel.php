@@ -21,7 +21,7 @@ class Channel extends \Model
      */
     protected $fillable = ['code', 'class_name', 'config_data', 'is_enabled', 'is_default'];
 
-    public $casts = [
+    protected $casts = [
         'config_data' => 'array',
         'is_enabled' => 'boolean',
         'is_default' => 'boolean',
