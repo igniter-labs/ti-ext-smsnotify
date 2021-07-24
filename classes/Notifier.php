@@ -2,7 +2,7 @@
 
 namespace IgniterLabs\SmsNotify\Classes;
 
-use ApplicationException;
+use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\Models\Template;

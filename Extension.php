@@ -2,12 +2,12 @@
 
 namespace IgniterLabs\SmsNotify;
 
-use Event;
 use Exception;
 use IgniterLabs\SmsNotify\Classes\BaseNotification;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Notifications\Events\NotificationFailed;
+use Illuminate\Support\Facades\Event;
 use System\Classes\BaseExtension;
 
 /**

@@ -3,9 +3,9 @@
 namespace IgniterLabs\SmsNotify\Controllers;
 
 use Admin\Classes\AdminController;
+use Admin\Facades\AdminMenu;
 use Admin\Models\Locations_model;
 use Admin\Widgets\Form;
-use AdminMenu;
 use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\SmsNotify\Classes\Notifier;
 use IgniterLabs\SmsNotify\Models\Template;

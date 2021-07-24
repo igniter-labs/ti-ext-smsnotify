@@ -3,7 +3,7 @@
 namespace IgniterLabs\SmsNotify\Controllers;
 
 use Admin\Classes\AdminController;
-use AdminMenu;
+use Admin\Facades\AdminMenu;
 use Exception;
 use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\SmsNotify\Classes\Manager;
