@@ -2,13 +2,14 @@
 
 namespace IgniterLabs\SmsNotify\Models;
 
+use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Validation;
 use Igniter\Flame\Mail\MailParser;
 use Igniter\Flame\Support\Facades\File;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use Illuminate\Support\Facades\View;
 
-class Template extends \Model
+class Template extends Model
 {
     use Validation;
 

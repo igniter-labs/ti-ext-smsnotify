@@ -2,10 +2,11 @@
 
 namespace IgniterLabs\SmsNotify\Models;
 
+use Igniter\Flame\Database\Model;
 use IgniterLabs\SmsNotify\Classes\BaseNotification;
 use Illuminate\Notifications\Events\NotificationSent;
 
-class MessageLog extends \Model
+class MessageLog extends Model
 {
     /**
      * @var string The database table used by the model.

@@ -2,10 +2,11 @@
 
 namespace IgniterLabs\SmsNotify\Models;
 
+use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Purgeable;
 use IgniterLabs\SmsNotify\Classes\Manager;
 
-class Channel extends \Model
+class Channel extends Model
 {
     use Purgeable;
 
