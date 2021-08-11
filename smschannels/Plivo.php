@@ -40,4 +40,9 @@ class Plivo extends BaseChannel
             ],
         ];
     }
+
+    public function toMessage($notifiable)
+    {
+        return new PlivoMessage;
+    }
 }

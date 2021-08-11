@@ -3,8 +3,8 @@
 namespace IgniterLabs\SmsNotify;
 
 use Exception;
-use IgniterLabs\SmsNotify\Classes\BaseNotification;
 use IgniterLabs\SmsNotify\Classes\Manager;
+use IgniterLabs\SmsNotify\Classes\SmsNotification;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Notifications\Events\NotificationFailed;
 use Illuminate\Support\Facades\Event;
@@ -143,7 +143,7 @@ class Extension extends BaseExtension
         });
 
         Event::listen(NotificationFailed::class, function ($event) {
-            if (!$event->notification instanceof BaseNotification)
+            if (!$event->notification instanceof SmsNotification)
                 return;
 
             $exception = array_get($event->data, 'exception');

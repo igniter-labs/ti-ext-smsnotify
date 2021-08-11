@@ -131,7 +131,7 @@ class Manager
 
     /**
      * @param $code
-     * @return \IgniterLabs\SmsNotify\Classes\BaseNotification|null
+     * @return \IgniterLabs\SmsNotify\Classes\SmsNotification|null
      */
     public function getTemplate($code)
     {

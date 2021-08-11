@@ -4,6 +4,7 @@ namespace IgniterLabs\SmsNotify\SmsChannels;
 
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use NotificationChannels\Twilio\TwilioChannel;
+use NotificationChannels\Twilio\TwilioSmsMessage;
 
 class Twilio extends BaseChannel
 {
@@ -39,5 +40,10 @@ class Twilio extends BaseChannel
                 ],
             ],
         ];
+    }
+
+    public function toMessage($notifiable)
+    {
+        return new TwilioSmsMessage;
     }
 }

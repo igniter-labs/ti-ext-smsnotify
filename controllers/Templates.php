@@ -8,8 +8,8 @@ use Admin\Models\Locations_model;
 use Admin\Widgets\Form;
 use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\SmsNotify\Classes\Notifier;
+use IgniterLabs\SmsNotify\Classes\SmsNotification;
 use IgniterLabs\SmsNotify\Models\Template;
-use IgniterLabs\SmsNotify\SmSNotifications\AnonymousNotification;
 
 class Templates extends AdminController
 {
@@ -82,7 +82,7 @@ class Templates extends AdminController
             throw new ApplicationException('Template not found');
 
         $telephoneNo = Locations_model::getDefault()->location_telephone;
-        $notification = (new AnonymousNotification())->template($model->code);
+        $notification = (new SmsNotification())->template($model->code);
 
         (new Notifier)->notifyNow($telephoneNo, $notification);
 

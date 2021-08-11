@@ -4,6 +4,7 @@ namespace IgniterLabs\SmsNotify\SmsChannels;
 
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use NotificationChannels\Clickatell\ClickatellChannel;
+use NotificationChannels\Clickatell\ClickatellMessage;
 
 class Clickatell extends BaseChannel
 {
@@ -39,5 +40,10 @@ class Clickatell extends BaseChannel
                 ],
             ],
         ];
+    }
+
+    public function toMessage($notifiable)
+    {
+        return new ClickatellMessage;
     }
 }

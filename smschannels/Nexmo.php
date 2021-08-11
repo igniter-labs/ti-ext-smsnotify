@@ -4,6 +4,7 @@ namespace IgniterLabs\SmsNotify\SmsChannels;
 
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use Illuminate\Notifications\Channels\NexmoSmsChannel;
+use Illuminate\Notifications\Messages\NexmoMessage;
 
 class Nexmo extends BaseChannel
 {
@@ -39,5 +40,10 @@ class Nexmo extends BaseChannel
                 ],
             ],
         ];
+    }
+
+    public function toMessage($notifiable)
+    {
+        return new NexmoMessage;
     }
 }
