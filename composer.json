@@ -11,7 +11,8 @@
     "laravel/nexmo-notification-channel": "~2.0",
     "laravel-notification-channels/twilio": "~2.0",
     "laravel-notification-channels/clickatell": "~0.1",
-    "laravel-notification-channels/plivo": "~2.0"
+    "laravel-notification-channels/plivo": "~2.0",
+    "laravel-notification-channels/sms77": "~v1.0"
   },
   "minimum-stability": "dev"
 }

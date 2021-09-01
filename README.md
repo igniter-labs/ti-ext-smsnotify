@@ -6,7 +6,7 @@ This extension allows admins to configure sms notifications to be sent out when 
 - Receive SMS notifications whenever a new order has been placed
 - SMS alert to your customers about their order or reservation status
 - Customizable SMS Messages
-- **Supported channels:** twilio, nexmo, clickatell and plivo
+- **Supported channels:** twilio, nexmo, clickatell, plivo and sms77
 - Add your own custom SMS notification channel.
 
 ### Admin Panel

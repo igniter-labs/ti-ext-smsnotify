@@ -9,7 +9,7 @@ return [
     'text_send_to_custom_tel' => 'Specific phone number',
 
     'setting_title' => 'Configure SMS Channels',
-    'setting_desc' => 'Configure twilio, plivo, nexmo or clickatell settings.',
+    'setting_desc' => 'Configure twilio, plivo, nexmo, clickatell or sms77 settings.',
 
     'label_template' => 'SMS Template',
     'label_send_to' => 'Send To',
@@ -35,6 +35,11 @@ return [
     'plivo' => [
         'text_title' => 'Plivo SMS Channel',
         'text_desc' => 'Sending SMS notifications using Plivo.',
+    ],
+
+    'sms77' => [
+        'text_title' => 'sms77 SMS Channel',
+        'text_desc' => 'Sending SMS notifications using sms77.',
     ],
 
     'channel' => [

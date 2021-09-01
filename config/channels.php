@@ -21,4 +21,8 @@ return [
     'nexmo' => [
         'send_from' => '',
     ],
+    'sms77' => [
+        'api_key' => env('SMS77_API_KEY'),
+        'from' => env('SMS77_FROM'),
+    ],
 ];

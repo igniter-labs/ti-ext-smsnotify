@@ -30,6 +30,7 @@ class Extension extends BaseExtension
         $this->app->register(\NotificationChannels\Twilio\TwilioProvider::class);
         $this->app->register(\NotificationChannels\Clickatell\ClickatellServiceProvider::class);
         $this->app->register(\NotificationChannels\Plivo\PlivoServiceProvider::class);
+        $this->app->register(\NotificationChannels\SMS77\SMS77ServiceProvider::class);
 
         AliasLoader::getInstance()->alias('Notification', \Illuminate\Support\Facades\Notification::class);
     }
@@ -119,6 +120,7 @@ class Extension extends BaseExtension
             'nexmo' => \IgniterLabs\SmsNotify\SmsChannels\Nexmo::class,
             'clickatell' => \IgniterLabs\SmsNotify\SmsChannels\Clickatell::class,
             'plivo' => \IgniterLabs\SmsNotify\SmsChannels\Plivo::class,
+            'sms77' => \IgniterLabs\SmsNotify\SmsChannels\Sms77::class,
         ];
     }
 
