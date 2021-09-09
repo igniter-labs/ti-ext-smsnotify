@@ -3,7 +3,7 @@
   "name": "SMS Notify",
   "description": "Send SMS notifications to both restaurant and customer about an order or reservation.",
   "version": "v2.0.0",
-  "author": "Igniter Labs",
+  "author": "Igniter Labs Team",
   "icon": {
     "class": "fa fa-sms",
     "backgroundColor": "#147EFB",
