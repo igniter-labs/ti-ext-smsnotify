@@ -9,9 +9,18 @@
   "license": "MIT",
   "require": {
     "laravel/nexmo-notification-channel": "~2.0",
-    "laravel-notification-channels/twilio": "~2.0",
-    "laravel-notification-channels/clickatell": "~0.1",
-    "laravel-notification-channels/plivo": "~2.0"
+    "laravel-notification-channels/twilio": "dev-master",
+    "laravel-notification-channels/clickatell": "dev-laravel-8",
+    "laravel-notification-channels/plivo": "dev-update-plivo"
   },
-  "minimum-stability": "dev"
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/sampoyigi/clickatell"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/sampoyigi/plivo"
+    }
+  ]
 }
