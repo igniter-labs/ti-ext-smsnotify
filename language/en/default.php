@@ -6,6 +6,7 @@ return [
     'text_send_to_location_tel' => 'Location phone number (if available)',
     'text_send_to_customer_tel' => 'Customer phone number (if available)',
     'text_send_to_order_tel' => 'Order phone number (if available)',
+    'text_send_to_reservation_tel' => 'Reservation phone number (if available)',
     'text_send_to_custom_tel' => 'Specific phone number',
 
     'setting_title' => 'Configure SMS Channels',

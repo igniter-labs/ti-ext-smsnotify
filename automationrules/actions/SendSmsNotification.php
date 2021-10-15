@@ -72,6 +72,7 @@ class SendSmsNotification extends BaseAction
             'location' => 'igniterlabs.smsnotify::default.text_send_to_location_tel',
             'customer' => 'igniterlabs.smsnotify::default.text_send_to_customer_tel',
             'order' => 'igniterlabs.smsnotify::default.text_send_to_order_tel',
+            'reservation' => 'igniterlabs.smsnotify::default.text_send_to_reservation_tel',
             'custom' => 'igniterlabs.smsnotify::default.text_send_to_custom_tel',
         ];
     }
