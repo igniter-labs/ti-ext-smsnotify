@@ -36,7 +36,7 @@ class SmsNotification extends Notification
         if (is_array($this->host))
             return $this->host;
 
-        if ($this->host instanceof Model AND $this->host->methodExists('mailGetData'))
+        if ($this->host instanceof Model && $this->host->methodExists('mailGetData'))
             return $this->host->mailGetData();
 
         return [];

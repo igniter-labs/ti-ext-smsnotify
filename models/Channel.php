@@ -116,10 +116,10 @@ class Channel extends Model
     public function applyChannelClass()
     {
         $className = $this->class_name;
-        if (!$className OR !class_exists($className))
+        if (!$className || !class_exists($className))
             $className = null;
 
-        if ($className AND !$this->isClassExtendedWith($className)) {
+        if ($className && !$this->isClassExtendedWith($className)) {
             $this->extendClassWith($className);
         }
 
