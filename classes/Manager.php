@@ -66,7 +66,10 @@ class Manager
         foreach (array_keys($this->listChannels()) as $channelCode) {
             $config = Channel::getConfig($channelCode, []);
             foreach ($config as $key => $value) {
-                $configKey = sprintf('services.%s.%s', $channelCode, $key);
+                $configKey = $channelCode == 'twilio'
+                    ? sprintf('twilio-notification-channel.%s', $key)
+                    : sprintf('services.%s.%s', $channelCode, $key);
+
                 Config::set($configKey, $value ?? Config::get($configKey));
 
                 if ($channelCode == 'nexmo')
