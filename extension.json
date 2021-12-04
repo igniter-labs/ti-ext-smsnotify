@@ -2,7 +2,7 @@
   "code": "igniterlabs.smsnotify",
   "name": "SMS Notify",
   "description": "Send SMS notifications to both restaurant and customer about an order or reservation.",
-  "version": "v2.1.1",
+  "version": "v2.1.2",
   "author": "Igniter Labs Team",
   "icon": {
     "class": "fa fa-sms",
