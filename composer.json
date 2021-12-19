@@ -1,12 +1,18 @@
 {
-  "name": "igniterlabs/smsnotify",
+  "name": "igniterlabs/ti-ext-smsnotify",
   "type": "tastyigniter-extension",
+  "description": "Send SMS notifications to both restaurant and customer about an order or reservation.",
   "keywords": [
     "tastyigniter",
     "notify",
     "notification"
   ],
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Igniter Labs Team"
+    }
+  ],
   "require": {
     "laravel/nexmo-notification-channel": "~2.0",
     "laravel-notification-channels/twilio": "dev-master",
@@ -22,5 +28,20 @@
       "type": "vcs",
       "url": "https://github.com/sampoyigi/plivo"
     }
-  ]
+  ],
+  "extra": {
+    "tastyigniter-extension": {
+      "code": "igniterlabs.smsnotify",
+      "name": "SMS Notify",
+      "icon": {
+        "class": "fa fa-sms",
+        "backgroundColor": "#147EFB",
+        "color": "#FFFFFF"
+      },
+      "homepage": "https://tastyigniter.com/marketplace/item/igniterlabs-smsnotify",
+      "require": {
+        "igniter.automation": "*"
+      }
+    }
+  }
 }
