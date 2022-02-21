@@ -54,8 +54,6 @@ class Notifier
         if (!($template instanceof Notification))
             throw new ApplicationException("Notification [{$notification}] not found");
 
-        $template->setParameters($data);
-
         return $template;
     }
 }

@@ -4,6 +4,7 @@ namespace IgniterLabs\SmsNotify\SmsChannels;
 
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use NotificationChannels\Plivo\PlivoChannel;
+use NotificationChannels\Plivo\PlivoMessage;
 
 class Plivo extends BaseChannel
 {
