@@ -7,8 +7,7 @@ use Admin\Facades\AdminMenu;
 use Admin\Models\Locations_model;
 use Admin\Widgets\Form;
 use Igniter\Flame\Exception\ApplicationException;
-use IgniterLabs\SmsNotify\Classes\Notifier;
-use IgniterLabs\SmsNotify\Classes\SmsNotification;
+use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Template;
 
 class Templates extends AdminController
@@ -82,9 +81,8 @@ class Templates extends AdminController
             throw new ApplicationException('Template not found');
 
         $telephoneNo = Locations_model::getDefault()->location_telephone;
-        $notification = (new SmsNotification())->template($model->code);
 
-        (new Notifier)->notifyNow($telephoneNo, $notification);
+        Manager::instance()->notify($model->code, $telephoneNo, []);
 
         flash()->success(sprintf(
             lang('igniterlabs.smsnotify::default.template.alert_test_message_sent'), $telephoneNo

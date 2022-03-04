@@ -4,8 +4,7 @@ namespace IgniterLabs\SmsNotify\AutomationRules\Actions;
 
 use Igniter\Automation\Classes\BaseAction;
 use Igniter\Flame\Exception\ApplicationException;
-use IgniterLabs\SmsNotify\Classes\Notifier;
-use IgniterLabs\SmsNotify\Classes\SmsNotification;
+use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Template;
 use Illuminate\Database\Eloquent\Model;
 
@@ -56,9 +55,7 @@ class SendSmsNotification extends BaseAction
         if (!$sendToNumber = $this->getRecipientAddress($object))
             throw new ApplicationException('SendSmsNotification: Missing a valid send to number from the event payload');
 
-        $notification = (new SmsNotification($object))->template($templateCode);
-
-        (new Notifier)->notifyNow($sendToNumber, $notification, $params);
+        Manager::instance()->notify($templateCode, $sendToNumber, $params);
     }
 
     public function getTemplateOptions()

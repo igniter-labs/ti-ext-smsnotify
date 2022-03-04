@@ -3,13 +3,12 @@
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
-use Illuminate\Notifications\Channels\NexmoSmsChannel;
-use Illuminate\Notifications\Messages\NexmoMessage;
+use RuntimeException;
+use Vonage\Client as VonageClient;
+use Vonage\Client\Credentials\Basic;
 
 class Nexmo extends BaseChannel
 {
-    protected $channelClassName = NexmoSmsChannel::class;
-
     public function channelDetails()
     {
         return [
@@ -42,8 +41,31 @@ class Nexmo extends BaseChannel
         ];
     }
 
-    public function toMessage($notifiable)
+    public function send($to, $content)
     {
-        return new NexmoMessage;
+        $payload = [
+            'type' => 'text',
+            'from' => $this->model->send_from,
+            'to' => $to,
+            'text' => trim($content),
+            'client-ref' => '',
+        ];
+
+        if ($this->model->status_callback) {
+            $payload['callback'] = $this->model->status_callback;
+        }
+
+        return $this->client()->message()->send($payload);
+    }
+
+    protected function client(): VonageClient
+    {
+        if (!strlen($this->model->api_key) || !strlen($this->model->api_secret)) {
+            throw new RuntimeException('Please provide your Vonage API credentials. api_key + api_secret');
+        }
+
+        return new VonageClient(
+            new Basic($this->model->api_key, $this->model->api_secret)
+        );
     }
 }

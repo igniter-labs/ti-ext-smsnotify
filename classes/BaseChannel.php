@@ -29,6 +29,8 @@ abstract class BaseChannel extends ModelAction
         $this->initConfigData();
     }
 
+    abstract public function send($to, $content);
+
     /**
      * Initialize method called when the notification channel is first loaded.
      */

@@ -32,7 +32,7 @@ class Manager
      */
     protected static $callbacks = [];
 
-    public function addContentToMessage($message, $templateCode, $data = [])
+    public function buildContent($templateCode, $data = [])
     {
         if (isset($this->messageTemplateCache[$templateCode])) {
             $template = $this->templateCache[$templateCode];
@@ -46,10 +46,7 @@ class Manager
             $data = (array)$data + $globalVars;
         }
 
-        $content = $this->renderTemplate($template, $data);
-        $message->content($content);
-
-        return $message;
+        return $this->renderTemplate($template, $data);
     }
 
     public function renderTemplate($template, $data = [])
@@ -76,6 +73,13 @@ class Manager
                     Config::set('nexmo.'.$key, $value ?? Config::get('nexmo.'.$key));
             }
         }
+    }
+
+    public function notify($templateCode, $to, $data)
+    {
+        $content = $this->buildContent($templateCode, $data);
+
+        Channel::getDefault()->getChannelObject()->send($to, $content);
     }
 
     //

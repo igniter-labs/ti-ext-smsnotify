@@ -2,12 +2,7 @@
 
 namespace IgniterLabs\SmsNotify;
 
-use Exception;
-use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Classes\SmsNotification;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Notifications\Events\NotificationFailed;
-use Illuminate\Support\Facades\Event;
 use System\Classes\BaseExtension;
 
 /**
@@ -15,35 +10,6 @@ use System\Classes\BaseExtension;
  */
 class Extension extends BaseExtension
 {
-    /**
-     * Register method, called when the extension is first registered.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $configPath = __DIR__.'/config/channels.php';
-        $this->mergeConfigFrom($configPath, 'services');
-
-        $this->app->register(\Igniter\Flame\Notifications\NotificationServiceProvider::class);
-        $this->app->register(\Illuminate\Notifications\NexmoChannelServiceProvider::class);
-        $this->app->register(\NotificationChannels\Twilio\TwilioProvider::class);
-        $this->app->register(\NotificationChannels\Clickatell\ClickatellServiceProvider::class);
-        $this->app->register(\NotificationChannels\Plivo\PlivoServiceProvider::class);
-
-        AliasLoader::getInstance()->alias('Notification', \Illuminate\Support\Facades\Notification::class);
-    }
-
-    /**
-     * Boot method, called right before the request route.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $this->bindNotificationEvents();
-    }
-
     /**
      * Registers any admin permissions used by this extension.
      *
@@ -134,23 +100,5 @@ class Extension extends BaseExtension
             'igniterlabs.smsnotify::_sms.reservation_confirmed' => 'igniterlabs.smsnotify::default.template.text_reservation_confirmed',
             'igniterlabs.smsnotify::_sms.reservation_status_changed' => 'igniterlabs.smsnotify::default.template.text_reservation_status_changed',
         ];
-    }
-
-    protected function bindNotificationEvents()
-    {
-        Event::listen('notification.beforeRegister', function () {
-            Manager::instance()->applyNotificationConfigValues();
-        });
-
-        Event::listen(NotificationFailed::class, function ($event) {
-            if (!$event->notification instanceof SmsNotification)
-                return;
-
-            $exception = array_get($event->data, 'exception');
-            if (!$exception instanceof Exception)
-                return;
-
-            throw $exception;
-        });
     }
 }

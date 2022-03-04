@@ -2,14 +2,12 @@
 
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
+use Exception;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
-use NotificationChannels\Twilio\TwilioChannel;
-use NotificationChannels\Twilio\TwilioSmsMessage;
+use Twilio\Rest\Client as TwilioClient;
 
 class Twilio extends BaseChannel
 {
-    protected $channelClassName = TwilioChannel::class;
-
     public function channelDetails()
     {
         return [
@@ -42,8 +40,40 @@ class Twilio extends BaseChannel
         ];
     }
 
-    public function toMessage($notifiable)
+    public function send($to, $content)
     {
-        return new TwilioSmsMessage;
+        $params = [
+            'body' => trim($content),
+        ];
+
+        if (strlen($this->model->service_sid))
+            $params['messagingServiceSid'] = $this->model->service_sid;
+
+        if (strlen($this->model->from))
+            $params['from'] = $this->model->from;
+
+        if (empty($params['from']) && empty($params['messagingServiceSid'])) {
+            throw new Exception('SMS message was not sent. Missing `from` number.');
+        }
+
+        $this->fillOptionalParams($params, [
+            'statusCallback',
+            'statusCallbackMethod',
+            'applicationSid',
+            'forceDelivery',
+            'maxPrice',
+            'provideFeedback',
+            'validityPeriod',
+        ]);
+
+        return (new TwilioClient(
+            $this->model->account_sid,
+            $this->model->auth_token
+        ))->messages->create($to, $params);
+    }
+
+    protected function fillOptionalParams(&$params, $optionalParams): self
+    {
+        return $this;
     }
 }

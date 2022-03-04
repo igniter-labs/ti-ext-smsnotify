@@ -2,14 +2,12 @@
 
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
+use Exception;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
-use NotificationChannels\Plivo\PlivoChannel;
-use NotificationChannels\Plivo\PlivoMessage;
+use Plivo\RestAPI as PlivoClient;
 
 class Plivo extends BaseChannel
 {
-    protected $channelClassName = PlivoChannel::class;
-
     public function channelDetails()
     {
         return [
@@ -42,8 +40,26 @@ class Plivo extends BaseChannel
         ];
     }
 
-    public function toMessage($notifiable)
+    public function send($to, $content)
     {
-        return new PlivoMessage;
+        $response = $this->client()->send_message([
+            'src' => $this->model->from_number,
+            'dst' => $to,
+            'text' => $content,
+        ]);
+
+        if ($response['status'] !== 202) {
+            throw new Exception("SMS message was not sent. Plivo responded with `{$response['status']}: {$response['response']['error']}`");
+        }
+
+        return $response;
+    }
+
+    protected function client(): PlivoClient
+    {
+        return (new PlivoClient(
+            $this->model->auth_id,
+            $this->model->auth_token,
+        ));
     }
 }

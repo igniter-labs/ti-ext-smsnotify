@@ -14,11 +14,10 @@
     }
   ],
   "require": {
-    "nexmo/laravel": "~2.0",
-    "laravel/nexmo-notification-channel": "~2.0",
-    "laravel-notification-channels/twilio": "dev-master",
-    "laravel-notification-channels/clickatell": "dev-master",
-    "laravel-notification-channels/plivo": "dev-master"
+    "vonage/client": "^2.0",
+    "twilio/sdk": "~6.0",
+    "arcturial/clickatell": "~3.0",
+    "plivo/plivo-php": "^1.1"
   },
   "replace": {
     "php-http/guzzle7-adapter": "~1.0"
