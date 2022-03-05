@@ -12,8 +12,8 @@ use IgniterLabs\SmsNotify\Models\Channel;
 class Channels extends AdminController
 {
     public $implement = [
-        'Admin\Actions\FormController',
-        'Admin\Actions\ListController',
+        \Admin\Actions\FormController::class,
+        \Admin\Actions\ListController::class,
     ];
 
     public $listConfig = [
