@@ -19,7 +19,7 @@ class Templates extends AdminController
 
     public $listConfig = [
         'list' => [
-            'model' => 'IgniterLabs\SmsNotify\Models\Template',
+            'model' => \IgniterLabs\SmsNotify\Models\Template::class,
             'title' => 'igniterlabs.smsnotify::default.template.text_title',
             'emptyMessage' => 'igniterlabs.smsnotify::default.template.text_empty',
             'defaultSort' => ['id', 'DESC'],
@@ -29,7 +29,7 @@ class Templates extends AdminController
 
     public $formConfig = [
         'name' => 'igniterlabs.smsnotify::default.template.text_title',
-        'model' => 'IgniterLabs\SmsNotify\Models\Template',
+        'model' => \IgniterLabs\SmsNotify\Models\Template::class,
         'edit' => [
             'title' => 'igniterlabs.smsnotify::default.template.text_edit_title',
             'redirect' => 'igniterlabs/smsnotify/templates/edit/{id}',

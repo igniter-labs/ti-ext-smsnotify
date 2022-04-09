@@ -18,7 +18,7 @@ class Channels extends AdminController
 
     public $listConfig = [
         'list' => [
-            'model' => 'IgniterLabs\SmsNotify\Models\Channel',
+            'model' => \IgniterLabs\SmsNotify\Models\Channel::class,
             'title' => 'igniterlabs.smsnotify::default.channel.text_title',
             'emptyMessage' => 'igniterlabs.smsnotify::default.channel.text_empty',
             'defaultSort' => ['id', 'DESC'],
@@ -28,7 +28,7 @@ class Channels extends AdminController
 
     public $formConfig = [
         'name' => 'igniterlabs.smsnotify::default.channel.text_title',
-        'model' => 'IgniterLabs\SmsNotify\Models\Channel',
+        'model' => \IgniterLabs\SmsNotify\Models\Channel::class,
         'create' => [
             'title' => 'igniterlabs.smsnotify::default.channel.text_new_title',
             'redirect' => 'igniterlabs/smsnotify/channels/edit/{code}',
