@@ -13,7 +13,7 @@ class MessageLog extends Model
      */
     public $table = 'igniterlabs_smsnotify_logs';
 
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     /**
      * @var array fillable fields

@@ -21,16 +21,16 @@ return [
             'updated_at' => [
                 'label' => 'igniterlabs.smsnotify::default.template.column_updated_at',
                 'type' => 'timetense',
-                'searchable' => TRUE,
+                'searchable' => true,
             ],
             'created_at' => [
                 'label' => 'igniterlabs.smsnotify::default.template.column_created_at',
                 'type' => 'timetense',
-                'searchable' => TRUE,
+                'searchable' => true,
             ],
             'id' => [
                 'label' => 'lang:admin::lang.column_id',
-                'invisible' => TRUE,
+                'invisible' => true,
             ],
         ],
     ],

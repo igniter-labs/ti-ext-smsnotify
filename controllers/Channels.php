@@ -101,7 +101,7 @@ class Channels extends AdminController
 
         if ($form->context != 'create') {
             $field = $form->getField('code');
-            $field->disabled = TRUE;
+            $field->disabled = true;
         }
     }
 

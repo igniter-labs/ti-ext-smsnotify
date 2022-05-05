@@ -15,7 +15,7 @@ class Channel extends Model
      */
     public $table = 'igniterlabs_smsnotify_channels';
 
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     /**
      * @var array fillable fields
@@ -125,7 +125,7 @@ class Channel extends Model
 
         $this->class_name = $className;
 
-        return TRUE;
+        return true;
     }
 
     /**
@@ -143,13 +143,13 @@ class Channel extends Model
     public function makeDefault()
     {
         if (!$this->is_enabled) {
-            return FALSE;
+            return false;
         }
 
-        $this->timestamps = FALSE;
+        $this->timestamps = false;
         $this->newQuery()->where('is_default', '!=', 0)->update(['is_default' => 0]);
         $this->newQuery()->where('id', $this->id)->update(['is_default' => 1]);
-        $this->timestamps = TRUE;
+        $this->timestamps = true;
     }
 
     public static function getDefault($id = null)
@@ -158,7 +158,7 @@ class Channel extends Model
             return self::$defaultChannel;
         }
 
-        $defaultChannel = self::whereIsEnabled()->where('is_default', TRUE)->first();
+        $defaultChannel = self::whereIsEnabled()->where('is_default', true)->first();
 
         if (!$defaultChannel) {
             if ($defaultChannel = self::whereIsEnabled()->first()) {

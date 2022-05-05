@@ -15,7 +15,7 @@ class MakePrimaryKeyBigintAllTables extends Migration
             'igniterlabs_smsnotify_channels' => 'id',
         ] as $table => $key) {
             Schema::table($table, function (Blueprint $table) use ($key) {
-                $table->unsignedBigInteger($key, TRUE)->change();
+                $table->unsignedBigInteger($key, true)->change();
             });
         }
     }

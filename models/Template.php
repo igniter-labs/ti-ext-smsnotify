@@ -18,7 +18,7 @@ class Template extends Model
      */
     public $table = 'igniterlabs_smsnotify_templates';
 
-    public $timestamps = TRUE;
+    public $timestamps = true;
 
     /**
      * @var array fillable fields
@@ -31,7 +31,7 @@ class Template extends Model
         ['content', 'admin::lang.label_description', 'string'],
     ];
 
-    protected $injectUniqueIdentifier = TRUE;
+    protected $injectUniqueIdentifier = true;
 
     public function getNameAttribute($value)
     {

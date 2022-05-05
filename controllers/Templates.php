@@ -63,13 +63,13 @@ class Templates extends AdminController
     {
         if ($form->context != 'create') {
             $field = $form->getField('code');
-            $field->disabled = TRUE;
+            $field->disabled = true;
         }
     }
 
     public function formBeforeSave($model)
     {
-        $model->is_custom = TRUE;
+        $model->is_custom = true;
     }
 
     public function onTestTemplate($context, $recordId)

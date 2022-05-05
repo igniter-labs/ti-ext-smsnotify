@@ -78,7 +78,7 @@ class SendSmsNotification extends BaseAction
     {
         $object = array_get($params, 'order', array_get($params, 'reservation'));
 
-        return $object instanceof Model ? $object : FALSE;
+        return $object instanceof Model ? $object : false;
     }
 
     protected function getRecipientAddress($object)
