@@ -6,7 +6,7 @@ return [
             'buttons' => [
                 'back' => [
                     'label' => 'lang:admin::lang.button_icon_back',
-                    'class' => 'btn btn-default',
+                    'class' => 'btn btn-outline-secondary',
                     'href' => 'settings',
                 ],
                 'create' => ['label' => 'lang:admin::lang.button_new', 'class' => 'btn btn-primary', 'href' => 'igniterlabs/smsnotify/channels/create'],
@@ -67,16 +67,16 @@ return [
             'updated_at' => [
                 'label' => 'igniterlabs.smsnotify::default.channel.column_updated_at',
                 'type' => 'timetense',
-                'searchable' => TRUE,
+                'searchable' => true,
             ],
             'created_at' => [
                 'label' => 'igniterlabs.smsnotify::default.channel.column_created_at',
                 'type' => 'timetense',
-                'searchable' => TRUE,
+                'searchable' => true,
             ],
             'id' => [
                 'label' => 'lang:admin::lang.column_id',
-                'invisible' => TRUE,
+                'invisible' => true,
             ],
         ],
     ],
@@ -85,7 +85,7 @@ return [
             'buttons' => [
                 'back' => [
                     'label' => 'lang:admin::lang.button_icon_back',
-                    'class' => 'btn btn-default',
+                    'class' => 'btn btn-outline-secondary',
                     'href' => 'igniterlabs/smsnotify/channels',
                 ],
                 'save' => ['label' => 'lang:admin::lang.button_save', 'class' => 'btn btn-primary', 'data-request' => 'onSave'],
