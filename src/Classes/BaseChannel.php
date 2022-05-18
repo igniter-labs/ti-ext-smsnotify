@@ -3,7 +3,7 @@
 namespace IgniterLabs\SmsNotify\Classes;
 
 use Igniter\Flame\Support\Facades\File;
-use System\Actions\ModelAction;
+use Igniter\System\Actions\ModelAction;
 
 abstract class BaseChannel extends ModelAction
 {

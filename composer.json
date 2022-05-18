@@ -16,11 +16,15 @@
   "require": {
     "vonage/client": "^2.0",
     "twilio/sdk": "~6.0",
-    "arcturial/clickatell": "~3.0",
-    "plivo/plivo-php": "^1.1"
+    "arcturial/clickatell": "~3.0"
   },
   "replace": {
     "php-http/guzzle7-adapter": "~1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "IgniterLabs\\SmsNotify\\": "src/"
+    }
   },
   "extra": {
     "tastyigniter-extension": {

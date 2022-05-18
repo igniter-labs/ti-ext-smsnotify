@@ -3,7 +3,6 @@
 namespace IgniterLabs\SmsNotify\Models;
 
 use Igniter\Flame\Database\Model;
-use IgniterLabs\SmsNotify\Classes\SmsNotification;
 use Illuminate\Notifications\Events\NotificationSent;
 
 class MessageLog extends Model
@@ -30,9 +29,6 @@ class MessageLog extends Model
 
     public static function createLogFromEvent($event)
     {
-        if (!$event->notification instanceof SmsNotification)
-            return;
-
         $isSuccess = $event instanceof NotificationSent;
 
         $record = new static;

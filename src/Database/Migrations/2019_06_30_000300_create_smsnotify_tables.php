@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Create templates table
  */
-class CreateSmsNotifyTables extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::create('igniterlabs_smsnotify_templates', function (Blueprint $table) {
@@ -54,4 +53,4 @@ class CreateSmsNotifyTables extends Migration
         Schema::dropIfExists('igniterlabs_smsnotify_channels');
         Schema::dropIfExists('igniterlabs_smsnotify_logs');
     }
-}
+};

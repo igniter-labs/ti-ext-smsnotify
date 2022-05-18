@@ -2,10 +2,10 @@
 
 namespace IgniterLabs\SmsNotify\Controllers;
 
-use Admin\Classes\AdminController;
-use Admin\Facades\AdminMenu;
-use Admin\Models\Locations_model;
-use Admin\Widgets\Form;
+use Igniter\Admin\Classes\AdminController;
+use Igniter\Admin\Facades\AdminMenu;
+use Igniter\Admin\Models\Location;
+use Igniter\Admin\Widgets\Form;
 use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Template;
@@ -13,8 +13,8 @@ use IgniterLabs\SmsNotify\Models\Template;
 class Templates extends AdminController
 {
     public $implement = [
-        \Admin\Actions\FormController::class,
-        \Admin\Actions\ListController::class,
+        \Igniter\Admin\Actions\FormController::class,
+        \Igniter\Admin\Actions\ListController::class,
     ];
 
     public $listConfig = [
@@ -80,7 +80,7 @@ class Templates extends AdminController
         if (!$model = $this->formFindModelObject($recordId))
             throw new ApplicationException('Template not found');
 
-        $telephoneNo = Locations_model::getDefault()->location_telephone;
+        $telephoneNo = Location::getDefault()->location_telephone;
 
         Manager::instance()->notify($model->code, $telephoneNo, []);
 

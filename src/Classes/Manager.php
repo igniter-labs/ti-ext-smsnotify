@@ -5,11 +5,11 @@ namespace IgniterLabs\SmsNotify\Classes;
 use Igniter\Flame\Support\PagicHelper;
 use Igniter\Flame\Support\StringParser;
 use Igniter\Flame\Traits\Singleton;
+use Igniter\System\Classes\ExtensionManager;
+use Igniter\System\Helpers\ViewHelper;
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\Models\Template;
 use Illuminate\Support\Facades\Config;
-use System\Classes\ExtensionManager;
-use System\Helpers\ViewHelper;
 
 class Manager
 {

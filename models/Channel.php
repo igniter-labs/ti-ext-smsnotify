@@ -1,207 +1,139 @@
 <?php
 
-namespace IgniterLabs\SmsNotify\Models;
-
-use Igniter\Flame\Database\Model;
-use Igniter\Flame\Database\Traits\Purgeable;
-use IgniterLabs\SmsNotify\Classes\Manager;
-
-class Channel extends Model
-{
-    use Purgeable;
-
-    /**
-     * @var string The database table used by the model.
-     */
-    public $table = 'igniterlabs_smsnotify_channels';
-
-    public $timestamps = true;
-
-    /**
-     * @var array fillable fields
-     */
-    protected $fillable = ['code', 'class_name', 'config_data', 'is_enabled', 'is_default'];
-
-    protected $casts = [
-        'config_data' => 'array',
-        'is_enabled' => 'boolean',
-        'is_default' => 'boolean',
-    ];
-
-    protected $purgeable = ['channel'];
-
-    /**
-     * @var self Default channel cache.
-     */
-    protected static $defaultChannel;
-
-    protected static $configCache;
-
-    protected static $configCacheKey = 'igniterlabs-smsnotify-channel-config';
-
-    public static function getConfig($channelCode = null, $default = null)
-    {
-        if (!self::$configCache) {
-            self::$configCache = self::whereIsEnabled()->get()->mapWithKeys(function ($model) {
-                return [$model->code => $model->config_data];
-            })->all();
-        }
-
-        return array_get(self::$configCache, $channelCode, $default);
-    }
-
-    public function getNameAttribute()
-    {
-        return $this->class_name ? lang($this->getChannelObject()->getName()) : null;
-    }
-
-    public function getDescriptionAttribute()
-    {
-        return $this->class_name ? lang($this->getChannelObject()->getDescription()) : null;
-    }
-
-    //
-    // Events
-    //
-
-    protected function afterFetch()
-    {
-        $this->applyChannelClass();
-
-        if (is_array($this->config_data))
-            $this->attributes = array_merge($this->config_data, $this->attributes);
-    }
-
-    protected function beforeSave()
-    {
-        if (!$this->exists)
-            return;
-
-        if ($this->is_default)
-            $this->makeDefault();
-
-        $data = [];
-        $fields = $this->getConfigFields();
-        foreach ($fields as $name => $config) {
-            if (!array_key_exists($name, $this->attributes)) continue;
-            $data[$name] = $this->attributes[$name];
-        }
-
-        foreach ($this->attributes as $name => $value) {
-            if (in_array($name, $this->fillable)) continue;
-            unset($this->attributes[$name]);
-        }
-
-        $this->config_data = $data;
-    }
-
-    public function isEnabled()
-    {
-        return $this->is_enabled;
-    }
-
-    public function scopeWhereIsEnabled($query)
-    {
-        return $query->where('is_enabled', 1);
-    }
-
-    //
-    // Manager
-    //
-
-    /**
-     * Extends this model with the notification class
-     * @return bool
-     */
-    public function applyChannelClass()
-    {
-        $className = $this->class_name;
-        if (!$className || !class_exists($className))
-            $className = null;
-
-        if ($className && !$this->isClassExtendedWith($className)) {
-            $this->extendClassWith($className);
-        }
-
-        $this->class_name = $className;
-
-        return true;
-    }
-
-    /**
-     * @return \IgniterLabs\SmsNotify\Classes\BaseChannel
-     */
-    public function getChannelObject()
-    {
-        return $this->asExtension($this->class_name);
-    }
-
-    //
-    // Helpers
-    //
-
-    public function makeDefault()
-    {
-        if (!$this->is_enabled) {
-            return false;
-        }
-
-        $this->timestamps = false;
-        $this->newQuery()->where('is_default', '!=', 0)->update(['is_default' => 0]);
-        $this->newQuery()->where('id', $this->id)->update(['is_default' => 1]);
-        $this->timestamps = true;
-    }
-
-    public static function getDefault($id = null)
-    {
-        if (self::$defaultChannel !== null) {
-            return self::$defaultChannel;
-        }
-
-        $defaultChannel = self::whereIsEnabled()->where('is_default', true)->first();
-
-        if (!$defaultChannel) {
-            if ($defaultChannel = self::whereIsEnabled()->first()) {
-                $defaultChannel->makeDefault();
-            }
-        }
-
-        return self::$defaultChannel = $defaultChannel;
-    }
-
-    public static function listChannels()
-    {
-        $result = [];
-        $manager = Manager::instance();
-        $channels = self::whereIsEnabled()->get()->keyBy('code');
-        foreach ($manager->listChannels() as $code => $className) {
-            if (!$channel = $channels->get($code))
-                continue;
-
-            $result[$code] = $channel->getName();
-        }
-
-        return $result;
-    }
-
-    /**
-     * Synchronise all channels to the database.
-     * @return void
-     */
-    public static function syncAll()
-    {
-        $manager = Manager::instance();
-        $channels = self::pluck('code')->all();
-        foreach ($manager->listChannels() as $code => $className) {
-            if (in_array($code, $channels)) continue;
-
-            $model = self::make([
-                'code' => $code,
-                'class_name' => $className,
-            ]);
-
-            $model->applyChannelClass();
-            $model->save();
-        }
-    }
-}
+return [
+    'list' => [
+        'toolbar' => [
+            'buttons' => [
+                'back' => [
+                    'label' => 'lang:admin::lang.button_icon_back',
+                    'class' => 'btn btn-outline-secondary',
+                    'href' => 'settings',
+                ],
+                'create' => ['label' => 'lang:admin::lang.button_new', 'class' => 'btn btn-primary', 'href' => 'igniterlabs/smsnotify/channels/create'],
+            ],
+        ],
+        'bulkActions' => [
+            'status' => [
+                'label' => 'lang:admin::lang.list.actions.label_status',
+                'type' => 'dropdown',
+                'class' => 'btn btn-light',
+                'statusColumn' => 'is_enabled',
+                'menuItems' => [
+                    'enable' => [
+                        'label' => 'lang:admin::lang.list.actions.label_enable',
+                        'type' => 'button',
+                        'class' => 'dropdown-item',
+                    ],
+                    'disable' => [
+                        'label' => 'lang:admin::lang.list.actions.label_disable',
+                        'type' => 'button',
+                        'class' => 'dropdown-item text-danger',
+                    ],
+                ],
+            ],
+            'delete' => [
+                'label' => 'lang:admin::lang.button_delete',
+                'class' => 'btn btn-light text-danger',
+                'data-request-confirm' => 'lang:admin::lang.alert_warning_confirm',
+            ],
+        ],
+        'columns' => [
+            'edit' => [
+                'type' => 'button',
+                'iconCssClass' => 'fa fa-pencil',
+                'attributes' => [
+                    'class' => 'btn btn-edit',
+                    'href' => 'igniterlabs/smsnotify/channels/edit/{code}',
+                ],
+            ],
+            'name' => [
+                'label' => 'igniterlabs.smsnotify::default.channel.column_label',
+                'type' => 'text',
+            ],
+            'description' => [
+                'label' => 'igniterlabs.smsnotify::default.channel.column_description',
+                'type' => 'text',
+            ],
+            'is_enabled' => [
+                'label' => 'lang:admin::lang.label_status',
+                'type' => 'switch',
+            ],
+            'is_default' => [
+                'label' => 'lang:admin::lang.payments.label_default',
+                'type' => 'switch',
+                'onText' => 'admin::lang.text_yes',
+                'offText' => 'admin::lang.text_no',
+            ],
+            'updated_at' => [
+                'label' => 'igniterlabs.smsnotify::default.channel.column_updated_at',
+                'type' => 'timetense',
+                'searchable' => true,
+            ],
+            'created_at' => [
+                'label' => 'igniterlabs.smsnotify::default.channel.column_created_at',
+                'type' => 'timetense',
+                'searchable' => true,
+            ],
+            'id' => [
+                'label' => 'lang:admin::lang.column_id',
+                'invisible' => true,
+            ],
+        ],
+    ],
+    'form' => [
+        'toolbar' => [
+            'buttons' => [
+                'back' => [
+                    'label' => 'lang:admin::lang.button_icon_back',
+                    'class' => 'btn btn-outline-secondary',
+                    'href' => 'igniterlabs/smsnotify/channels',
+                ],
+                'save' => ['label' => 'lang:admin::lang.button_save', 'class' => 'btn btn-primary', 'data-request' => 'onSave'],
+                'saveClose' => [
+                    'label' => 'lang:admin::lang.button_save_close',
+                    'class' => 'btn btn-default',
+                    'data-request' => 'onSave',
+                    'data-request-data' => 'close:1',
+                ],
+            ],
+        ],
+        'fields' => [
+            'channel' => [
+                'label' => 'igniterlabs.smsnotify::default.channel.label_channel',
+                'type' => 'select',
+                'options' => 'listChannels',
+                'context' => ['create'],
+                'placeholder' => 'lang:admin::lang.text_please_select',
+            ],
+            'name' => [
+                'label' => 'igniterlabs.smsnotify::default.channel.label_label',
+                'type' => 'text',
+                'span' => 'left',
+                'context' => ['edit'],
+            ],
+            'code' => [
+                'label' => 'igniterlabs.smsnotify::default.channel.label_code',
+                'type' => 'text',
+                'span' => 'right',
+            ],
+            'description' => [
+                'label' => 'lang:admin::lang.label_description',
+                'type' => 'textarea',
+                'span' => 'left',
+                'context' => ['edit'],
+            ],
+            'is_default' => [
+                'label' => 'lang:admin::lang.payments.label_default',
+                'type' => 'switch',
+                'span' => 'right',
+                'cssClass' => 'flex-width',
+            ],
+            'is_enabled' => [
+                'label' => 'lang:admin::lang.label_status',
+                'type' => 'switch',
+                'span' => 'right',
+                'cssClass' => 'flex-width',
+            ],
+        ],
+    ],
+];

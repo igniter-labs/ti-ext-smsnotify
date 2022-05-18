@@ -2,9 +2,9 @@
 
 namespace IgniterLabs\SmsNotify\Controllers;
 
-use Admin\Classes\AdminController;
-use Admin\Facades\AdminMenu;
 use Exception;
+use Igniter\Admin\Classes\AdminController;
+use Igniter\Admin\Facades\AdminMenu;
 use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Channel;
@@ -12,8 +12,8 @@ use IgniterLabs\SmsNotify\Models\Channel;
 class Channels extends AdminController
 {
     public $implement = [
-        \Admin\Actions\FormController::class,
-        \Admin\Actions\ListController::class,
+        \Igniter\Admin\Actions\FormController::class,
+        \Igniter\Admin\Actions\ListController::class,
     ];
 
     public $listConfig = [
