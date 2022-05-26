@@ -13,8 +13,8 @@ use IgniterLabs\SmsNotify\Models\Template;
 class Templates extends AdminController
 {
     public $implement = [
-        \Igniter\Admin\Actions\FormController::class,
-        \Igniter\Admin\Actions\ListController::class,
+        \Igniter\Admin\Http\Actions\FormController::class,
+        \Igniter\Admin\Http\Actions\ListController::class,
     ];
 
     public $listConfig = [
