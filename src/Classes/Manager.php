@@ -169,7 +169,7 @@ class Manager
     protected function loadRegistered(string $methodName)
     {
         $results = [];
-        $manager = ExtensionManager::instance();
+        $manager = resolve(ExtensionManager::class);
         $bundles = $manager->getRegistrationMethodValues($methodName);
         foreach ($bundles as $owner => $definitions) {
             foreach ($definitions as $index => $value) {
