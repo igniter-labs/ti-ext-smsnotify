@@ -110,7 +110,7 @@ class Channels extends AdminController
         if (!strlen($code = post('Channel.channel')))
             throw new ApplicationException('Invalid channel code selected');
 
-        $model->class_name = Manager::instance()->getChannel($code);
+        $model->class_name = resolve(Manager::class)->getChannel($code);
         $model->applyChannelClass();
     }
 

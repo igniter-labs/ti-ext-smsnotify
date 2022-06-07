@@ -82,7 +82,7 @@ class Templates extends AdminController
 
         $telephoneNo = Location::getDefault()->location_telephone;
 
-        Manager::instance()->notify($model->code, $telephoneNo, []);
+        resolve(Manager::class)->notify($model->code, $telephoneNo, []);
 
         flash()->success(sprintf(
             lang('igniterlabs.smsnotify::default.template.alert_test_message_sent'), $telephoneNo

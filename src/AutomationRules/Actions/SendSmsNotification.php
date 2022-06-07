@@ -55,7 +55,7 @@ class SendSmsNotification extends BaseAction
         if (!$sendToNumber = $this->getRecipientAddress($object))
             throw new ApplicationException('SendSmsNotification: Missing a valid send to number from the event payload');
 
-        Manager::instance()->notify($templateCode, $sendToNumber, $params);
+        resolve(Manager::class)->notify($templateCode, $sendToNumber, $params);
     }
 
     public function getTemplateOptions()

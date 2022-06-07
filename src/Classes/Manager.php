@@ -4,7 +4,6 @@ namespace IgniterLabs\SmsNotify\Classes;
 
 use Igniter\Flame\Support\PagicHelper;
 use Igniter\Flame\Support\StringParser;
-use Igniter\Flame\Traits\Singleton;
 use Igniter\System\Classes\ExtensionManager;
 use Igniter\System\Helpers\ViewHelper;
 use IgniterLabs\SmsNotify\Models\Channel;
@@ -13,8 +12,6 @@ use Illuminate\Support\Facades\Config;
 
 class Manager
 {
-    use Singleton;
-
     /**
      * @var array An array of channel types.
      */
@@ -138,7 +135,7 @@ class Manager
 
     /**
      * @param $code
-     * @return \IgniterLabs\SmsNotify\Classes\SmsNotification|null
+     * @return string|null
      */
     public function getTemplate($code)
     {

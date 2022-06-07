@@ -172,7 +172,7 @@ class Channel extends Model
     public static function listChannels()
     {
         $result = [];
-        $manager = Manager::instance();
+        $manager = resolve(Manager::class);
         $channels = self::whereIsEnabled()->get()->keyBy('code');
         foreach ($manager->listChannels() as $code => $className) {
             if (!$channel = $channels->get($code))
@@ -190,7 +190,7 @@ class Channel extends Model
      */
     public static function syncAll()
     {
-        $manager = Manager::instance();
+        $manager = resolve(Manager::class);
         $channels = self::pluck('code')->all();
         foreach ($manager->listChannels() as $code => $className) {
             if (in_array($code, $channels)) continue;

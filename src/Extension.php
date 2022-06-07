@@ -3,12 +3,18 @@
 namespace IgniterLabs\SmsNotify;
 
 use Igniter\System\Classes\BaseExtension;
+use IgniterLabs\SmsNotify\Classes\Manager;
 
 /**
  * SmsNotify Extension Information File
  */
 class Extension extends BaseExtension
 {
+    public function register()
+    {
+        $this->app->singleton(Manager::class);
+    }
+
     /**
      * Registers any admin permissions used by this extension.
      *
