@@ -14,6 +14,7 @@
     }
   ],
   "require": {
+    "tastyigniter/flame": "v4.x-dev",
     "vonage/client": "^2.0",
     "twilio/sdk": "~6.0",
     "arcturial/clickatell": "~3.0"
