@@ -1,6 +1,6 @@
 {
   "name": "igniterlabs/ti-ext-smsnotify",
-  "type": "tastyigniter-extension",
+  "type": "tastyigniter-package",
   "description": "Send SMS notifications to both restaurant and customer about an order or reservation.",
   "keywords": [
     "tastyigniter",
