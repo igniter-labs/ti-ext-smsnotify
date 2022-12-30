@@ -85,6 +85,7 @@ class Extension extends BaseExtension
             'nexmo' => \IgniterLabs\SmsNotify\SmsChannels\Nexmo::class,
             'clickatell' => \IgniterLabs\SmsNotify\SmsChannels\Clickatell::class,
             'plivo' => \IgniterLabs\SmsNotify\SmsChannels\Plivo::class,
+            'aws' => \IgniterLabs\SmsNotify\SmsChannels\Aws::class,
         ];
     }
 
