@@ -2,11 +2,9 @@
 
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
-use Exception;
-use IgniterLabs\SmsNotify\Classes\BaseChannel;
-use Aws\Sns\SnsClient;
-use Aws\Exception\AwsException;
 use Aws\Credentials\Credentials;
+use Aws\Sns\SnsClient;
+use IgniterLabs\SmsNotify\Classes\BaseChannel;
 
 class Aws extends BaseChannel
 {
@@ -49,11 +47,11 @@ class Aws extends BaseChannel
             'credentials' => $cred,
             'use_aws_shared_config_files' => false,
             'region' => 'us-east-1',
-            'version' => '2010-03-31'
+            'version' => '2010-03-31',
         ]);
 
         if (substr($to, 0, 1) != '+') // if not starting with + sign, use default country code
-            $to = $this->model->country_code . $to;
+            $to = $this->model->country_code.$to;
 
         $result = $SnSclient->publish([
             'Message' => $content,
