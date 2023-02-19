@@ -2,7 +2,6 @@
 
 namespace IgniterLabs\SmsNotify;
 
-use IgniterLabs\SmsNotify\Classes\SmsNotification;
 use System\Classes\BaseExtension;
 
 /**
