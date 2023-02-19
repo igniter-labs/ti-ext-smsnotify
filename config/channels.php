@@ -21,4 +21,8 @@ return [
     'nexmo' => [
         'send_from' => '',
     ],
+    'aws' => [
+        'key' => env('AWS_KEY'),
+        'secret' => env('AWS_SECRET'),
+    ],
 ];
