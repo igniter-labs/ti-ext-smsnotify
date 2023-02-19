@@ -42,26 +42,18 @@ class Aws extends BaseChannel
 
     public function send($to, $content)
     {
-        $cred = new Credentials($this->model->key, $this->model->secret);
-        $SnSclient = new SnsClient([
-            'credentials' => $cred,
+        // if not starting with + sign, use default country code
+        if (substr($to, 0, 1) != '+')
+            $to = $this->model->country_code.$to;
+
+        (new SnsClient([
+            'credentials' => new Credentials($this->model->key, $this->model->secret),
             'use_aws_shared_config_files' => false,
             'region' => 'us-east-1',
             'version' => '2010-03-31',
-        ]);
-
-        if (substr($to, 0, 1) != '+') // if not starting with + sign, use default country code
-            $to = $this->model->country_code.$to;
-
-        $result = $SnSclient->publish([
+        ]))->publish([
             'Message' => $content,
             'PhoneNumber' => $to,
         ]);
-        $a = $result;
-    }
-
-    protected function fillOptionalParams(&$params, $optionalParams): self
-    {
-        return $this;
     }
 }
