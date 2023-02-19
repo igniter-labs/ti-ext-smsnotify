@@ -57,9 +57,9 @@ class Plivo extends BaseChannel
 
     protected function client(): PlivoClient
     {
-        return (new PlivoClient(
+        return new PlivoClient(
             $this->model->auth_id,
             $this->model->auth_token,
-        ));
+        );
     }
 }
