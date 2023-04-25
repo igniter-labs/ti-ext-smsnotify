@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\File;
 
 abstract class BaseChannel extends ModelAction
 {
-    protected $channelClassName;
-
     protected $configFields = [];
 
     protected $configRules = [];

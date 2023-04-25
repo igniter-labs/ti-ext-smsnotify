@@ -70,5 +70,10 @@ class Twilio extends \IgniterLabs\SmsNotify\Classes\BaseChannel
             ...
         ];
     }
+    
+    public function send($to, $content)
+    {
+        //
+    }
 }
 ```
