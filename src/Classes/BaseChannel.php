@@ -21,8 +21,9 @@ abstract class BaseChannel extends ModelAction
         $this->configFields = array_get($formConfig, 'fields', []);
         $this->configRules = array_get($formConfig, 'rules', []);
 
-        if (!$model)
+        if (!$model) {
             return;
+        }
 
         $this->initConfigData();
     }

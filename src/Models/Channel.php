@@ -68,27 +68,34 @@ class Channel extends Model
     {
         $this->applyChannelClass();
 
-        if (is_array($this->config_data))
+        if (is_array($this->config_data)) {
             $this->attributes = array_merge($this->config_data, $this->attributes);
+        }
     }
 
     protected function beforeSave()
     {
-        if (!$this->exists)
+        if (!$this->exists) {
             return;
+        }
 
-        if ($this->is_default)
+        if ($this->is_default) {
             $this->makeDefault();
+        }
 
         $data = [];
         $fields = $this->getConfigFields();
         foreach ($fields as $name => $config) {
-            if (!array_key_exists($name, $this->attributes)) continue;
+            if (!array_key_exists($name, $this->attributes)) {
+                continue;
+            }
             $data[$name] = $this->attributes[$name];
         }
 
         foreach ($this->attributes as $name => $value) {
-            if (in_array($name, $this->fillable)) continue;
+            if (in_array($name, $this->fillable)) {
+                continue;
+            }
             unset($this->attributes[$name]);
         }
 
@@ -116,8 +123,9 @@ class Channel extends Model
     public function applyChannelClass()
     {
         $className = $this->class_name;
-        if (!$className || !class_exists($className))
+        if (!$className || !class_exists($className)) {
             $className = null;
+        }
 
         if ($className && !$this->isClassExtendedWith($className)) {
             $this->extendClassWith($className);
@@ -175,8 +183,9 @@ class Channel extends Model
         $manager = resolve(Manager::class);
         $channels = self::whereIsEnabled()->get()->keyBy('code');
         foreach ($manager->listChannels() as $code => $className) {
-            if (!$channel = $channels->get($code))
+            if (!$channel = $channels->get($code)) {
                 continue;
+            }
 
             $result[$code] = $channel->getName();
         }
@@ -193,7 +202,9 @@ class Channel extends Model
         $manager = resolve(Manager::class);
         $channels = self::pluck('code')->all();
         foreach ($manager->listChannels() as $code => $className) {
-            if (in_array($code, $channels)) continue;
+            if (in_array($code, $channels)) {
+                continue;
+            }
 
             $model = self::make([
                 'code' => $code,

@@ -46,11 +46,13 @@ class Twilio extends BaseChannel
             'body' => trim($content),
         ];
 
-        if (strlen($this->model->service_sid))
+        if (strlen($this->model->service_sid)) {
             $params['messagingServiceSid'] = $this->model->service_sid;
+        }
 
-        if (strlen($this->model->from))
+        if (strlen($this->model->from)) {
             $params['from'] = $this->model->from;
+        }
 
         if (empty($params['from']) && empty($params['messagingServiceSid'])) {
             throw new Exception('SMS message was not sent. Missing `from` number.');

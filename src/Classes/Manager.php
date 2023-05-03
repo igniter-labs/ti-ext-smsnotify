@@ -33,8 +33,7 @@ class Manager
     {
         if (isset($this->messageTemplateCache[$templateCode])) {
             $template = $this->templateCache[$templateCode];
-        }
-        else {
+        } else {
             $this->templateCache[$templateCode] = $template = Template::findOrMakeTemplate($templateCode);
         }
 
@@ -66,8 +65,9 @@ class Manager
 
                 Config::set($configKey, $value ?? Config::get($configKey));
 
-                if ($channelCode == 'nexmo')
+                if ($channelCode == 'nexmo') {
                     Config::set('nexmo.'.$key, $value ?? Config::get('nexmo.'.$key));
+                }
             }
         }
     }
@@ -85,12 +85,14 @@ class Manager
 
     public function listChannels()
     {
-        if (!is_null($this->channelCache))
+        if (!is_null($this->channelCache)) {
             return $this->channelCache;
+        }
 
         foreach ($this->getRegisteredChannels() as $channelCode => $className) {
-            if (!class_exists($className))
+            if (!class_exists($className)) {
                 continue;
+            }
 
             $this->channelCache[$channelCode] = $className;
         }
@@ -122,8 +124,9 @@ class Manager
 
     public function listTemplates()
     {
-        if (!is_null($this->templateCache))
+        if (!is_null($this->templateCache)) {
             return $this->templateCache;
+        }
 
         $templates = (array)$this->getRegisteredTemplates();
         foreach ($templates as $code => $name) {
@@ -134,7 +137,6 @@ class Manager
     }
 
     /**
-     * @param $code
      * @return string|null
      */
     public function getTemplate($code)
@@ -155,12 +157,14 @@ class Manager
     public function resolveTemplateCode(string $codeOrClass)
     {
         $templates = (array)$this->getRegisteredTemplates();
-        if (isset($templates[$codeOrClass]))
+        if (isset($templates[$codeOrClass])) {
             return $templates[$codeOrClass];
+        }
 
         $templates = array_flip($templates);
-        if (isset($templates[$codeOrClass]))
+        if (isset($templates[$codeOrClass])) {
             return $codeOrClass;
+        }
     }
 
     protected function loadRegistered(string $methodName)

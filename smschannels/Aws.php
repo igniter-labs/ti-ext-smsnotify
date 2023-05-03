@@ -43,8 +43,9 @@ class Aws extends BaseChannel
     public function send($to, $content)
     {
         // if not starting with + sign, use default country code
-        if (substr($to, 0, 1) != '+')
+        if (substr($to, 0, 1) != '+') {
             $to = $this->model->country_code.$to;
+        }
 
         (new SnsClient([
             'credentials' => new Credentials($this->model->key, $this->model->secret),

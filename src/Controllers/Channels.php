@@ -57,8 +57,9 @@ class Channels extends AdminController
 
     public function index()
     {
-        if ($this->getUser()->hasPermission('IgniterLabs.SmsNotify.ManageChannels'))
+        if ($this->getUser()->hasPermission('IgniterLabs.SmsNotify.ManageChannels')) {
             Channel::syncAll();
+        }
 
         $this->asExtension('ListController')->index();
     }
@@ -77,8 +78,9 @@ class Channels extends AdminController
         $this->formExtendQuery($query);
         $result = $query->whereCode($channelCode)->first();
 
-        if (!$result)
+        if (!$result) {
             throw new Exception(sprintf(lang('admin::lang.form.not_found'), $channelCode));
+        }
 
         $result = $this->formExtendModel($result) ?: $result;
 
@@ -87,8 +89,9 @@ class Channels extends AdminController
 
     public function formExtendModel($model)
     {
-        if (!$model->exists)
+        if (!$model->exists) {
             $model->applyChannelClass();
+        }
 
         return $model;
     }
@@ -108,8 +111,9 @@ class Channels extends AdminController
 
     public function formBeforeCreate($model)
     {
-        if (!strlen($code = post('Channel.channel')))
+        if (!strlen($code = post('Channel.channel'))) {
             throw new ApplicationException('Invalid channel code selected');
+        }
 
         $model->class_name = resolve(Manager::class)->getChannel($code);
         $model->applyChannelClass();
@@ -126,8 +130,9 @@ class Channels extends AdminController
             ['is_enabled', 'lang:admin::lang.label_status', 'required|integer'],
         ];
 
-        if ($mergeRules = $form->model->getConfigRules())
+        if ($mergeRules = $form->model->getConfigRules()) {
             array_push($rules, ...$mergeRules);
+        }
 
         return $this->validatePasses($form->getSaveData(), $rules);
     }

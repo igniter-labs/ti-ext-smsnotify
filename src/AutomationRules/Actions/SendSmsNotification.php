@@ -46,14 +46,17 @@ class SendSmsNotification extends BaseAction
 
     public function triggerAction($params)
     {
-        if (!$object = $this->shouldTrigger($params))
+        if (!$object = $this->shouldTrigger($params)) {
             return;
+        }
 
-        if (!$templateCode = $this->model->template)
+        if (!$templateCode = $this->model->template) {
             throw new ApplicationException('SendSmsNotification: Missing a valid mail template');
+        }
 
-        if (!$sendToNumber = $this->getRecipientAddress($object))
+        if (!$sendToNumber = $this->getRecipientAddress($object)) {
             throw new ApplicationException('SendSmsNotification: Missing a valid send to number from the event payload');
+        }
 
         resolve(Manager::class)->notify($templateCode, $sendToNumber, $params);
     }

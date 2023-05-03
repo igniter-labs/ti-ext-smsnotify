@@ -101,11 +101,13 @@ class Template extends Model
         $newTemplates = array_diff_key($templates, $dbTemplates);
 
         foreach ($dbTemplates as $code => $is_custom) {
-            if ($is_custom)
+            if ($is_custom) {
                 continue;
+            }
 
-            if (!array_key_exists($code, $templates))
+            if (!array_key_exists($code, $templates)) {
                 self::whereCode($code)->delete();
+            }
         }
 
         foreach ($newTemplates as $code => $name) {

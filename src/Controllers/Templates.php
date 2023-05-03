@@ -53,8 +53,9 @@ class Templates extends AdminController
 
     public function index()
     {
-        if ($this->getUser()->hasPermission('IgniterLabs.SmsNotify.ManageTemplates'))
+        if ($this->getUser()->hasPermission('IgniterLabs.SmsNotify.ManageTemplates')) {
             Template::syncAll();
+        }
 
         $this->asExtension('ListController')->index();
     }
@@ -74,11 +75,13 @@ class Templates extends AdminController
 
     public function onTestTemplate($context, $recordId)
     {
-        if (!strlen($recordId))
+        if (!strlen($recordId)) {
             throw new ApplicationException('Template id not found');
+        }
 
-        if (!$model = $this->formFindModelObject($recordId))
+        if (!$model = $this->formFindModelObject($recordId)) {
             throw new ApplicationException('Template not found');
+        }
 
         $telephoneNo = Location::getDefault()->location_telephone;
 

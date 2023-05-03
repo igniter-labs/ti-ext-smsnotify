@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Create templates table
  */
-return new class extends Migration {
+return new class extends Migration
+{
     public function up()
     {
         Schema::create('igniterlabs_smsnotify_templates', function (Blueprint $table) {
