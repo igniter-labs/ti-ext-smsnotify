@@ -1,54 +1,60 @@
 {
-  "name": "igniterlabs/ti-ext-smsnotify",
-  "type": "tastyigniter-package",
-  "description": "Send SMS notifications to both restaurant and customer about an order or reservation.",
-  "keywords": [
-    "tastyigniter",
-    "notify",
-    "notification"
-  ],
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Igniter Labs Team"
-    }
-  ],
-  "require": {
-    "vonage/client": "^2.0",
-    "twilio/sdk": "~6.0",
-    "arcturial/clickatell": "~3.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "IgniterLabs\\SmsNotify\\": "src/"
-    }
-  },
-  "extra": {
-    "tastyigniter-extension": {
-      "code": "igniterlabs.smsnotify",
-      "name": "SMS Notify",
-      "icon": {
-        "class": "fa fa-sms",
-        "backgroundColor": "#147EFB",
-        "color": "#FFFFFF"
-      },
-      "homepage": "https://tastyigniter.com/marketplace/item/igniterlabs-smsnotify",
-      "require": {
-        "igniter.automation": "*"
-      }
-    }
-  },
-  "require-dev": {
-    "laravel/pint": "^1.2",
-    "nunomaduro/larastan": "^2.4.0",
-    "orchestra/testbench": "^8.5",
-    "pestphp/pest-plugin-laravel": "^2.0",
-    "pestphp/pest": "^2.5"
-  },
-  "config": {
-    "allow-plugins": {
-      "pestphp/pest-plugin": true
+    "name": "igniterlabs/ti-ext-smsnotify",
+    "type": "tastyigniter-package",
+    "description": "Send SMS notifications to both restaurant and customer about an order or reservation.",
+    "keywords": [
+        "tastyigniter",
+        "notify",
+        "notification"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Igniter Labs Team"
+        }
+    ],
+    "require": {
+        "vonage/client": "^2.0",
+        "twilio/sdk": "~6.0",
+        "arcturial/clickatell": "~3.0"
     },
-    "sort-packages": true
-  }
+    "autoload": {
+        "psr-4": {
+            "IgniterLabs\\SmsNotify\\": "src/"
+        }
+    },
+    "extra": {
+        "tastyigniter-extension": {
+            "code": "igniterlabs.smsnotify",
+            "name": "SMS Notify",
+            "icon": {
+                "class": "fa fa-sms",
+                "backgroundColor": "#147EFB",
+                "color": "#FFFFFF"
+            },
+            "homepage": "https://tastyigniter.com/marketplace/item/igniterlabs-smsnotify",
+            "require": {
+                "igniter.automation": "*"
+            }
+        }
+    },
+    "require-dev": {
+        "laravel/pint": "^1.2",
+        "nunomaduro/larastan": "^2.4.0",
+        "orchestra/testbench": "^8.5",
+        "pestphp/pest-plugin-laravel": "^2.0",
+        "pestphp/pest": "^2.5"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint",
+        "static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M"
+    }
 }
