@@ -1,0 +1,436 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Class Igniter\\\\System\\\\Models\\\\MailTemplate not found\\.$#"
+			count: 1
+			path: resources/models/Template.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\AutomationRules\\\\Actions\\\\SendSmsNotification\\:\\:\\$model\\.$#"
+			count: 3
+			path: src/AutomationRules/Actions/SendSmsNotification.php
+
+		-
+			message: "#^Call to an undefined static method IgniterLabs\\\\SmsNotify\\\\Models\\\\Template\\:\\:get\\(\\)\\.$#"
+			count: 1
+			path: src/AutomationRules/Actions/SendSmsNotification.php
+
+		-
+			message: "#^Function array_get not found\\.$#"
+			count: 2
+			path: src/AutomationRules/Actions/SendSmsNotification.php
+
+		-
+			message: "#^Instantiated class Igniter\\\\Flame\\\\Exception\\\\ApplicationException not found\\.$#"
+			count: 2
+			path: src/AutomationRules/Actions/SendSmsNotification.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Classes\\\\BaseChannel\\:\\:\\$channelClassName\\.$#"
+			count: 1
+			path: src/Classes/BaseChannel.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Classes\\\\BaseChannel\\:\\:\\$configPath\\.$#"
+			count: 1
+			path: src/Classes/BaseChannel.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Classes\\\\BaseChannel\\:\\:loadConfig\\(\\)\\.$#"
+			count: 1
+			path: src/Classes/BaseChannel.php
+
+		-
+			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\File\\:\\:normalizePath\\(\\)\\.$#"
+			count: 1
+			path: src/Classes/BaseChannel.php
+
+		-
+			message: "#^Function array_get not found\\.$#"
+			count: 4
+			path: src/Classes/BaseChannel.php
+
+		-
+			message: "#^Function extension_path not found\\.$#"
+			count: 1
+			path: src/Classes/BaseChannel.php
+
+		-
+			message: "#^IgniterLabs\\\\SmsNotify\\\\Classes\\\\BaseChannel\\:\\:__construct\\(\\) calls parent\\:\\:__construct\\(\\) but IgniterLabs\\\\SmsNotify\\\\Classes\\\\BaseChannel does not extend any class\\.$#"
+			count: 1
+			path: src/Classes/BaseChannel.php
+
+		-
+			message: "#^Call to method parse\\(\\) on an unknown class Igniter\\\\Flame\\\\Support\\\\StringParser\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to static method getGlobalVars\\(\\) on an unknown class Igniter\\\\System\\\\Helpers\\\\ViewHelper\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to static method parse\\(\\) on an unknown class Igniter\\\\Flame\\\\Support\\\\PagicHelper\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Class Igniter\\\\System\\\\Classes\\\\ExtensionManager not found\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Function array_get not found\\.$#"
+			count: 2
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Instantiated class Igniter\\\\Flame\\\\Support\\\\StringParser not found\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Channels\\:\\:asExtension\\(\\)\\.$#"
+			count: 1
+			path: src/Controllers/Channels.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Channels\\:\\:fireEvent\\(\\)\\.$#"
+			count: 1
+			path: src/Controllers/Channels.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Channels\\:\\:formCreateModelObject\\(\\)\\.$#"
+			count: 1
+			path: src/Controllers/Channels.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Channels\\:\\:formExtendQuery\\(\\)\\.$#"
+			count: 1
+			path: src/Controllers/Channels.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Channels\\:\\:getUser\\(\\)\\.$#"
+			count: 1
+			path: src/Controllers/Channels.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Channels\\:\\:validatePasses\\(\\)\\.$#"
+			count: 1
+			path: src/Controllers/Channels.php
+
+		-
+			message: "#^Call to static method setContext\\(\\) on an unknown class Igniter\\\\Admin\\\\Facades\\\\AdminMenu\\.$#"
+			count: 1
+			path: src/Controllers/Channels.php
+
+		-
+			message: "#^Class Igniter\\\\Admin\\\\Http\\\\Actions\\\\FormController not found\\.$#"
+			count: 1
+			path: src/Controllers/Channels.php
+
+		-
+			message: "#^Class Igniter\\\\Admin\\\\Http\\\\Actions\\\\ListController not found\\.$#"
+			count: 1
+			path: src/Controllers/Channels.php
+
+		-
+			message: "#^Function lang not found\\.$#"
+			count: 2
+			path: src/Controllers/Channels.php
+
+		-
+			message: "#^Function post not found\\.$#"
+			count: 1
+			path: src/Controllers/Channels.php
+
+		-
+			message: "#^IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Channels\\:\\:__construct\\(\\) calls parent\\:\\:__construct\\(\\) but IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Channels does not extend any class\\.$#"
+			count: 1
+			path: src/Controllers/Channels.php
+
+		-
+			message: "#^Instantiated class Igniter\\\\Flame\\\\Exception\\\\ApplicationException not found\\.$#"
+			count: 1
+			path: src/Controllers/Channels.php
+
+		-
+			message: "#^Access to property \\$context on an unknown class Igniter\\\\Admin\\\\Widgets\\\\Form\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Templates\\:\\:asExtension\\(\\)\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Templates\\:\\:formFindModelObject\\(\\)\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Templates\\:\\:getUser\\(\\)\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Templates\\:\\:makePartial\\(\\)\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Call to method getField\\(\\) on an unknown class Igniter\\\\Admin\\\\Widgets\\\\Form\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Call to static method getDefault\\(\\) on an unknown class Igniter\\\\Admin\\\\Models\\\\Location\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Call to static method setContext\\(\\) on an unknown class Igniter\\\\Admin\\\\Facades\\\\AdminMenu\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Class Igniter\\\\Admin\\\\Http\\\\Actions\\\\FormController not found\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Class Igniter\\\\Admin\\\\Http\\\\Actions\\\\ListController not found\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Function flash not found\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Function lang not found\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Templates\\:\\:__construct\\(\\) calls parent\\:\\:__construct\\(\\) but IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Templates does not extend any class\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Instantiated class Igniter\\\\Flame\\\\Exception\\\\ApplicationException not found\\.$#"
+			count: 2
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Parameter \\$form of method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Templates\\:\\:formExtendFields\\(\\) has invalid type Igniter\\\\Admin\\\\Widgets\\\\Form\\.$#"
+			count: 1
+			path: src/Controllers/Templates.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Extension\\:\\:\\$app\\.$#"
+			count: 1
+			path: src/Extension.php
+
+		-
+			message: "#^Class IgniterLabs\\\\SmsNotify\\\\SmsChannels\\\\Aws not found\\.$#"
+			count: 1
+			path: src/Extension.php
+
+		-
+			message: "#^Class Igniter\\\\Cart\\\\AutomationRules\\\\Events\\\\NewOrderStatus not found\\.$#"
+			count: 1
+			path: src/Extension.php
+
+		-
+			message: "#^Function admin_url not found\\.$#"
+			count: 2
+			path: src/Extension.php
+
+		-
+			message: "#^Function lang not found\\.$#"
+			count: 1
+			path: src/Extension.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:\\$attributes\\.$#"
+			count: 5
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:\\$class_name\\.$#"
+			count: 5
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:\\$config_data\\.$#"
+			count: 2
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:\\$exists\\.$#"
+			count: 1
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:\\$id\\.$#"
+			count: 1
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:\\$is_default\\.$#"
+			count: 1
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:\\$is_enabled\\.$#"
+			count: 2
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:asExtension\\(\\)\\.$#"
+			count: 1
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:extendClassWith\\(\\)\\.$#"
+			count: 1
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:getConfigFields\\(\\)\\.$#"
+			count: 1
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:isClassExtendedWith\\(\\)\\.$#"
+			count: 1
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:newQuery\\(\\)\\.$#"
+			count: 2
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Call to an undefined static method IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:make\\(\\)\\.$#"
+			count: 1
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Call to an undefined static method IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:pluck\\(\\)\\.$#"
+			count: 1
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Call to an undefined static method IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:whereIsEnabled\\(\\)\\.$#"
+			count: 4
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Function array_get not found\\.$#"
+			count: 1
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Function lang not found\\.$#"
+			count: 2
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Template\\:\\:\\$code\\.$#"
+			count: 2
+			path: src/Models/Template.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Template\\:\\:\\$content\\.$#"
+			count: 1
+			path: src/Models/Template.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Template\\:\\:\\$is_custom\\.$#"
+			count: 1
+			path: src/Models/Template.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\View\\\\View\\:\\:getPath\\(\\)\\.$#"
+			count: 1
+			path: src/Models/Template.php
+
+		-
+			message: "#^Call to an undefined static method IgniterLabs\\\\SmsNotify\\\\Models\\\\Template\\:\\:make\\(\\)\\.$#"
+			count: 1
+			path: src/Models/Template.php
+
+		-
+			message: "#^Call to an undefined static method IgniterLabs\\\\SmsNotify\\\\Models\\\\Template\\:\\:pluck\\(\\)\\.$#"
+			count: 1
+			path: src/Models/Template.php
+
+		-
+			message: "#^Call to an undefined static method IgniterLabs\\\\SmsNotify\\\\Models\\\\Template\\:\\:whereCode\\(\\)\\.$#"
+			count: 2
+			path: src/Models/Template.php
+
+		-
+			message: "#^Call to static method parse\\(\\) on an unknown class Igniter\\\\Flame\\\\Mail\\\\MailParser\\.$#"
+			count: 2
+			path: src/Models/Template.php
+
+		-
+			message: "#^Function array_get not found\\.$#"
+			count: 1
+			path: src/Models/Template.php
+
+		-
+			message: "#^Function is_lang_key not found\\.$#"
+			count: 1
+			path: src/Models/Template.php
+
+		-
+			message: "#^Function lang not found\\.$#"
+			count: 1
+			path: src/Models/Template.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\SmsChannels\\\\Clickatell\\:\\:\\$model\\.$#"
+			count: 1
+			path: src/SmsChannels/Clickatell.php
+
+		-
+			message: "#^Function array_get not found\\.$#"
+			count: 2
+			path: src/SmsChannels/Clickatell.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\SmsChannels\\\\Nexmo\\:\\:\\$model\\.$#"
+			count: 7
+			path: src/SmsChannels/Nexmo.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\SmsChannels\\\\Plivo\\:\\:\\$model\\.$#"
+			count: 3
+			path: src/SmsChannels/Plivo.php
+
+		-
+			message: "#^Call to method send_message\\(\\) on an unknown class Plivo\\\\RestAPI\\.$#"
+			count: 1
+			path: src/SmsChannels/Plivo.php
+
+		-
+			message: "#^Instantiated class Plivo\\\\RestAPI not found\\.$#"
+			count: 1
+			path: src/SmsChannels/Plivo.php
+
+		-
+			message: "#^Method IgniterLabs\\\\SmsNotify\\\\SmsChannels\\\\Plivo\\:\\:client\\(\\) has invalid return type Plivo\\\\RestAPI\\.$#"
+			count: 1
+			path: src/SmsChannels/Plivo.php
+
+		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\SmsChannels\\\\Twilio\\:\\:\\$model\\.$#"
+			count: 6
+			path: src/SmsChannels/Twilio.php
