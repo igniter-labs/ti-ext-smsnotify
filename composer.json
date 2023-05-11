@@ -13,6 +13,11 @@
         "notify",
         "notification"
     ],
+    "require": {
+        "vonage/client": "^2.0",
+        "twilio/sdk": "~6.0",
+        "arcturial/clickatell": "~3.0"
+    },
     "require-dev": {
         "laravel/pint": "^1.2",
         "nunomaduro/larastan": "^2.4.0",
@@ -59,10 +64,5 @@
             "composer/installers": true
         },
         "sort-packages": true
-    },
-    "require": {
-        "vonage/client": "^2.0",
-        "twilio/sdk": "~6.0",
-        "arcturial/clickatell": "~3.0"
     }
 }
