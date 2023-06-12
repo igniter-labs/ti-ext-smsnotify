@@ -22,7 +22,7 @@ class Twilio extends BaseChannel
             'fields' => [
                 'setup' => [
                     'type' => 'partial',
-                    'path' => '$/igniterlabs/smsnotify/smschannels/twilio/info',
+                    'path' => 'twilio/info',
                 ],
                 'account_sid' => [
                     'label' => 'Account SID',

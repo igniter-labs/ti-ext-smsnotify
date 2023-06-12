@@ -59,7 +59,7 @@ return [
                 'type' => 'switch',
             ],
             'is_default' => [
-                'label' => 'lang:admin::lang.payments.label_default',
+                'label' => 'lang:igniter.payregister::default.label_default',
                 'type' => 'switch',
                 'onText' => 'admin::lang.text_yes',
                 'offText' => 'admin::lang.text_no',
@@ -123,7 +123,7 @@ return [
                 'context' => ['edit'],
             ],
             'is_default' => [
-                'label' => 'lang:admin::lang.payments.label_default',
+                'label' => 'lang:igniter.payregister::default.label_default',
                 'type' => 'switch',
                 'span' => 'right',
                 'cssClass' => 'flex-width',

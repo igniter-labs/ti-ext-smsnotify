@@ -1,12 +1,12 @@
 <?php
 
-namespace IgniterLabs\SmsNotify\Controllers;
+namespace IgniterLabs\SmsNotify\Http\Controllers;
 
 use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Facades\AdminMenu;
-use Igniter\Admin\Models\Location;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Local\Models\Location;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Template;
 

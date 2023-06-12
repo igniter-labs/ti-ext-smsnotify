@@ -3,7 +3,6 @@
 namespace IgniterLabs\SmsNotify\Classes;
 
 use Igniter\System\Actions\ModelAction;
-use Illuminate\Support\Facades\File;
 
 abstract class BaseChannel extends ModelAction
 {
@@ -15,8 +14,12 @@ abstract class BaseChannel extends ModelAction
     {
         parent::__construct($model);
 
-        $calledClass = strtolower(get_called_class());
-        $this->configPath = extension_path(File::normalizePath($calledClass));
+        $parts = explode('\\', strtolower(get_called_class()));
+        $namespace = implode('.', array_slice($parts, 0, 2));
+
+        $this->configPath[] = 'igniterlabs.smsnotify::/models';
+        $this->configPath[] = $namespace.'::models';
+
         $formConfig = $this->loadConfig($this->defineFormConfig(), ['fields']);
         $this->configFields = array_get($formConfig, 'fields', []);
         $this->configRules = array_get($formConfig, 'rules', []);

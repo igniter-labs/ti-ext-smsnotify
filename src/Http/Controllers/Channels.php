@@ -1,6 +1,6 @@
 <?php
 
-namespace IgniterLabs\SmsNotify\Controllers;
+namespace IgniterLabs\SmsNotify\Http\Controllers;
 
 use Exception;
 use Igniter\Admin\Classes\AdminController;
@@ -67,7 +67,7 @@ class Channels extends AdminController
     public function formFindModelObject($channelCode = null)
     {
         if (!strlen($channelCode)) {
-            throw new Exception(lang('admin::lang.payments.alert_setting_missing_id'));
+            throw new Exception(lang('igniter.payregister::default.alert_setting_missing_id'));
         }
 
         $model = $this->formCreateModelObject();
@@ -122,11 +122,11 @@ class Channels extends AdminController
     public function formValidate($model, $form)
     {
         $rules = [
-            ['channel', 'lang:admin::lang.payments.label_payments', 'sometimes|required|alpha_dash'],
+            ['channel', 'lang:igniter.payregister::default.label_payments', 'sometimes|required|alpha_dash'],
             ['name', 'lang:admin::lang.label_name', 'sometimes|required|min:2|max:128'],
-            ['code', 'lang:admin::lang.payments.label_code', 'sometimes|required|alpha_dash|unique:igniterlabs_smsnotify_channels,code'],
+            ['code', 'lang:igniter.payregister::default.label_code', 'sometimes|required|alpha_dash|unique:igniterlabs_smsnotify_channels,code'],
             ['description', 'lang:admin::lang.label_description', 'sometimes|required|max:255'],
-            ['is_default', 'lang:admin::lang.payments.label_default', 'required|integer'],
+            ['is_default', 'lang:igniter.payregister::default.label_default', 'required|integer'],
             ['is_enabled', 'lang:admin::lang.label_status', 'required|integer'],
         ];
 

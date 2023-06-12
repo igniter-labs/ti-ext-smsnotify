@@ -23,7 +23,7 @@ class Nexmo extends BaseChannel
             'fields' => [
                 'setup' => [
                     'type' => 'partial',
-                    'path' => '$/igniterlabs/smsnotify/smschannels/nexmo/info',
+                    'path' => 'nexmo/info',
                 ],
                 'api_key' => [
                     'label' => 'API Key',

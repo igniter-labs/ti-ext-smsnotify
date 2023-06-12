@@ -22,7 +22,7 @@ class Plivo extends BaseChannel
             'fields' => [
                 'setup' => [
                     'type' => 'partial',
-                    'path' => '$/igniterlabs/smsnotify/smschannels/plivo/info',
+                    'path' => 'plivo/info',
                 ],
                 'auth_id' => [
                     'label' => 'Auth ID',

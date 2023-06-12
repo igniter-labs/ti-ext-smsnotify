@@ -22,7 +22,7 @@ class Aws extends BaseChannel
             'fields' => [
                 'setup' => [
                     'type' => 'partial',
-                    'path' => '$/igniterlabs/smsnotify/smschannels/aws/info',
+                    'path' => 'aws/info',
                 ],
                 'key' => [
                     'label' => 'Key',
