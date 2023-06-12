@@ -26,44 +26,34 @@ parameters:
 			path: src/Classes/BaseChannel.php
 
 		-
-			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Facades\\\\File\\:\\:normalizePath\\(\\)\\.$#"
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Http\\\\Controllers\\\\Channels\\:\\:formCreateModelObject\\(\\)\\.$#"
 			count: 1
-			path: src/Classes/BaseChannel.php
+			path: src/Http/Controllers/Channels.php
 
 		-
-			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Channels\\:\\:formCreateModelObject\\(\\)\\.$#"
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Http\\\\Controllers\\\\Channels\\:\\:formExtendQuery\\(\\)\\.$#"
 			count: 1
-			path: src/Controllers/Channels.php
-
-		-
-			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Channels\\:\\:formExtendQuery\\(\\)\\.$#"
-			count: 1
-			path: src/Controllers/Channels.php
+			path: src/Http/Controllers/Channels.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Facades\\\\AdminMenu\\:\\:setContext\\(\\)\\.$#"
 			count: 1
-			path: src/Controllers/Channels.php
+			path: src/Http/Controllers/Channels.php
 
 		-
-			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Controllers\\\\Templates\\:\\:formFindModelObject\\(\\)\\.$#"
+			message: "#^Access to an undefined property Igniter\\\\Local\\\\Models\\\\Location\\:\\:\\$location_telephone\\.$#"
 			count: 1
-			path: src/Controllers/Templates.php
+			path: src/Http/Controllers/Templates.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Http\\\\Controllers\\\\Templates\\:\\:formFindModelObject\\(\\)\\.$#"
+			count: 1
+			path: src/Http/Controllers/Templates.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Facades\\\\AdminMenu\\:\\:setContext\\(\\)\\.$#"
 			count: 1
-			path: src/Controllers/Templates.php
-
-		-
-			message: "#^Class IgniterLabs\\\\SmsNotify\\\\SmsChannels\\\\Aws not found\\.$#"
-			count: 1
-			path: src/Extension.php
-
-		-
-			message: "#^Class Igniter\\\\Cart\\\\AutomationRules\\\\Events\\\\NewOrderStatus not found\\.$#"
-			count: 1
-			path: src/Extension.php
+			path: src/Http/Controllers/Templates.php
 
 		-
 			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:\\$class_name\\.$#"
@@ -154,6 +144,36 @@ parameters:
 			message: "#^Call to an undefined static method IgniterLabs\\\\SmsNotify\\\\Models\\\\Template\\:\\:whereCode\\(\\)\\.$#"
 			count: 2
 			path: src/Models/Template.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$country_code\\.$#"
+			count: 1
+			path: src/SmsChannels/Aws.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$key\\.$#"
+			count: 1
+			path: src/SmsChannels/Aws.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$secret\\.$#"
+			count: 1
+			path: src/SmsChannels/Aws.php
+
+		-
+			message: "#^Call to method publish\\(\\) on an unknown class Aws\\\\Sns\\\\SnsClient\\.$#"
+			count: 1
+			path: src/SmsChannels/Aws.php
+
+		-
+			message: "#^Instantiated class Aws\\\\Credentials\\\\Credentials not found\\.$#"
+			count: 1
+			path: src/SmsChannels/Aws.php
+
+		-
+			message: "#^Instantiated class Aws\\\\Sns\\\\SnsClient not found\\.$#"
+			count: 1
+			path: src/SmsChannels/Aws.php
 
 		-
 			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$api_key\\.$#"

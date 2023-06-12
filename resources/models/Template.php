@@ -75,7 +75,7 @@ return [
                 '_variables' => [
                     'tab' => 'igniterlabs.smsnotify::default.template.label_content',
                     'type' => 'partial',
-                    'path' => '~/app/system/views/mailtemplates/form/variables',
+                    'path' => 'igniter.system::/mailtemplates/variables',
                     'span' => 'right',
                     'cssClass' => 'col-md-4 pr-0',
                     'options' => [\Igniter\System\Models\MailTemplate::class, 'getVariableOptions'],
