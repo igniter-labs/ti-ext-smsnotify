@@ -25,7 +25,7 @@ class Extension extends BaseExtension
         return [
             'IgniterLabs.SmsNotify.Manage' => [
                 'description' => 'Manage SMS notification channels and templates',
-                'group' => 'module',
+                'group' => 'admin',
             ],
         ];
     }
