@@ -23,6 +23,7 @@ class Channels extends AdminController
             'emptyMessage' => 'igniterlabs.smsnotify::default.channel.text_empty',
             'defaultSort' => ['id', 'DESC'],
             'configFile' => 'channel',
+            'back' => 'settings',
         ],
     ];
 
@@ -41,7 +42,7 @@ class Channels extends AdminController
         ],
         'preview' => [
             'title' => 'igniterlabs.smsnotify::default.channel.text_preview_title',
-            'redirect' => 'igniterlabs/smsnotify/channels',
+            'back' => 'igniterlabs/smsnotify/channels',
         ],
         'configFile' => 'channel',
     ];

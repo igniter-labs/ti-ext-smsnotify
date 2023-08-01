@@ -1,8 +1,9 @@
-<div class="alert text-reset">
+<div class="bg-light mt-3 p-3 border rounded">
     <h4>Setting up the twilio channel</h4>
-    <ol class="pl-3">
+    <ol class="pl-3 mb-0">
         <li>First, go to the
-            <a href="https://www.twilio.com" target="_blank">Twilio's website</a> and if you haven't already, sign up for a Twilio
+            <a href="https://www.twilio.com" target="_blank">Twilio's website</a> and if you haven't already, sign up
+            for a Twilio
             account and purchase an SMS-enabled phone number.
         </li>
         <li>From your Twilio console dashboard, locate your Account SID and Auth Token.</li>

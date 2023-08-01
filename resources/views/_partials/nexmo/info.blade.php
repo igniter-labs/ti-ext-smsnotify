@@ -1,6 +1,6 @@
-<div class="alert text-reset">
+<div class="bg-light mt-3 p-3 border rounded">
     <h4>Setting up the nexmo channel</h4>
-    <ol class="pl-3">
+    <ol class="pl-3 mb-0">
         <li>First, go to the <a href="https://dashboard.nexmo.com/sign-up" target="_blank">Nexmo's website</a>
             and sign up for a Nexmo account if you haven't already.
         </li>

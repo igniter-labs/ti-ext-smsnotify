@@ -4,12 +4,11 @@ return [
     'list' => [
         'toolbar' => [
             'buttons' => [
-                'back' => [
-                    'label' => 'lang:admin::lang.button_icon_back',
-                    'class' => 'btn btn-outline-secondary',
-                    'href' => 'settings',
+                'create' => [
+                    'label' => 'lang:admin::lang.button_new',
+                    'class' => 'btn btn-primary',
+                    'href' => 'igniterlabs/smsnotify/channels/create'
                 ],
-                'create' => ['label' => 'lang:admin::lang.button_new', 'class' => 'btn btn-primary', 'href' => 'igniterlabs/smsnotify/channels/create'],
             ],
         ],
         'bulkActions' => [
@@ -83,11 +82,6 @@ return [
     'form' => [
         'toolbar' => [
             'buttons' => [
-                'back' => [
-                    'label' => 'lang:admin::lang.button_icon_back',
-                    'class' => 'btn btn-outline-secondary',
-                    'href' => 'igniterlabs/smsnotify/channels',
-                ],
                 'save' => ['label' => 'lang:admin::lang.button_save', 'class' => 'btn btn-primary', 'data-request' => 'onSave'],
                 'saveClose' => [
                     'label' => 'lang:admin::lang.button_save_close',

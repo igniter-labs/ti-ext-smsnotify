@@ -1,8 +1,9 @@
-<div class="alert text-reset">
+<div class="bg-light mt-3 p-3 border rounded">
     <h4>Setting up the aws channel</h4>
-    <ol class="pl-3">
+    <ol class="pl-3 mb-0">
         <li>First, go to the
-            <a href="https://www.aws.com" target="_blank">AWS's website</a> and if you haven't already, sign up for a AWS
+            <a href="https://www.aws.com" target="_blank">AWS's website</a> and if you haven't already, sign up for a
+            AWS
             account and purchase an SMS-enabled phone number through AWS Pinpoint.
         </li>
         <li>From your AWS console dashboard, create an IAM role and take down the Key and Secret</li>

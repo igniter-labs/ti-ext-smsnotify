@@ -1,6 +1,6 @@
-<div class="alert text-reset">
+<div class="bg-light mt-3 p-3 border rounded">
     <h4>Setting up the clickatell channel</h4>
-    <ol class="pl-3">
+    <ol class="pl-3 mb-0">
         <li>First, go to <a href="https://www.clickatell.com/signup/" target="_blank">Clickatell's website</a> and
             create an account if you haven't
             already.

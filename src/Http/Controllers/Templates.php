@@ -37,7 +37,7 @@ class Templates extends AdminController
         ],
         'preview' => [
             'title' => 'igniterlabs.smsnotify::default.template.text_preview_title',
-            'redirect' => 'igniterlabs/smsnotify/templates',
+            'back' => 'igniterlabs/smsnotify/templates',
         ],
         'configFile' => 'template',
     ];
