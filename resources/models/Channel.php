@@ -7,7 +7,7 @@ return [
                 'create' => [
                     'label' => 'lang:admin::lang.button_new',
                     'class' => 'btn btn-primary',
-                    'href' => 'igniterlabs/smsnotify/channels/create'
+                    'href' => 'igniterlabs/smsnotify/channels/create',
                 ],
             ],
         ],
