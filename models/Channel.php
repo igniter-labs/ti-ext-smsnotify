@@ -2,13 +2,17 @@
 
 namespace IgniterLabs\SmsNotify\Models;
 
+use Admin\Traits\Locationable;
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Purgeable;
+use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\SmsNotify\Classes\Manager;
+use Admin\Models\Locations_model;
 
 class Channel extends Model
 {
     use Purgeable;
+    use Locationable;
 
     /**
      * @var string The database table used by the model.
@@ -21,6 +25,12 @@ class Channel extends Model
      * @var array fillable fields
      */
     protected $fillable = ['code', 'class_name', 'config_data', 'is_enabled', 'is_default'];
+
+    public $relation = [
+        'belongsTo' => [
+            'location' => Locations_model::class,
+        ],
+    ];
 
     protected $casts = [
         'config_data' => 'array',
@@ -87,9 +97,8 @@ class Channel extends Model
             $data[$name] = $this->attributes[$name];
         }
 
-        foreach ($this->attributes as $name => $value) {
-            if (in_array($name, $this->fillable)) continue;
-            unset($this->attributes[$name]);
+        if (is_array($this->config_data)) {
+            $this->attributes = array_except($this->attributes, array_keys(array_merge($fields, $this->channelDetails())));
         }
 
         $this->config_data = $data;
@@ -142,26 +151,32 @@ class Channel extends Model
 
     public function makeDefault()
     {
-        if (!$this->is_enabled) {
-            return false;
-        }
+        throw_unless($this->is_enabled, ApplicationException::class, 'Cannot set default channel when disabled.');
 
         $this->timestamps = false;
-        $this->newQuery()->where('is_default', '!=', 0)->update(['is_default' => 0]);
-        $this->newQuery()->where('id', $this->id)->update(['is_default' => 1]);
+        $this->newQuery()->whereHasOrDoesntHaveLocation($this->location_id)->update(['is_default' => 0]);
+        $this->newQuery()->where('id', $this->id)->whereHasOrDoesntHaveLocation($this->location_id)->update(['is_default' => 1]);
         $this->timestamps = true;
     }
 
-    public static function getDefault($id = null)
+    public static function getDefault($locationId = null)
     {
         if (self::$defaultChannel !== null) {
             return self::$defaultChannel;
         }
 
-        $defaultChannel = self::whereIsEnabled()->where('is_default', true)->first();
+        $query = self::whereIsEnabled()->where('is_default', true);
+        if (!is_null($locationId)) {
+            $query->whereHasOrDoesntHaveLocation($locationId);
+        }
 
-        if (!$defaultChannel) {
-            if ($defaultChannel = self::whereIsEnabled()->first()) {
+        if (!$defaultChannel = $query->first()) {
+            $query = self::whereIsEnabled();
+            if (!is_null($locationId)) {
+                $query->whereHasOrDoesntHaveLocation($locationId);
+            }
+
+            if ($defaultChannel = $query->first()) {
                 $defaultChannel->makeDefault();
             }
         }
@@ -173,11 +188,7 @@ class Channel extends Model
     {
         $result = [];
         $manager = Manager::instance();
-        $channels = self::whereIsEnabled()->get()->keyBy('code');
-        foreach ($manager->listChannels() as $code => $className) {
-            if (!$channel = $channels->get($code))
-                continue;
-
+        foreach ($manager->listChannelObjects() as $code => $channel) {
             $result[$code] = $channel->getName();
         }
 

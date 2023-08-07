@@ -14,6 +14,7 @@ class Channels extends AdminController
     public $implement = [
         \Admin\Actions\FormController::class,
         \Admin\Actions\ListController::class,
+        \Admin\Actions\LocationAwareController::class,
     ];
 
     public $listConfig = [
@@ -31,12 +32,12 @@ class Channels extends AdminController
         'model' => \IgniterLabs\SmsNotify\Models\Channel::class,
         'create' => [
             'title' => 'igniterlabs.smsnotify::default.channel.text_new_title',
-            'redirect' => 'igniterlabs/smsnotify/channels/edit/{code}',
+            'redirect' => 'igniterlabs/smsnotify/channels/edit/{id}',
             'redirectClose' => 'igniterlabs/smsnotify/channels',
         ],
         'edit' => [
             'title' => 'igniterlabs.smsnotify::default.channel.text_edit_title',
-            'redirect' => 'igniterlabs/smsnotify/channels/edit/{code}',
+            'redirect' => 'igniterlabs/smsnotify/channels/edit/{id}',
             'redirectClose' => 'igniterlabs/smsnotify/channels',
         ],
         'preview' => [
@@ -61,28 +62,6 @@ class Channels extends AdminController
             Channel::syncAll();
 
         $this->asExtension('ListController')->index();
-    }
-
-    public function formFindModelObject($channelCode = null)
-    {
-        if (!strlen($channelCode)) {
-            throw new Exception(lang('admin::lang.payments.alert_setting_missing_id'));
-        }
-
-        $model = $this->formCreateModelObject();
-
-        // Prepare query and find model record
-        $query = $model->newQuery();
-        $this->fireEvent('admin.controller.extendFormQuery', [$query]);
-        $this->formExtendQuery($query);
-        $result = $query->whereCode($channelCode)->first();
-
-        if (!$result)
-            throw new Exception(sprintf(lang('admin::lang.form.not_found'), $channelCode));
-
-        $result = $this->formExtendModel($result) ?: $result;
-
-        return $result;
     }
 
     public function formExtendModel($model)
