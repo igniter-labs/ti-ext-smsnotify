@@ -166,15 +166,11 @@ class Channel extends Model
         }
 
         $query = self::whereIsEnabled()->where('is_default', true);
-        if (!is_null($locationId)) {
-            $query->whereHasOrDoesntHaveLocation($locationId);
-        }
+        $query->whereHasOrDoesntHaveLocation($locationId);
 
         if (!$defaultChannel = $query->first()) {
             $query = self::whereIsEnabled();
-            if (!is_null($locationId)) {
-                $query->whereHasOrDoesntHaveLocation($locationId);
-            }
+            $query->whereHasOrDoesntHaveLocation($locationId);
 
             if ($defaultChannel = $query->first()) {
                 $defaultChannel->makeDefault();
