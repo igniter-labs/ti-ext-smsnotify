@@ -24,7 +24,7 @@ class Channel extends Model
     /**
      * @var array fillable fields
      */
-    protected $fillable = ['code', 'class_name', 'config_data', 'is_enabled', 'is_default'];
+    protected $fillable = ['code', 'class_name', 'config_data', 'is_enabled', 'is_default', 'location_id'];
 
     public $relation = [
         'belongsTo' => [
@@ -62,12 +62,12 @@ class Channel extends Model
 
     public function getNameAttribute()
     {
-        return $this->class_name ? lang($this->getChannelObject()->getName()) : null;
+        return ($channelObject = $this->getChannelObject()) ? lang($channelObject->getName()) : null;
     }
 
     public function getDescriptionAttribute()
     {
-        return $this->class_name ? lang($this->getChannelObject()->getDescription()) : null;
+        return ($channelObject = $this->getChannelObject()) ? lang($channelObject->getDescription()) : null;
     }
 
     //
@@ -97,8 +97,9 @@ class Channel extends Model
             $data[$name] = $this->attributes[$name];
         }
 
-        if (is_array($this->config_data)) {
-            $this->attributes = array_except($this->attributes, array_keys(array_merge($fields, $this->channelDetails())));
+        foreach ($this->attributes as $name => $value) {
+            if (in_array($name, $this->fillable, true)) continue;
+            unset($this->attributes[$name]);
         }
 
         $this->config_data = $data;
@@ -142,7 +143,9 @@ class Channel extends Model
      */
     public function getChannelObject()
     {
-        return $this->asExtension($this->class_name);
+        return $this->class_name
+            ? $this->asExtension($this->class_name)
+            : null;
     }
 
     //
