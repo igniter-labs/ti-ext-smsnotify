@@ -24,7 +24,7 @@ class Channel extends Model
     /**
      * @var array fillable fields
      */
-    protected $fillable = ['code', 'class_name', 'config_data', 'is_enabled', 'is_default', 'location_id'];
+    protected $fillable = ['id', 'code', 'class_name', 'config_data', 'is_enabled', 'is_default', 'location_id'];
 
     public $relation = [
         'belongsTo' => [
