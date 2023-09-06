@@ -98,7 +98,7 @@ class Channel extends Model
         }
 
         foreach ($this->attributes as $name => $value) {
-            if (in_array($name, $this->fillable, true)) continue;
+            if (array_key_exists($name, $this->original)) continue;
             unset($this->attributes[$name]);
         }
 
