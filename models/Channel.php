@@ -24,7 +24,7 @@ class Channel extends Model
     /**
      * @var array fillable fields
      */
-    protected $fillable = ['id', 'code', 'class_name', 'config_data', 'is_enabled', 'is_default', 'location_id'];
+    protected $fillable = ['id', 'name', 'description', 'code', 'class_name', 'config_data', 'is_enabled', 'is_default', 'location_id'];
 
     public $relation = [
         'belongsTo' => [
@@ -60,13 +60,21 @@ class Channel extends Model
         return array_get(self::$configCache, $channelCode, $default);
     }
 
-    public function getNameAttribute()
+    public function getNameAttribute($value)
     {
+        if (!is_null($value)) {
+            return $value;
+        }
+
         return ($channelObject = $this->getChannelObject()) ? lang($channelObject->getName()) : null;
     }
 
-    public function getDescriptionAttribute()
+    public function getDescriptionAttribute($value)
     {
+        if (!is_null($value)) {
+            return $value;
+        }
+
         return ($channelObject = $this->getChannelObject()) ? lang($channelObject->getDescription()) : null;
     }
 
@@ -202,12 +210,14 @@ class Channel extends Model
     {
         $manager = Manager::instance();
         $channels = self::pluck('code')->all();
-        foreach ($manager->listChannels() as $code => $className) {
+        foreach ($manager->listChannelObjects() as $code => $channelObject) {
             if (in_array($code, $channels)) continue;
 
             $model = self::make([
                 'code' => $code,
-                'class_name' => $className,
+                'class_name' => get_class($channelObject),
+                'name' => lang($channelObject->getName()),
+                'description' => lang($channelObject->getDescription()),
             ]);
 
             $model->applyChannelClass();

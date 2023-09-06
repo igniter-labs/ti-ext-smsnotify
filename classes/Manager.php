@@ -110,7 +110,7 @@ class Manager
     {
         $results = [];
         foreach ($this->listChannels() as $channelCode => $className) {
-            $results[$channelCode] = new $className;
+            $results[$channelCode] = resolve($className);
         }
 
         return $results;
