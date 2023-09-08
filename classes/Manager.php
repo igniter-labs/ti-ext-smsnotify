@@ -75,11 +75,11 @@ class Manager
         }
     }
 
-    public function notify($templateCode, $to, $data, $object = null)
+    public function notify($templateCode, $to, $data, $location = null)
     {
         $content = $this->buildContent($templateCode, $data);
 
-        Channel::getDefault(optional($object->location)->location_id)
+        Channel::getDefault(optional($location)->location_id)
             ->getChannelObject()
             ->send($to, $content);
     }

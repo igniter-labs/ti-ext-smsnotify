@@ -3,6 +3,7 @@
 namespace IgniterLabs\SmsNotify\Controllers;
 
 use Admin\Classes\AdminController;
+use Admin\Facades\AdminLocation;
 use Admin\Facades\AdminMenu;
 use Admin\Models\Locations_model;
 use Admin\Widgets\Form;
@@ -82,7 +83,7 @@ class Templates extends AdminController
 
         $telephoneNo = Locations_model::getDefault()->location_telephone;
 
-        Manager::instance()->notify($model->code, $telephoneNo, []);
+        Manager::instance()->notify($model->code, $telephoneNo, [], AdminLocation::current());
 
         flash()->success(sprintf(
             lang('igniterlabs.smsnotify::default.template.alert_test_message_sent'), $telephoneNo
