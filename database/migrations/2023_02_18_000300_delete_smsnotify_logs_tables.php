@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Create templates table
  */
-class DeleteSmsNotifyLogsTables extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::dropIfExists('igniterlabs_smsnotify_logs');
@@ -18,4 +17,4 @@ class DeleteSmsNotifyLogsTables extends Migration
     public function down()
     {
     }
-}
+};
