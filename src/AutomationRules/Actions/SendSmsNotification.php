@@ -2,8 +2,8 @@
 
 namespace IgniterLabs\SmsNotify\AutomationRules\Actions;
 
+use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
-use Igniter\Flame\Exception\ApplicationException;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Template;
 use Illuminate\Database\Eloquent\Model;
@@ -51,11 +51,11 @@ class SendSmsNotification extends BaseAction
         }
 
         if (!$templateCode = $this->model->template) {
-            throw new ApplicationException('SendSmsNotification: Missing a valid mail template');
+            throw new AutomationException('SendSmsNotification: Missing a valid mail template');
         }
 
         if (!$sendToNumber = $this->getRecipientAddress($object)) {
-            throw new ApplicationException('SendSmsNotification: Missing a valid send to number from the event payload');
+            throw new AutomationException('SendSmsNotification: Missing a valid send to number from the event payload');
         }
 
         resolve(Manager::class)->notify($templateCode, $sendToNumber, $params);

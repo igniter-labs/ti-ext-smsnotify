@@ -2,7 +2,6 @@
 
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
-use Exception;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use Twilio\Rest\Client as TwilioClient;
 
@@ -55,7 +54,7 @@ class Twilio extends BaseChannel
         }
 
         if (empty($params['from']) && empty($params['messagingServiceSid'])) {
-            throw new Exception('SMS message was not sent. Missing `from` number.');
+            throw new \RuntimeException('SMS message was not sent. Missing `from` number.');
         }
 
         $this->fillOptionalParams($params, [

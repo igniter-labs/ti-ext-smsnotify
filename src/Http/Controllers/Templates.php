@@ -5,7 +5,7 @@ namespace IgniterLabs\SmsNotify\Http\Controllers;
 use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Facades\AdminMenu;
 use Igniter\Admin\Widgets\Form;
-use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Flame\Exception\FlashException;
 use Igniter\Local\Models\Location;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Template;
@@ -75,13 +75,11 @@ class Templates extends AdminController
 
     public function onTestTemplate($context, $recordId)
     {
-        if (!strlen($recordId)) {
-            throw new ApplicationException('Template id not found');
-        }
+        throw_unless(strlen($recordId), FlashException::error('Template id not found'));
 
-        if (!$model = $this->formFindModelObject($recordId)) {
-            throw new ApplicationException('Template not found');
-        }
+        throw_unless($model = $this->formFindModelObject($recordId),
+            FlashException::error('Template not found')
+        );
 
         $telephoneNo = Location::getDefault()->location_telephone;
 

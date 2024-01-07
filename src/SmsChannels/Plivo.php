@@ -2,7 +2,6 @@
 
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
-use Exception;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use Plivo\RestAPI as PlivoClient;
 
@@ -49,7 +48,7 @@ class Plivo extends BaseChannel
         ]);
 
         if ($response['status'] !== 202) {
-            throw new Exception("SMS message was not sent. Plivo responded with `{$response['status']}: {$response['response']['error']}`");
+            throw new \RuntimeException("SMS message was not sent. Plivo responded with `{$response['status']}: {$response['response']['error']}`");
         }
 
         return $response;

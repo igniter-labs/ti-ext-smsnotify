@@ -3,7 +3,6 @@
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
 use Clickatell\Rest as ClickatellClient;
-use Exception;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 
 class Clickatell extends BaseChannel
@@ -50,7 +49,7 @@ class Clickatell extends BaseChannel
             $errorCode = (int)array_get($response, 'errorCode');
 
             if ($errorCode != self::SUCCESSFUL_SEND) {
-                throw new Exception(sprintf("Clickatell responded with an error '{%s}: {%s}'",
+                throw new \RuntimeException(sprintf("Clickatell responded with an error '{%s}: {%s}'",
                     (string)array_get($response, 'error'),
                     $errorCode
                 ));

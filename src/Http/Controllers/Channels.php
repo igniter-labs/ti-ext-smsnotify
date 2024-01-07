@@ -2,10 +2,9 @@
 
 namespace IgniterLabs\SmsNotify\Http\Controllers;
 
-use Exception;
 use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Facades\AdminMenu;
-use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Flame\Exception\FlashException;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Channel;
 
@@ -67,9 +66,9 @@ class Channels extends AdminController
 
     public function formFindModelObject($channelCode = null)
     {
-        if (!strlen($channelCode)) {
-            throw new Exception(lang('igniter.payregister::default.alert_setting_missing_id'));
-        }
+        throw_unless(strlen($channelCode),
+            FlashException::error(lang('igniter.payregister::default.alert_setting_missing_id'))
+        );
 
         $model = $this->formCreateModelObject();
 
@@ -77,15 +76,12 @@ class Channels extends AdminController
         $query = $model->newQuery();
         $this->fireEvent('admin.controller.extendFormQuery', [$query]);
         $this->formExtendQuery($query);
-        $result = $query->whereCode($channelCode)->first();
 
-        if (!$result) {
-            throw new Exception(sprintf(lang('admin::lang.form.not_found'), $channelCode));
-        }
+        throw_unless($result = $query->whereCode($channelCode)->first(),
+            FlashException::error(sprintf(lang('admin::lang.form.not_found'), $channelCode))
+        );
 
-        $result = $this->formExtendModel($result) ?: $result;
-
-        return $result;
+        return $this->formExtendModel($result) ?: $result;
     }
 
     public function formExtendModel($model)
@@ -112,9 +108,9 @@ class Channels extends AdminController
 
     public function formBeforeCreate($model)
     {
-        if (!strlen($code = post('Channel.channel'))) {
-            throw new ApplicationException('Invalid channel code selected');
-        }
+        throw_unless(strlen($code = post('Channel.channel')),
+            FlashException::error('Invalid channel code selected')
+        );
 
         $model->class_name = resolve(Manager::class)->getChannel($code);
         $model->applyChannelClass();
