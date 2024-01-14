@@ -10,12 +10,12 @@ use IgniterLabs\SmsNotify\Models\Channel;
 
 class Channels extends AdminController
 {
-    public $implement = [
+    public array $implement = [
         \Igniter\Admin\Http\Actions\FormController::class,
         \Igniter\Admin\Http\Actions\ListController::class,
     ];
 
-    public $listConfig = [
+    public array $listConfig = [
         'list' => [
             'model' => \IgniterLabs\SmsNotify\Models\Channel::class,
             'title' => 'igniterlabs.smsnotify::default.channel.text_title',
@@ -26,7 +26,7 @@ class Channels extends AdminController
         ],
     ];
 
-    public $formConfig = [
+    public array $formConfig = [
         'name' => 'igniterlabs.smsnotify::default.channel.text_title',
         'model' => \IgniterLabs\SmsNotify\Models\Channel::class,
         'create' => [
@@ -46,7 +46,7 @@ class Channels extends AdminController
         'configFile' => 'channel',
     ];
 
-    protected $requiredPermissions = 'IgniterLabs.SmsNotify.*';
+    protected null|string|array $requiredPermissions = 'IgniterLabs.SmsNotify.*';
 
     public function __construct()
     {

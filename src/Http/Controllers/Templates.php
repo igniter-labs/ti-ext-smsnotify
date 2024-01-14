@@ -12,12 +12,12 @@ use IgniterLabs\SmsNotify\Models\Template;
 
 class Templates extends AdminController
 {
-    public $implement = [
+    public array $implement = [
         \Igniter\Admin\Http\Actions\FormController::class,
         \Igniter\Admin\Http\Actions\ListController::class,
     ];
 
-    public $listConfig = [
+    public array $listConfig = [
         'list' => [
             'model' => \IgniterLabs\SmsNotify\Models\Template::class,
             'title' => 'igniterlabs.smsnotify::default.template.text_title',
@@ -27,7 +27,7 @@ class Templates extends AdminController
         ],
     ];
 
-    public $formConfig = [
+    public array $formConfig = [
         'name' => 'igniterlabs.smsnotify::default.template.text_title',
         'model' => \IgniterLabs\SmsNotify\Models\Template::class,
         'edit' => [
@@ -42,7 +42,7 @@ class Templates extends AdminController
         'configFile' => 'template',
     ];
 
-    protected $requiredPermissions = 'IgniterLabs.SmsNotify.*';
+    protected null|string|array $requiredPermissions = 'IgniterLabs.SmsNotify.*';
 
     public function __construct()
     {
