@@ -75,10 +75,10 @@ class Templates extends AdminController
 
     public function onTestTemplate($context, $recordId)
     {
-        throw_unless(strlen($recordId), FlashException::error('Template id not found'));
+        throw_unless(strlen($recordId), new FlashException('Template id not found'));
 
         throw_unless($model = $this->formFindModelObject($recordId),
-            FlashException::error('Template not found')
+            new FlashException('Template not found')
         );
 
         $telephoneNo = Location::getDefault()->location_telephone;

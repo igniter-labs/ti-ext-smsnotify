@@ -67,7 +67,7 @@ class Channels extends AdminController
     public function formFindModelObject($channelCode = null)
     {
         throw_unless(strlen($channelCode),
-            FlashException::error(lang('igniter.payregister::default.alert_setting_missing_id'))
+            new FlashException(lang('igniter.payregister::default.alert_setting_missing_id'))
         );
 
         $model = $this->formCreateModelObject();
@@ -78,7 +78,7 @@ class Channels extends AdminController
         $this->formExtendQuery($query);
 
         throw_unless($result = $query->whereCode($channelCode)->first(),
-            FlashException::error(sprintf(lang('admin::lang.form.not_found'), $channelCode))
+            new FlashException(sprintf(lang('admin::lang.form.not_found'), $channelCode))
         );
 
         return $this->formExtendModel($result) ?: $result;
@@ -109,7 +109,7 @@ class Channels extends AdminController
     public function formBeforeCreate($model)
     {
         throw_unless(strlen($code = post('Channel.channel')),
-            FlashException::error('Invalid channel code selected')
+            new FlashException('Invalid channel code selected')
         );
 
         $model->class_name = resolve(Manager::class)->getChannel($code);
