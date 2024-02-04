@@ -26,16 +26,6 @@ parameters:
 			path: src/Classes/BaseChannel.php
 
 		-
-			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Http\\\\Controllers\\\\Channels\\:\\:formCreateModelObject\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Controllers/Channels.php
-
-		-
-			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Http\\\\Controllers\\\\Channels\\:\\:formExtendQuery\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Controllers/Channels.php
-
-		-
 			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Facades\\\\AdminMenu\\:\\:setContext\\(\\)\\.$#"
 			count: 1
 			path: src/Http/Controllers/Channels.php
@@ -56,8 +46,13 @@ parameters:
 			path: src/Http/Controllers/Templates.php
 
 		-
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\AdminLocation\\:\\:current\\(\\)\\.$#"
+			count: 1
+			path: src/Http/Controllers/Templates.php
+
+		-
 			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:\\$class_name\\.$#"
-			count: 5
+			count: 3
 			path: src/Models/Channel.php
 
 		-
@@ -81,8 +76,18 @@ parameters:
 			path: src/Models/Channel.php
 
 		-
+			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:\\$location_id\\.$#"
+			count: 2
+			path: src/Models/Channel.php
+
+		-
 			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:getConfigFields\\(\\)\\.$#"
 			count: 1
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:whereHasOrDoesntHaveLocation\\(\\)\\.$#"
+			count: 2
 			path: src/Models/Channel.php
 
 		-

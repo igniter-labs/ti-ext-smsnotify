@@ -42,7 +42,7 @@ return [
                 'iconCssClass' => 'fa fa-pencil',
                 'attributes' => [
                     'class' => 'btn btn-edit',
-                    'href' => 'igniterlabs/smsnotify/channels/edit/{code}',
+                    'href' => 'igniterlabs/smsnotify/channels/edit/{id}',
                 ],
             ],
             'name' => [
@@ -52,6 +52,13 @@ return [
             'description' => [
                 'label' => 'igniterlabs.smsnotify::default.channel.column_description',
                 'type' => 'text',
+            ],
+            'location_name' => [
+                'label' => 'lang:admin::lang.column_location',
+                'relation' => 'location',
+                'select' => 'location_name',
+                'searchable' => true,
+                'locationAware' => true,
             ],
             'is_enabled' => [
                 'label' => 'lang:admin::lang.label_status',
@@ -82,12 +89,13 @@ return [
     'form' => [
         'toolbar' => [
             'buttons' => [
-                'save' => ['label' => 'lang:admin::lang.button_save', 'class' => 'btn btn-primary', 'data-request' => 'onSave'],
-                'saveClose' => [
-                    'label' => 'lang:admin::lang.button_save_close',
-                    'class' => 'btn btn-default',
+                'save' => [
+                    'label' => 'lang:admin::lang.button_save',
+                    'context' => ['create', 'edit'],
+                    'partial' => 'form/toolbar_save_button',
+                    'class' => 'btn btn-primary',
                     'data-request' => 'onSave',
-                    'data-request-data' => 'close:1',
+                    'data-progress-indicator' => 'admin::lang.text_saving',
                 ],
             ],
         ],
@@ -103,7 +111,16 @@ return [
                 'label' => 'igniterlabs.smsnotify::default.channel.label_label',
                 'type' => 'text',
                 'span' => 'left',
-                'context' => ['edit'],
+                'cssClass' => 'flex-width',
+            ],
+            'location_id' => [
+                'label' => 'lang:admin::lang.label_location',
+                'type' => 'relation',
+                'relationFrom' => 'location',
+                'nameFrom' => 'location_name',
+                'span' => 'left',
+                'cssClass' => 'flex-width',
+                'placeholder' => 'lang:admin::lang.text_please_select',
             ],
             'code' => [
                 'label' => 'igniterlabs.smsnotify::default.channel.label_code',
@@ -114,7 +131,6 @@ return [
                 'label' => 'lang:admin::lang.label_description',
                 'type' => 'textarea',
                 'span' => 'left',
-                'context' => ['edit'],
             ],
             'is_default' => [
                 'label' => 'lang:igniter.payregister::default.label_default',

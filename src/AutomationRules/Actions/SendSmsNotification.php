@@ -58,7 +58,7 @@ class SendSmsNotification extends BaseAction
             throw new AutomationException('SendSmsNotification: Missing a valid send to number from the event payload');
         }
 
-        resolve(Manager::class)->notify($templateCode, $sendToNumber, $params);
+        resolve(Manager::class)->notify($templateCode, $sendToNumber, $params, $object->location);
     }
 
     public function getTemplateOptions()

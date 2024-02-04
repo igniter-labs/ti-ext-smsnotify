@@ -4,10 +4,14 @@ namespace IgniterLabs\SmsNotify\Models;
 
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Purgeable;
+use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Local\Models\Concerns\Locationable;
+use Igniter\Local\Models\Location;
 use IgniterLabs\SmsNotify\Classes\Manager;
 
 class Channel extends Model
 {
+    use Locationable;
     use Purgeable;
 
     /**
@@ -20,7 +24,13 @@ class Channel extends Model
     /**
      * @var array fillable fields
      */
-    protected $fillable = ['code', 'class_name', 'config_data', 'is_enabled', 'is_default'];
+    protected $fillable = ['id', 'name', 'description', 'code', 'class_name', 'config_data', 'is_enabled', 'is_default', 'location_id'];
+
+    public $relation = [
+        'belongsTo' => [
+            'location' => Location::class,
+        ],
+    ];
 
     protected $casts = [
         'config_data' => 'array',
@@ -50,14 +60,22 @@ class Channel extends Model
         return array_get(self::$configCache, $channelCode, $default);
     }
 
-    public function getNameAttribute()
+    public function getNameAttribute($value)
     {
-        return $this->class_name ? lang($this->getChannelObject()->getName()) : null;
+        if (!is_null($value)) {
+            return $value;
+        }
+
+        return ($channelObject = $this->getChannelObject()) ? lang($channelObject->getName()) : null;
     }
 
-    public function getDescriptionAttribute()
+    public function getDescriptionAttribute($value)
     {
-        return $this->class_name ? lang($this->getChannelObject()->getDescription()) : null;
+        if (!is_null($value)) {
+            return $value;
+        }
+
+        return ($channelObject = $this->getChannelObject()) ? lang($channelObject->getDescription()) : null;
     }
 
     //
@@ -93,7 +111,7 @@ class Channel extends Model
         }
 
         foreach ($this->attributes as $name => $value) {
-            if (in_array($name, $this->fillable)) {
+            if (array_key_exists($name, $this->original)) {
                 continue;
             }
             unset($this->attributes[$name]);
@@ -141,7 +159,9 @@ class Channel extends Model
      */
     public function getChannelObject()
     {
-        return $this->asExtension($this->class_name);
+        return $this->class_name
+            ? $this->asExtension($this->class_name)
+            : null;
     }
 
     //
@@ -150,26 +170,28 @@ class Channel extends Model
 
     public function makeDefault()
     {
-        if (!$this->is_enabled) {
-            return false;
-        }
+        throw_unless($this->is_enabled, ApplicationException::class, 'Cannot set default channel when disabled.');
 
         $this->timestamps = false;
-        $this->newQuery()->where('is_default', '!=', 0)->update(['is_default' => 0]);
-        $this->newQuery()->where('id', $this->id)->update(['is_default' => 1]);
+        $this->newQuery()->whereHasOrDoesntHaveLocation($this->location_id)->update(['is_default' => 0]);
+        $this->newQuery()->where('id', $this->id)->whereHasOrDoesntHaveLocation($this->location_id)->update(['is_default' => 1]);
         $this->timestamps = true;
     }
 
-    public static function getDefault($id = null)
+    public static function getDefault($locationId = null)
     {
         if (self::$defaultChannel !== null) {
             return self::$defaultChannel;
         }
 
-        $defaultChannel = self::whereIsEnabled()->where('is_default', true)->first();
+        $query = self::whereIsEnabled()->where('is_default', true);
+        $query->whereHasOrDoesntHaveLocation($locationId);
 
-        if (!$defaultChannel) {
-            if ($defaultChannel = self::whereIsEnabled()->first()) {
+        if (!$defaultChannel = $query->first()) {
+            $query = self::whereIsEnabled();
+            $query->whereHasOrDoesntHaveLocation($locationId);
+
+            if ($defaultChannel = $query->first()) {
                 $defaultChannel->makeDefault();
             }
         }
@@ -201,14 +223,16 @@ class Channel extends Model
     {
         $manager = resolve(Manager::class);
         $channels = self::pluck('code')->all();
-        foreach ($manager->listChannels() as $code => $className) {
+        foreach ($manager->listChannelObjects() as $code => $channelObject) {
             if (in_array($code, $channels)) {
                 continue;
             }
 
             $model = self::make([
                 'code' => $code,
-                'class_name' => $className,
+                'class_name' => get_class($channelObject),
+                'name' => lang($channelObject->getName()),
+                'description' => lang($channelObject->getDescription()),
             ]);
 
             $model->applyChannelClass();
