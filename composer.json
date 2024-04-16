@@ -14,6 +14,8 @@
         "notification"
     ],
     "require": {
+        "tastyigniter/core": "dev-master",
+        "tastyigniter/ti-ext-automation": "*",
         "vonage/client": "^2.0",
         "twilio/sdk": "~6.0",
         "arcturial/clickatell": "~3.0"
@@ -22,9 +24,7 @@
         "laravel/pint": "^1.2",
         "nunomaduro/larastan": "^2.4.0",
         "orchestra/testbench": "^8.5",
-        "pestphp/pest-plugin-laravel": "^2.0",
-        "tastyigniter/core": "dev-master",
-        "tastyigniter/ti-ext-automation": "v4.x-dev as 4.0"
+        "pestphp/pest-plugin-laravel": "^2.0"
     },
     "autoload": {
         "psr-4": {
