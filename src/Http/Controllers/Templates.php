@@ -6,7 +6,7 @@ use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Facades\AdminMenu;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Flame\Exception\FlashException;
-use Igniter\Local\Facades\AdminLocation;
+use Igniter\Local\Facades\Location as LocationFacade;
 use Igniter\Local\Models\Location;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Template;
@@ -84,7 +84,7 @@ class Templates extends AdminController
 
         $telephoneNo = Location::getDefault()->location_telephone;
 
-        resolve(Manager::class)->notify($model->code, $telephoneNo, [], AdminLocation::current());
+        resolve(Manager::class)->notify($model->code, $telephoneNo, [], LocationFacade::current());
 
         flash()->success(sprintf(
             lang('igniterlabs.smsnotify::default.template.alert_test_message_sent'), $telephoneNo

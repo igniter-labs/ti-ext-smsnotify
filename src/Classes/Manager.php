@@ -8,7 +8,6 @@ use Igniter\System\Classes\ExtensionManager;
 use Igniter\System\Helpers\ViewHelper;
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\Models\Template;
-use Illuminate\Support\Facades\Config;
 
 class Manager
 {
@@ -52,24 +51,6 @@ class Manager
         $content = (new StringParser)->parse($content, $data);
 
         return html_entity_decode(preg_replace("/[\r\n]{2,}/", "\n\n", $content), ENT_QUOTES, 'UTF-8');
-    }
-
-    public function applyNotificationConfigValues()
-    {
-        foreach (array_keys($this->listChannels()) as $channelCode) {
-            $config = Channel::getConfig($channelCode, []);
-            foreach ($config as $key => $value) {
-                $configKey = $channelCode == 'twilio'
-                    ? sprintf('twilio-notification-channel.%s', $key)
-                    : sprintf('services.%s.%s', $channelCode, $key);
-
-                Config::set($configKey, $value ?? Config::get($configKey));
-
-                if ($channelCode == 'nexmo') {
-                    Config::set('nexmo.'.$key, $value ?? Config::get('nexmo.'.$key));
-                }
-            }
-        }
     }
 
     public function notify($templateCode, $to, $data, $location = null)
