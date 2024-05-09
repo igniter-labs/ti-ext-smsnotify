@@ -46,7 +46,7 @@ parameters:
 			path: src/Http/Controllers/Templates.php
 
 		-
-			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\AdminLocation\\:\\:current\\(\\)\\.$#"
+			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
 			count: 1
 			path: src/Http/Controllers/Templates.php
 
