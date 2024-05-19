@@ -12,7 +12,7 @@ return new class extends Migration
             'igniterlabs_smsnotify_templates' => 'id',
             'igniterlabs_smsnotify_channels' => 'id',
         ] as $table => $key) {
-            Schema::table($table, function (Blueprint $table) use ($key) {
+            Schema::table($table, function(Blueprint $table) use ($key) {
                 $table->unsignedBigInteger($key, true)->change();
             });
         }

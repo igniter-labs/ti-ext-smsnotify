@@ -10,7 +10,7 @@ class AddNameSmschannelsTable extends Migration
 {
     public function up()
     {
-        Schema::table('igniterlabs_smsnotify_channels', function (Blueprint $table) {
+        Schema::table('igniterlabs_smsnotify_channels', function(Blueprint $table) {
             $table->unsignedBigInteger('name')->nullable()->after('class_name');
         });
     }

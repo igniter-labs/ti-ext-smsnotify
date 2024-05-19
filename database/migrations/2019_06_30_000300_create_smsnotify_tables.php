@@ -11,7 +11,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('igniterlabs_smsnotify_templates', function (Blueprint $table) {
+        Schema::create('igniterlabs_smsnotify_templates', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('code')->unique()->index();
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('igniterlabs_smsnotify_channels', function (Blueprint $table) {
+        Schema::create('igniterlabs_smsnotify_channels', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('code')->unique()->index();
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('igniterlabs_smsnotify_logs', function (Blueprint $table) {
+        Schema::create('igniterlabs_smsnotify_logs', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('channel')->nullable();

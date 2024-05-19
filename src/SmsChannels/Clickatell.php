@@ -45,7 +45,7 @@ class Clickatell extends BaseChannel
                 'content' => $content,
             ]);
 
-        collect($responses)->each(function ($response) {
+        collect($responses)->each(function($response) {
             $errorCode = (int)array_get($response, 'errorCode');
 
             if ($errorCode != self::SUCCESSFUL_SEND) {

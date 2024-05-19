@@ -10,7 +10,7 @@ class AddLocationIdSmschannelsTable extends Migration
 {
     public function up()
     {
-        Schema::table('igniterlabs_smsnotify_channels', function (Blueprint $table) {
+        Schema::table('igniterlabs_smsnotify_channels', function(Blueprint $table) {
             $table->unsignedBigInteger('location_id')->nullable()->after('id');
         });
     }
