@@ -7,13 +7,13 @@ use RuntimeException;
 use Vonage\Client as VonageClient;
 use Vonage\Client\Credentials\Basic;
 
-class Nexmo extends BaseChannel
+class Vonage extends BaseChannel
 {
     public function channelDetails()
     {
         return [
-            'name' => 'igniterlabs.smsnotify::default.nexmo.text_title',
-            'description' => 'igniterlabs.smsnotify::default.nexmo.text_desc',
+            'name' => 'igniterlabs.smsnotify::default.vonage.text_title',
+            'description' => 'igniterlabs.smsnotify::default.vonage.text_desc',
         ];
     }
 
@@ -23,7 +23,7 @@ class Nexmo extends BaseChannel
             'fields' => [
                 'setup' => [
                     'type' => 'partial',
-                    'path' => '$/igniterlabs/smsnotify/smschannels/nexmo/info',
+                    'path' => '$/igniterlabs/smsnotify/smschannels/vonage/info',
                 ],
                 'api_key' => [
                     'label' => 'API Key',

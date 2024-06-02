@@ -18,7 +18,7 @@ return [
         'account_sid' => env('TWILIO_ACCOUNT_SID'),
         'from' => env('TWILIO_FROM'),
     ],
-    'nexmo' => [
+    'vonage' => [
         'send_from' => '',
     ],
     'aws' => [

@@ -69,8 +69,8 @@ class Manager
 
                 Config::set($configKey, $value ?? Config::get($configKey));
 
-                if ($channelCode == 'nexmo')
-                    Config::set('nexmo.'.$key, $value ?? Config::get('nexmo.'.$key));
+                if ($channelCode == 'vonage')
+                    Config::set('vonage.'.$key, $value ?? Config::get('vonage.'.$key));
             }
         }
     }
