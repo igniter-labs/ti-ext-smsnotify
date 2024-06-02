@@ -18,7 +18,7 @@ return [
 
     'help_template' => 'To customize SMS Templates, go to Design -> SMS Templates.',
 
-    'VONAGE' => [
+    'vonage' => [
         'text_title' => 'VONAGE SMS Channel',
         'text_desc' => 'Sending SMS notifications using VONAGE.',
     ],
