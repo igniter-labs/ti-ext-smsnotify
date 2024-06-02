@@ -10,7 +10,7 @@ return [
     'text_send_to_custom_tel' => 'Specific phone number',
 
     'setting_title' => 'Configure SMS Channels',
-    'setting_desc' => 'Configure twilio, plivo, nexmo or clickatell settings.',
+    'setting_desc' => 'Configure twilio, plivo, VONAGE or clickatell settings.',
 
     'label_template' => 'SMS Template',
     'label_send_to' => 'Send To',
@@ -18,9 +18,9 @@ return [
 
     'help_template' => 'To customize SMS Templates, go to Design -> SMS Templates.',
 
-    'nexmo' => [
-        'text_title' => 'Nexmo SMS Channel',
-        'text_desc' => 'Sending SMS notifications using Nexmo.',
+    'VONAGE' => [
+        'text_title' => 'VONAGE SMS Channel',
+        'text_desc' => 'Sending SMS notifications using VONAGE.',
     ],
 
     'twilio' => [

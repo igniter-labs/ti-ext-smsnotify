@@ -81,7 +81,7 @@ class Extension extends BaseExtension
     {
         return [
             'twilio' => \IgniterLabs\SmsNotify\SmsChannels\Twilio::class,
-            'nexmo' => \IgniterLabs\SmsNotify\SmsChannels\Nexmo::class,
+            'vonage' => \IgniterLabs\SmsNotify\SmsChannels\Vonage::class,
             'clickatell' => \IgniterLabs\SmsNotify\SmsChannels\Clickatell::class,
             'plivo' => \IgniterLabs\SmsNotify\SmsChannels\Plivo::class,
             'aws' => \IgniterLabs\SmsNotify\SmsChannels\Aws::class,
