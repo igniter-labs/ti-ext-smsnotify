@@ -36,9 +36,7 @@ abstract class BaseChannel extends ModelAction
     /**
      * Initialize method called when the notification channel is first loaded.
      */
-    public function initConfigData()
-    {
-    }
+    public function initConfigData() {}
 
     /**
      * Extra field configuration for the payment type.

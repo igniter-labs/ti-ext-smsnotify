@@ -15,7 +15,5 @@ return new class extends Migration
         Schema::dropIfExists('igniterlabs_smsnotify_logs');
     }
 
-    public function down()
-    {
-    }
+    public function down() {}
 };
