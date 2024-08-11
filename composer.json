@@ -14,8 +14,8 @@
     "notification"
   ],
   "require": {
-    "tastyigniter/core": "dev-master",
-    "tastyigniter/ti-ext-automation": "v4.x-dev as 4.0",
+    "tastyigniter/core": "^v4.0@beta",
+    "tastyigniter/ti-ext-automation": "^v4.0@beta",
     "vonage/client": "^2.0",
     "twilio/sdk": "~6.0",
     "arcturial/clickatell": "~3.0"
@@ -23,7 +23,7 @@
   "require-dev": {
     "laravel/pint": "^1.2",
     "larastan/larastan": "^2.4.0",
-    "sampoyigi/testbench": "^1.0",
+    "sampoyigi/testbench": "dev-main as 1.0",
     "pestphp/pest-plugin-laravel": "^2.0"
   },
   "autoload": {
@@ -62,5 +62,6 @@
     },
     "sort-packages": true
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "beta",
+  "prefer-stable": true
 }
