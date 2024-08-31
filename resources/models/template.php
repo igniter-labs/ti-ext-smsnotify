@@ -54,12 +54,12 @@ return [
         ],
         'fields' => [
             'name' => [
-                'label' => 'admin::lang.label_name',
+                'label' => 'igniter::admin.label_name',
                 'type' => 'text',
                 'span' => 'left',
             ],
             'code' => [
-                'label' => 'admin::lang.label_code',
+                'label' => 'igniter::admin.label_code',
                 'type' => 'text',
                 'span' => 'right',
             ],

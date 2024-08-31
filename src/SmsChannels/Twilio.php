@@ -39,6 +39,15 @@ class Twilio extends BaseChannel
         ];
     }
 
+    public function getConfigRules()
+    {
+        return [
+            'account_sid' => ['required', 'string', 'max:128'],
+            'auth_token' => ['required', 'string', 'max:128'],
+            'from' => ['required', 'string', 'max:128'],
+        ];
+    }
+
     public function send($to, $content)
     {
         $params = [

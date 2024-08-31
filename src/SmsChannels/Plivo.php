@@ -39,6 +39,15 @@ class Plivo extends BaseChannel
         ];
     }
 
+    public function getConfigRules()
+    {
+//        return [
+//            'auth_id' => ['required', 'string', 'max:128'],
+//            'auth_token' => ['required', 'string', 'max:128'],
+//            'from_number' => ['required', 'string', 'max:128'],
+//        ];
+    }
+
     public function send($to, $content)
     {
         $response = $this->client()->send_message([

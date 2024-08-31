@@ -40,6 +40,15 @@ class Aws extends BaseChannel
         ];
     }
 
+    public function getConfigRules()
+    {
+        return [
+            'key' => ['required', 'string', 'max:128'],
+            'secret' => ['required', 'string', 'max:128'],
+            'country_code' => ['required', 'string', 'max:128'],
+        ];
+    }
+
     public function send($to, $content)
     {
         // if not starting with + sign, use default country code

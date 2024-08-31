@@ -41,6 +41,15 @@ class Nexmo extends BaseChannel
         ];
     }
 
+    public function getConfigRules()
+    {
+        return [
+            'api_key' => ['required', 'string', 'max:128'],
+            'api_secret' => ['required', 'string', 'max:128'],
+            'send_from' => ['required', 'string', 'max:128'],
+        ];
+    }
+
     public function send($to, $content)
     {
         $payload = [

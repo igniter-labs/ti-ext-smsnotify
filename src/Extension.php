@@ -10,14 +10,10 @@ use IgniterLabs\SmsNotify\Classes\Manager;
  */
 class Extension extends BaseExtension
 {
-    public function register()
-    {
-        $this->app->singleton(Manager::class);
-    }
+    public $singletons = [
+        Manager::class,
+    ];
 
-    /**
-     * Registers any admin permissions used by this extension.
-     */
     public function registerPermissions(): array
     {
         return [

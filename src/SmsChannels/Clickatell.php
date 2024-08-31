@@ -37,6 +37,14 @@ class Clickatell extends BaseChannel
         ];
     }
 
+    public function getConfigRules()
+    {
+        return [
+            'api_key' => ['required', 'string', 'max:128'],
+            'api_id' => ['required', 'string', 'max:128'],
+        ];
+    }
+
     public function send($to, $content)
     {
         $responses = (new ClickatellClient($this->model->api_key))

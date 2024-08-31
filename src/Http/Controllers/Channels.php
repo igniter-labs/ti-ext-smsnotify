@@ -30,6 +30,7 @@ class Channels extends AdminController
     public array $formConfig = [
         'name' => 'igniterlabs.smsnotify::default.channel.text_title',
         'model' => \IgniterLabs\SmsNotify\Models\Channel::class,
+        'request' => \IgniterLabs\SmsNotify\Http\Requests\ChannelRequest::class,
         'create' => [
             'title' => 'igniterlabs.smsnotify::default.channel.text_new_title',
             'redirect' => 'igniterlabs/smsnotify/channels/edit/{id}',
