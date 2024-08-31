@@ -21,5 +21,4 @@ class TemplateRequest extends FormRequest
             'content' => ['required', 'string'],
         ];
     }
-
 }
