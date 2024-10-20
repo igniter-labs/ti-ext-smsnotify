@@ -16,6 +16,11 @@ parameters:
 			path: src/AutomationRules/Actions/SendSmsNotification.php
 
 		-
+			message: "#^Access to an undefined property Illuminate\\\\Support\\\\Optional\\:\\:\\$location_telephone\\.$#"
+			count: 1
+			path: src/AutomationRules/Actions/SendSmsNotification.php
+
+		-
 			message: "#^Call to an undefined static method IgniterLabs\\\\SmsNotify\\\\Models\\\\Template\\:\\:get\\(\\)\\.$#"
 			count: 1
 			path: src/AutomationRules/Actions/SendSmsNotification.php
@@ -24,6 +29,11 @@ parameters:
 			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Classes\\\\BaseChannel\\:\\:\\$channelClassName\\.$#"
 			count: 1
 			path: src/Classes/BaseChannel.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Support\\\\Optional\\:\\:\\$location_id\\.$#"
+			count: 1
+			path: src/Classes/Manager.php
 
 		-
 			message: "#^Call to an undefined static method Igniter\\\\Admin\\\\Facades\\\\AdminMenu\\:\\:setContext\\(\\)\\.$#"
@@ -49,6 +59,11 @@ parameters:
 			message: "#^Call to an undefined static method Igniter\\\\Local\\\\Facades\\\\Location\\:\\:current\\(\\)\\.$#"
 			count: 1
 			path: src/Http/Controllers/Templates.php
+
+		-
+			message: "#^Cannot call method getController\\(\\) on object\\|string\\.$#"
+			count: 2
+			path: src/Http/Requests/ChannelRequest.php
 
 		-
 			message: "#^Access to an undefined property IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:\\$class_name\\.$#"
@@ -86,7 +101,7 @@ parameters:
 			path: src/Models/Channel.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:whereHasOrDoesntHaveLocation\\(\\)\\.$#"
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<static\\(IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\)\\>\\:\\:whereHasOrDoesntHaveLocation\\(\\)\\.$#"
 			count: 2
 			path: src/Models/Channel.php
 
