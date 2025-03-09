@@ -13,14 +13,14 @@ use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Template;
 
 it('action details returns expected values', function(): void {
-    expect((new SendSmsNotification())->actionDetails())
+    expect((new SendSmsNotification)->actionDetails())
         ->toBeArray()
         ->toHaveKey('name', 'Send an SMS notification')
         ->toHaveKey('description', 'Send an SMS to a recipient');
 });
 
 it('define form fields returns expected structure', function(): void {
-    $fields = (new SendSmsNotification())->defineFormFields();
+    $fields = (new SendSmsNotification)->defineFormFields();
 
     expect($fields)
         ->toBeArray()
@@ -38,7 +38,7 @@ it('get template options returns templates from database', function(): void {
         'content' => 'Test content',
     ]);
 
-    $options = (new SendSmsNotification())->getTemplateOptions();
+    $options = (new SendSmsNotification)->getTemplateOptions();
 
     expect($options->toArray())
         ->toBeArray()
@@ -46,7 +46,7 @@ it('get template options returns templates from database', function(): void {
 });
 
 it('get send to options returns predefined options', function(): void {
-    $options = (new SendSmsNotification())->getSendToOptions();
+    $options = (new SendSmsNotification)->getSendToOptions();
 
     expect($options)
         ->toBeArray()
@@ -55,14 +55,14 @@ it('get send to options returns predefined options', function(): void {
 });
 
 it('trigger action returns false with invalid params', function(): void {
-    expect((new SendSmsNotification())->triggerAction(['invalid' => 'params']))->toBeNull();
+    expect((new SendSmsNotification)->triggerAction(['invalid' => 'params']))->toBeNull();
 });
 
 it('trigger action throws exception with missing template', function(): void {
     $order = Order::factory()->create([
         'customer_id' => Customer::factory(),
     ]);
-    $model = new RuleAction();
+    $model = new RuleAction;
     $model->template = null;
 
     expect(fn() => (new SendSmsNotification($model))->triggerAction(['order' => $order]))
@@ -73,7 +73,7 @@ it('trigger action throws exception with missing recipient', closure: function()
     $order = Order::factory()->create([
         'customer_id' => Customer::factory(),
     ]);
-    $model = new RuleAction();
+    $model = new RuleAction;
     $model->template = 'test_template';
     $model->send_to = 'custom';
     $model->custom = null;
@@ -98,7 +98,7 @@ it('trigger action successfully sends notification', function($sendTo, $expected
         $order->customer->telephone = $expectedNumber;
     }
 
-    $model = new RuleAction();
+    $model = new RuleAction;
     $model->template = 'test_template';
     $model->send_to = $sendTo;
     if ($sendTo === 'custom') {

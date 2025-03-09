@@ -9,7 +9,7 @@ use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\SmsChannels\Aws;
 
 it('returns correct channel details', function(): void {
-    $awsChannel = new Aws();
+    $awsChannel = new Aws;
 
     $details = $awsChannel->channelDetails();
 
@@ -19,7 +19,7 @@ it('returns correct channel details', function(): void {
 });
 
 it('returns correct form config', function(): void {
-    $awsChannel = new Aws();
+    $awsChannel = new Aws;
 
     $config = $awsChannel->defineFormConfig();
 
@@ -39,7 +39,7 @@ it('returns correct form config', function(): void {
 });
 
 it('returns correct config rules', function(): void {
-    $awsChannel = new Aws();
+    $awsChannel = new Aws;
 
     $rules = $awsChannel->getConfigRules();
 
@@ -57,7 +57,7 @@ it('sends message with default country code', function(): void {
     ])->andReturn(true);
     app()->singleton(SnsClient::class, fn() => $snsClient);
 
-    $channel = new Channel();
+    $channel = new Channel;
     $channel->forceFill([
         'key' => 'test_key',
         'secret' => 'test_secret',
@@ -76,7 +76,7 @@ it('sends message with provided country code', function(): void {
     ])->andReturn(true);
     app()->singleton(SnsClient::class, fn() => $snsClient);
 
-    $channel = new Channel();
+    $channel = new Channel;
     $channel->forceFill([
         'key' => 'test_key',
         'secret' => 'test_secret',

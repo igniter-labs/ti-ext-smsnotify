@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify\Tests\SmsChannels;
 
-use Plivo\RestClient;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\SmsChannels\Plivo;
 use Plivo\Resources\Message\MessageInterface;
+use Plivo\RestClient;
 
 it('returns correct channel details', function(): void {
-    $plivoChannel = new Plivo();
+    $plivoChannel = new Plivo;
 
     $details = $plivoChannel->channelDetails();
 
@@ -21,7 +21,7 @@ it('returns correct channel details', function(): void {
 });
 
 it('returns correct form config', function(): void {
-    $plivoChannel = new Plivo();
+    $plivoChannel = new Plivo;
 
     $config = $plivoChannel->defineFormConfig();
 
@@ -41,7 +41,7 @@ it('returns correct form config', function(): void {
 });
 
 it('returns correct config rules', function(): void {
-    $plivoChannel = new Plivo();
+    $plivoChannel = new Plivo;
 
     $rules = $plivoChannel->getConfigRules();
 
@@ -61,7 +61,7 @@ it('sends message successfully', function(): void {
     ])->andReturn(['status' => 202]);
     app()->singleton(RestClient::class, fn() => $plivoClient);
 
-    $channel = new Channel();
+    $channel = new Channel;
     $channel->forceFill([
         'auth_id' => 'test_auth_id',
         'auth_token' => 'test_auth_token',
@@ -84,7 +84,7 @@ it('throws exception on failed message send', function(): void {
     ])->andReturn(['status' => 400, 'response' => ['error' => 'Some error']]);
     app()->singleton(RestClient::class, fn() => $plivoClient);
 
-    $channel = new Channel();
+    $channel = new Channel;
     $channel->forceFill([
         'auth_id' => 'test_auth_id',
         'auth_token' => 'test_auth_token',

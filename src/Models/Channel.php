@@ -16,8 +16,6 @@ use Illuminate\Support\Carbon;
 use Override;
 
 /**
- *
- *
  * @property int $id
  * @property int|null $location_id
  * @property string $code

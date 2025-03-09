@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify\Http\Controllers;
 
-use Igniter\Admin\Http\Actions\FormController;
-use Igniter\Admin\Http\Actions\ListController;
-use IgniterLabs\SmsNotify\Http\Requests\TemplateRequest;
 use Exception;
 use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Facades\AdminMenu;
+use Igniter\Admin\Http\Actions\FormController;
+use Igniter\Admin\Http\Actions\ListController;
 use Igniter\Admin\Widgets\Form;
 use Igniter\Flame\Exception\FlashException;
 use Igniter\Local\Facades\Location as LocationFacade;
 use Igniter\Local\Models\Location;
 use IgniterLabs\SmsNotify\Classes\Manager;
+use IgniterLabs\SmsNotify\Http\Requests\TemplateRequest;
 use IgniterLabs\SmsNotify\Models\Template;
 
 class Templates extends AdminController

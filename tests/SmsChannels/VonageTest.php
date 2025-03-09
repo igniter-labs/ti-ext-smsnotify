@@ -9,7 +9,7 @@ use Vonage\Client;
 use Vonage\Message\Message;
 
 it('returns correct channel details', function(): void {
-    $vonageChannel = new Vonage();
+    $vonageChannel = new Vonage;
 
     $details = $vonageChannel->channelDetails();
 
@@ -19,7 +19,7 @@ it('returns correct channel details', function(): void {
 });
 
 it('returns correct form config', function(): void {
-    $vonageChannel = new Vonage();
+    $vonageChannel = new Vonage;
 
     $config = $vonageChannel->defineFormConfig();
 
@@ -39,7 +39,7 @@ it('returns correct form config', function(): void {
 });
 
 it('returns correct config rules', function(): void {
-    $vonageChannel = new Vonage();
+    $vonageChannel = new Vonage;
 
     $rules = $vonageChannel->getConfigRules();
 
@@ -59,7 +59,7 @@ it('sends message successfully', function(): void {
     )->andReturn(mock(Message::class));
     app()->singleton(Client::class, fn() => $vonageClient);
 
-    $channel = new Channel();
+    $channel = new Channel;
     $channel->forceFill([
         'api_key' => 'test_api_key',
         'api_secret' => 'test_api_secret',
@@ -74,7 +74,7 @@ it('sends message successfully', function(): void {
 });
 
 it('throws exception when api credentials are missing', function(): void {
-    $channel = new Channel();
+    $channel = new Channel;
     $channel->forceFill([
         'api_key' => '',
         'api_secret' => '',

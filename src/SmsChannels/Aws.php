@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
-use Override;
 use Aws\Sns\SnsClient;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
+use Override;
 
 class Aws extends BaseChannel
 {

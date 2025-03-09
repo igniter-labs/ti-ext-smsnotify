@@ -28,7 +28,7 @@ it('initializes correctly', function(): void {
 });
 
 it('send method is abstract and must be implemented', function(): void {
-    $model = new Channel();
+    $model = new Channel;
     $channel = new class($model) extends BaseChannel
     {
         public function defineFormConfig(): string

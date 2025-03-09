@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify\Tests;
 
-use IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification;
-use Igniter\Cart\AutomationRules\Events\NewOrderStatus;
 use Aws\Sns\SnsClient;
 use Clickatell\Rest as ClickatellClient;
+use Igniter\Cart\AutomationRules\Events\NewOrderStatus;
+use IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification;
 use IgniterLabs\SmsNotify\Extension;
 use IgniterLabs\SmsNotify\SmsChannels\Aws;
 use IgniterLabs\SmsNotify\SmsChannels\Clickatell;

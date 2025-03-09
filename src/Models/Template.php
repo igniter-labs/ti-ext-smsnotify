@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify\Models;
 
-use Override;
-use Illuminate\Support\Carbon;
 use Igniter\Flame\Database\Builder;
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Validation;
 use Igniter\Flame\Mail\MailParser;
 use IgniterLabs\SmsNotify\Classes\Manager;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
+use Override;
 
 /**
- *
  * @property int $id
  * @property string $code
  * @property string|null $name

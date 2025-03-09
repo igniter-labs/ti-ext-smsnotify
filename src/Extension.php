@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify;
 
-use Override;
-use IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification;
-use Igniter\Cart\AutomationRules\Events\NewOrderStatus;
-use IgniterLabs\SmsNotify\SmsChannels\Twilio;
-use IgniterLabs\SmsNotify\SmsChannels\Vonage;
-use IgniterLabs\SmsNotify\SmsChannels\Clickatell;
-use IgniterLabs\SmsNotify\SmsChannels\Plivo;
-use IgniterLabs\SmsNotify\SmsChannels\Aws;
 use Aws\Credentials\Credentials;
 use Aws\Sns\SnsClient;
 use Clickatell\Rest as ClickatellClient;
+use Igniter\Cart\AutomationRules\Events\NewOrderStatus;
 use Igniter\System\Classes\BaseExtension;
+use IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification;
 use IgniterLabs\SmsNotify\Classes\Manager;
+use IgniterLabs\SmsNotify\SmsChannels\Aws;
+use IgniterLabs\SmsNotify\SmsChannels\Clickatell;
+use IgniterLabs\SmsNotify\SmsChannels\Plivo;
+use IgniterLabs\SmsNotify\SmsChannels\Twilio;
+use IgniterLabs\SmsNotify\SmsChannels\Vonage;
+use Override;
 use Plivo\RestClient as PlivoClient;
 use Twilio\Rest\Client as TwilioClient;
 use Vonage\Client as VonageClient;

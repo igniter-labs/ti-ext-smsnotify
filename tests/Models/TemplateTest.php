@@ -66,7 +66,7 @@ it('syncs all templates correctly', function(): void {
 });
 
 it('configures template model correctly', function(): void {
-    $template = new Template();
+    $template = new Template;
 
     expect(class_uses_recursive($template))
         ->toContain(Validation::class)

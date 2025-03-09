@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify\Tests\SmsChannels;
 
-use Twilio\Rest\Client;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\SmsChannels\Twilio;
@@ -12,9 +11,10 @@ use Twilio\Rest\Api;
 use Twilio\Rest\Api\V2010;
 use Twilio\Rest\Api\V2010\Account\MessageInstance;
 use Twilio\Rest\Api\V2010\Account\MessageList;
+use Twilio\Rest\Client;
 
 it('returns correct channel details', function(): void {
-    $twilioChannel = new Twilio();
+    $twilioChannel = new Twilio;
 
     $details = $twilioChannel->channelDetails();
 
@@ -24,7 +24,7 @@ it('returns correct channel details', function(): void {
 });
 
 it('returns correct form config', function(): void {
-    $twilioChannel = new Twilio();
+    $twilioChannel = new Twilio;
 
     $config = $twilioChannel->defineFormConfig();
 
@@ -44,7 +44,7 @@ it('returns correct form config', function(): void {
 });
 
 it('returns correct config rules', function(): void {
-    $twilioChannel = new Twilio();
+    $twilioChannel = new Twilio;
 
     $rules = $twilioChannel->getConfigRules();
 
@@ -67,7 +67,7 @@ it('sends message successfully with from number', function(): void {
     ], 'test_account_sid'));
     app()->singleton(Client::class, fn() => $twilioClient);
 
-    $channel = new Channel();
+    $channel = new Channel;
     $channel->forceFill([
         'account_sid' => 'test_account_sid',
         'auth_token' => 'test_auth_token',
@@ -82,7 +82,7 @@ it('sends message successfully with from number', function(): void {
 });
 
 it('throws exception when from number and service sid are missing', function(): void {
-    $channel = new Channel();
+    $channel = new Channel;
     $channel->forceFill([
         'account_sid' => 'test_account_sid',
         'auth_token' => 'test_auth_token',

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
-use Override;
 use Clickatell\Rest as ClickatellClient;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
+use Override;
 
 class Clickatell extends BaseChannel
 {

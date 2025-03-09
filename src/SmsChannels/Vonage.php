@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
-use Override;
-use Vonage\Message\Message;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
+use Override;
 use Vonage\Client as VonageClient;
+use Vonage\Message\Message;
 
 class Vonage extends BaseChannel
 {

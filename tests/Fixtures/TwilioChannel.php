@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify\Tests\Fixtures;
 
-use Override;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
+use Override;
 
 class TwilioChannel extends BaseChannel
 {

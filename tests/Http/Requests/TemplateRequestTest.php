@@ -7,7 +7,7 @@ namespace IgniterLabs\SmsNotify\Tests\Http\Requests;
 use IgniterLabs\SmsNotify\Http\Requests\TemplateRequest;
 
 it('returns correct attribute labels', function(): void {
-    $request = new TemplateRequest();
+    $request = new TemplateRequest;
 
     expect($request->attributes())
         ->toHaveKey('name', lang('igniter::admin.label_name'))
@@ -15,7 +15,7 @@ it('returns correct attribute labels', function(): void {
 });
 
 it('returns correct validation rules', function(): void {
-    $request = new TemplateRequest();
+    $request = new TemplateRequest;
 
     expect($request->rules())
         ->toHaveKey('name', ['required', 'string', 'max:128'])

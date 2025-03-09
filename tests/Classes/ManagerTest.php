@@ -13,7 +13,7 @@ use IgniterLabs\SmsNotify\Tests\Fixtures\TwilioChannel;
 beforeEach(function(): void {
     $this->extensionManager = mock(ExtensionManager::class);
     app()->instance(ExtensionManager::class, $this->extensionManager);
-    $this->manager = new Manager();
+    $this->manager = new Manager;
 });
 
 it('lists registered channels', function(): void {
@@ -94,7 +94,7 @@ it('builds content from a template', function(): void {
 });
 
 it('renders a template with provided data', function(): void {
-    $template = new Template();
+    $template = new Template;
     $template->content = 'Hello {{$name}}, welcome to {{$site_name}}!';
 
     $data = [

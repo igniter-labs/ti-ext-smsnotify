@@ -106,8 +106,8 @@ it('lists enabled channels correctly', function(): void {
 it('syncs all channels correctly', function(): void {
     $manager = mock(Manager::class);
     $manager->shouldReceive('listChannelObjects')->andReturn([
-        'test_channel_1' => new TwilioChannel(),
-        'new_channel' => new TwilioChannel(),
+        'test_channel_1' => new TwilioChannel,
+        'new_channel' => new TwilioChannel,
     ]);
     app()->instance(Manager::class, $manager);
 
@@ -126,7 +126,7 @@ it('syncs all channels correctly', function(): void {
 });
 
 it('configures channel model correctly', function(): void {
-    $channel = new Channel();
+    $channel = new Channel;
 
     expect(class_uses_recursive($channel))
         ->toContain(Locationable::class)

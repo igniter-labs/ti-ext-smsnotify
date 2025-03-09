@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify\Http\Controllers;
 
-use Igniter\Admin\Http\Actions\FormController;
-use Igniter\Admin\Http\Actions\ListController;
-use Igniter\Local\Http\Actions\LocationAwareController;
-use IgniterLabs\SmsNotify\Http\Requests\ChannelRequest;
 use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Facades\AdminMenu;
+use Igniter\Admin\Http\Actions\FormController;
+use Igniter\Admin\Http\Actions\ListController;
 use Igniter\Flame\Exception\FlashException;
+use Igniter\Local\Http\Actions\LocationAwareController;
 use IgniterLabs\SmsNotify\Classes\Manager;
+use IgniterLabs\SmsNotify\Http\Requests\ChannelRequest;
 use IgniterLabs\SmsNotify\Models\Channel;
 
 class Channels extends AdminController

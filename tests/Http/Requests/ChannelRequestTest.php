@@ -7,7 +7,7 @@ namespace IgniterLabs\SmsNotify\Tests\Http\Requests;
 use IgniterLabs\SmsNotify\Http\Requests\ChannelRequest;
 
 it('returns correct attribute labels', function(): void {
-    $request = new ChannelRequest();
+    $request = new ChannelRequest;
 
     expect($request->attributes())
         ->toHaveKey('channel', lang('igniterlabs.smsnotify::default.channel.label_channel'))
@@ -20,7 +20,7 @@ it('returns correct attribute labels', function(): void {
 });
 
 it('returns correct validation rules', function(): void {
-    $request = new ChannelRequest();
+    $request = new ChannelRequest;
 
     expect($request->rules())
         ->toHaveKey('channel', ['sometimes', 'required', 'alpha_dash'])

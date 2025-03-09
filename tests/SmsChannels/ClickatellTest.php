@@ -10,7 +10,7 @@ use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\SmsChannels\Clickatell;
 
 it('returns correct channel details', function(): void {
-    $clickatellChannel = new Clickatell();
+    $clickatellChannel = new Clickatell;
 
     $details = $clickatellChannel->channelDetails();
 
@@ -20,7 +20,7 @@ it('returns correct channel details', function(): void {
 });
 
 it('returns correct form config', function(): void {
-    $clickatellChannel = new Clickatell();
+    $clickatellChannel = new Clickatell;
 
     $config = $clickatellChannel->defineFormConfig();
 
@@ -37,7 +37,7 @@ it('returns correct form config', function(): void {
 });
 
 it('returns correct config rules', function(): void {
-    $clickatellChannel = new Clickatell();
+    $clickatellChannel = new Clickatell;
 
     $rules = $clickatellChannel->getConfigRules();
 
@@ -54,7 +54,7 @@ it('sends message successfully', function(): void {
     ])->andReturn([['errorCode' => 0]]);
     app()->singleton(Rest::class, fn() => $clickatellClient);
 
-    $channel = new Channel();
+    $channel = new Channel;
     $channel->forceFill([
         'api_key' => 'test_api_key',
         'api_id' => 'test_api_id',
@@ -72,7 +72,7 @@ it('throws exception on failed message send', function(): void {
     ])->andReturn([['errorCode' => 1, 'error' => 'Some error']]);
     app()->singleton(Rest::class, fn() => $clickatellClient);
 
-    $channel = new Channel();
+    $channel = new Channel;
     $channel->forceFill([
         'api_key' => 'test_api_key',
         'api_id' => 'test_api_id',
