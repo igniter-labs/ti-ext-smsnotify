@@ -1,7 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify;
 
+use Override;
+use IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification;
+use Igniter\Cart\AutomationRules\Events\NewOrderStatus;
+use IgniterLabs\SmsNotify\SmsChannels\Twilio;
+use IgniterLabs\SmsNotify\SmsChannels\Vonage;
+use IgniterLabs\SmsNotify\SmsChannels\Clickatell;
+use IgniterLabs\SmsNotify\SmsChannels\Plivo;
+use IgniterLabs\SmsNotify\SmsChannels\Aws;
 use Aws\Credentials\Credentials;
 use Aws\Sns\SnsClient;
 use Clickatell\Rest as ClickatellClient;
@@ -21,7 +31,8 @@ class Extension extends BaseExtension
         Manager::class,
     ];
 
-    public function boot()
+    #[Override]
+    public function boot(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/channels.php', 'igniterlabs-smsnotify');
 
@@ -32,6 +43,7 @@ class Extension extends BaseExtension
         $this->registerTwilioClient();
     }
 
+    #[Override]
     public function registerPermissions(): array
     {
         return [
@@ -42,6 +54,7 @@ class Extension extends BaseExtension
         ];
     }
 
+    #[Override]
     public function registerNavigation(): array
     {
         return [
@@ -59,6 +72,7 @@ class Extension extends BaseExtension
         ];
     }
 
+    #[Override]
     public function registerSettings(): array
     {
         return [
@@ -72,20 +86,20 @@ class Extension extends BaseExtension
         ];
     }
 
-    public function registerAutomationRules()
+    public function registerAutomationRules(): array
     {
         return [
             'events' => [],
             'actions' => [
-                \IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification::class,
+                SendSmsNotification::class,
             ],
             'conditions' => [],
             'presets' => [
                 'smsnotify_new_order_status' => [
                     'name' => 'Send an SMS message when an order status is updated',
-                    'event' => \Igniter\Cart\AutomationRules\Events\NewOrderStatus::class,
+                    'event' => NewOrderStatus::class,
                     'actions' => [
-                        \IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification::class => [
+                        SendSmsNotification::class => [
                             'template' => 'igniterlabs.smsnotify::_sms.order_status_changed',
                             'send_to' => 'customer',
                         ],
@@ -95,18 +109,18 @@ class Extension extends BaseExtension
         ];
     }
 
-    public function registerSmsChannels()
+    public function registerSmsChannels(): array
     {
         return [
-            'twilio' => \IgniterLabs\SmsNotify\SmsChannels\Twilio::class,
-            'vonage' => \IgniterLabs\SmsNotify\SmsChannels\Vonage::class,
-            'clickatell' => \IgniterLabs\SmsNotify\SmsChannels\Clickatell::class,
-            'plivo' => \IgniterLabs\SmsNotify\SmsChannels\Plivo::class,
-            'aws' => \IgniterLabs\SmsNotify\SmsChannels\Aws::class,
+            'twilio' => Twilio::class,
+            'vonage' => Vonage::class,
+            'clickatell' => Clickatell::class,
+            'plivo' => Plivo::class,
+            'aws' => Aws::class,
         ];
     }
 
-    public function registerSmsTemplates()
+    public function registerSmsTemplates(): array
     {
         return [
             'igniterlabs.smsnotify::_sms.new_order' => 'igniterlabs.smsnotify::default.template.text_order_placed',
@@ -122,53 +136,43 @@ class Extension extends BaseExtension
 
     protected function registerSnsClient(): void
     {
-        $this->app->singleton(SnsClient::class, function($app) {
-            return new SnsClient([
-                'credentials' => new Credentials(
-                    $app['config']['igniterlabs-smsnotify.aws.key'],
-                    $app['config']['igniterlabs-smsnotify.aws.secret'],
-                ),
-                'use_aws_shared_config_files' => false,
-                'region' => 'us-east-1',
-                'version' => '2010-03-31',
-            ]);
-        });
+        $this->app->singleton(SnsClient::class, fn($app): SnsClient => new SnsClient([
+            'credentials' => new Credentials(
+                $app['config']['igniterlabs-smsnotify.aws.key'],
+                $app['config']['igniterlabs-smsnotify.aws.secret'],
+            ),
+            'use_aws_shared_config_files' => false,
+            'region' => 'us-east-1',
+            'version' => '2010-03-31',
+        ]));
     }
 
     protected function registerClickatellClient(): void
     {
-        $this->app->singleton(ClickatellClient::class, function($app) {
-            return new ClickatellClient($app['config']['igniterlabs-smsnotify.clickatell.api_key']);
-        });
+        $this->app->singleton(ClickatellClient::class, fn($app): ClickatellClient => new ClickatellClient($app['config']['igniterlabs-smsnotify.clickatell.api_key']));
     }
 
     protected function registerPlivoClient(): void
     {
-        $this->app->singleton(PlivoClient::class, function($app) {
-            return new PlivoClient(
-                $app['config']['igniterlabs-smsnotify.plivo.auth_id'],
-                $app['config']['igniterlabs-smsnotify.plivo.auth_token'],
-            );
-        });
+        $this->app->singleton(PlivoClient::class, fn($app): PlivoClient => new PlivoClient(
+            $app['config']['igniterlabs-smsnotify.plivo.auth_id'],
+            $app['config']['igniterlabs-smsnotify.plivo.auth_token'],
+        ));
     }
 
     protected function registerVonageClient(): void
     {
-        $this->app->singleton(VonageClient::class, function($app) {
-            return new VonageClient(new Basic(
-                $app['config']['igniterlabs-smsnotify.vonage.api_key'],
-                $app['config']['igniterlabs-smsnotify.vonage.api_secret'],
-            ));
-        });
+        $this->app->singleton(VonageClient::class, fn($app): \Vonage\Client => new VonageClient(new Basic(
+            $app['config']['igniterlabs-smsnotify.vonage.api_key'],
+            $app['config']['igniterlabs-smsnotify.vonage.api_secret'],
+        )));
     }
 
     protected function registerTwilioClient(): void
     {
-        $this->app->singleton(TwilioClient::class, function($app) {
-            return new TwilioClient(
-                $app['config']['igniterlabs-smsnotify.twilio.account_sid'],
-                $app['config']['igniterlabs-smsnotify.twilio.auth_token'],
-            );
-        });
+        $this->app->singleton(TwilioClient::class, fn($app): TwilioClient => new TwilioClient(
+            $app['config']['igniterlabs-smsnotify.twilio.account_sid'],
+            $app['config']['igniterlabs-smsnotify.twilio.auth_token'],
+        ));
     }
 }

@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\SmsChannels\Vonage;
+use Vonage\Client;
+use Vonage\Message\Message;
 
-it('returns correct channel details', function() {
+it('returns correct channel details', function(): void {
     $vonageChannel = new Vonage();
 
     $details = $vonageChannel->channelDetails();
@@ -14,7 +18,7 @@ it('returns correct channel details', function() {
         ->and($details['description'])->toBe('igniterlabs.smsnotify::default.vonage.text_desc');
 });
 
-it('returns correct form config', function() {
+it('returns correct form config', function(): void {
     $vonageChannel = new Vonage();
 
     $config = $vonageChannel->defineFormConfig();
@@ -34,7 +38,7 @@ it('returns correct form config', function() {
         ->and($config['fields']['send_from']['type'])->toBe('text');
 });
 
-it('returns correct config rules', function() {
+it('returns correct config rules', function(): void {
     $vonageChannel = new Vonage();
 
     $rules = $vonageChannel->getConfigRules();
@@ -45,32 +49,31 @@ it('returns correct config rules', function() {
         ->and($rules['send_from'])->toContain('required', 'string', 'max:128');
 });
 
-it('sends message successfully', function() {
-    $vonageClient = Mockery::mock(\Vonage\Client::class);
-    $vonageClient->shouldReceive('message->send')->withArgs(function($payload) {
-        return $payload['type'] === 'text' &&
-            $payload['from'] === '12345' &&
-            $payload['to'] === '67890' &&
-            $payload['text'] === 'Test message' &&
-            $payload['client-ref'] === '';
-    })->andReturn(['message-id' => 'abc123']);
-    app()->singleton(\Vonage\Client::class, fn() => $vonageClient);
+it('sends message successfully', function(): void {
+    $vonageClient = Mockery::mock(Client::class);
+    $vonageClient->shouldReceive('message->send')->once()->withArgs(fn($payload): bool => $payload['type'] === 'text' &&
+        $payload['from'] === '12345' &&
+        $payload['to'] === '67890' &&
+        $payload['text'] === 'Test message' &&
+        $payload['client-ref'] === '',
+    )->andReturn(mock(Message::class));
+    app()->singleton(Client::class, fn() => $vonageClient);
 
     $channel = new Channel();
     $channel->forceFill([
         'api_key' => 'test_api_key',
         'api_secret' => 'test_api_secret',
         'send_from' => '12345',
-        'status_callback' => function() {},
+        'status_callback' => function(): void {},
     ]);
     $vonageChannel = new Vonage($channel);
 
     $response = $vonageChannel->send('67890', 'Test message');
 
-    expect($response['message-id'])->toBe('abc123');
+    expect($response)->toBeInstanceOf(Message::class);
 });
 
-it('throws exception when api credentials are missing', function() {
+it('throws exception when api credentials are missing', function(): void {
     $channel = new Channel();
     $channel->forceFill([
         'api_key' => '',
@@ -79,6 +82,6 @@ it('throws exception when api credentials are missing', function() {
     ]);
     $vonageChannel = new Vonage($channel);
 
-    expect(fn() => $vonageChannel->send('67890', 'Test message'))
+    expect(fn(): Message => $vonageChannel->send('67890', 'Test message'))
         ->toThrow(SystemException::class, 'Please provide your Vonage API credentials. api_key + api_secret');
 });

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\SmsChannels;
 
 use Aws\Sns\SnsClient;
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\SmsChannels\Aws;
 
-it('returns correct channel details', function() {
+it('returns correct channel details', function(): void {
     $awsChannel = new Aws();
 
     $details = $awsChannel->channelDetails();
@@ -16,7 +18,7 @@ it('returns correct channel details', function() {
         ->and($details['description'])->toBe('igniterlabs.smsnotify::default.aws.text_desc');
 });
 
-it('returns correct form config', function() {
+it('returns correct form config', function(): void {
     $awsChannel = new Aws();
 
     $config = $awsChannel->defineFormConfig();
@@ -36,7 +38,7 @@ it('returns correct form config', function() {
         ->and($config['fields']['country_code']['type'])->toBe('text');
 });
 
-it('returns correct config rules', function() {
+it('returns correct config rules', function(): void {
     $awsChannel = new Aws();
 
     $rules = $awsChannel->getConfigRules();
@@ -47,7 +49,7 @@ it('returns correct config rules', function() {
         ->and($rules['country_code'])->toContain('required', 'string', 'max:128');
 });
 
-it('sends message with default country code', function() {
+it('sends message with default country code', function(): void {
     $snsClient = mock(SnsClient::class);
     $snsClient->shouldReceive('publish')->once()->with([
         'Message' => 'Test message',
@@ -66,7 +68,7 @@ it('sends message with default country code', function() {
     $awsChannel->send('234567890', 'Test message');
 });
 
-it('sends message with provided country code', function() {
+it('sends message with provided country code', function(): void {
     $snsClient = mock(SnsClient::class);
     $snsClient->shouldReceive('publish')->once()->with([
         'Message' => 'Test message',

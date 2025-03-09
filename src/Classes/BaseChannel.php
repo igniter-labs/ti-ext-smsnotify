@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Classes;
 
+use Igniter\Flame\Database\Model;
 use Igniter\System\Actions\ModelAction;
 
 abstract class BaseChannel extends ModelAction
@@ -10,11 +13,11 @@ abstract class BaseChannel extends ModelAction
 
     protected $configRules = [];
 
-    public function __construct($model = null)
+    public function __construct(?Model $model = null)
     {
         parent::__construct($model);
 
-        $parts = explode('\\', strtolower(get_called_class()));
+        $parts = explode('\\', strtolower(static::class));
         $namespace = implode('.', array_slice($parts, 0, 2));
 
         $this->configPath[] = 'igniterlabs.smsnotify::/models';
@@ -24,7 +27,7 @@ abstract class BaseChannel extends ModelAction
         $this->configFields = array_get($formConfig, 'fields', []);
         $this->configRules = array_get($formConfig, 'rules', []);
 
-        if (!$model) {
+        if (!$model instanceof Model) {
             return;
         }
 

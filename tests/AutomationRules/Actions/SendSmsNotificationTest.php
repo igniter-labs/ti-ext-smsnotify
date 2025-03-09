@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\AutomationRules\Actions;
 
 use Igniter\Automation\AutomationException;
@@ -10,14 +12,14 @@ use IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Template;
 
-it('action details returns expected values', function() {
+it('action details returns expected values', function(): void {
     expect((new SendSmsNotification())->actionDetails())
         ->toBeArray()
         ->toHaveKey('name', 'Send an SMS notification')
         ->toHaveKey('description', 'Send an SMS to a recipient');
 });
 
-it('define form fields returns expected structure', function() {
+it('define form fields returns expected structure', function(): void {
     $fields = (new SendSmsNotification())->defineFormFields();
 
     expect($fields)
@@ -29,7 +31,7 @@ it('define form fields returns expected structure', function() {
         ->toHaveKey('custom');
 });
 
-it('get template options returns templates from database', function() {
+it('get template options returns templates from database', function(): void {
     Template::create([
         'code' => 'igniterlabs.smsnotify::_sms.new_order',
         'name' => 'Test Template',
@@ -43,7 +45,7 @@ it('get template options returns templates from database', function() {
         ->toHaveKey('igniterlabs.smsnotify::_sms.new_order', 'Test Template');
 });
 
-it('get send to options returns predefined options', function() {
+it('get send to options returns predefined options', function(): void {
     $options = (new SendSmsNotification())->getSendToOptions();
 
     expect($options)
@@ -52,11 +54,11 @@ it('get send to options returns predefined options', function() {
         ->toHaveKeys(['location', 'customer', 'order', 'reservation', 'custom']);
 });
 
-it('trigger action returns false with invalid params', function() {
+it('trigger action returns false with invalid params', function(): void {
     expect((new SendSmsNotification())->triggerAction(['invalid' => 'params']))->toBeNull();
 });
 
-it('trigger action throws exception with missing template', function() {
+it('trigger action throws exception with missing template', function(): void {
     $order = Order::factory()->create([
         'customer_id' => Customer::factory(),
     ]);
@@ -67,7 +69,7 @@ it('trigger action throws exception with missing template', function() {
         ->toThrow(AutomationException::class, 'SendSmsNotification: Missing a valid mail template');
 });
 
-it('trigger action throws exception with missing recipient', closure: function() {
+it('trigger action throws exception with missing recipient', closure: function(): void {
     $order = Order::factory()->create([
         'customer_id' => Customer::factory(),
     ]);
@@ -80,16 +82,18 @@ it('trigger action throws exception with missing recipient', closure: function()
         ->toThrow(AutomationException::class, 'SendSmsNotification: Missing a valid send to number from the event payload');
 });
 
-it('trigger action successfully sends notification', function($sendTo, $expectedNumber) {
+it('trigger action successfully sends notification', function($sendTo, $expectedNumber): void {
     $order = Order::factory()->create([
         'customer_id' => Customer::factory(),
     ]);
     if (in_array($sendTo, ['order', 'reservation'])) {
         $order->telephone = $expectedNumber;
     }
+
     if ($sendTo === 'location') {
         $order->location->location_telephone = $expectedNumber;
     }
+
     if ($sendTo === 'customer') {
         $order->customer->telephone = $expectedNumber;
     }

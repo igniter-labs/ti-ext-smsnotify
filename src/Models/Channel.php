@@ -1,13 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Models;
 
+use Igniter\Flame\Database\Builder;
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Purgeable;
 use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Local\Models\Concerns\Locationable;
 use Igniter\Local\Models\Location;
+use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use IgniterLabs\SmsNotify\Classes\Manager;
+use Illuminate\Support\Carbon;
+use Override;
 
 /**
  *
@@ -21,22 +27,22 @@ use IgniterLabs\SmsNotify\Classes\Manager;
  * @property array<array-key, mixed>|null $config_data
  * @property bool|null $is_enabled
  * @property bool|null $is_default
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Igniter\Flame\Database\Builder<static>|Channel applyFilters(array $options = [])
- * @method static \Igniter\Flame\Database\Builder<static>|Channel applySorts(array $sorts = [])
- * @method static \Igniter\Flame\Database\Builder<static>|Channel dropdown(string $column, string $key = null)
- * @method static \Igniter\Flame\Database\Builder<static>|Channel like(string $column, string $value, string $side = 'both', string $boolean = 'and')
- * @method static \Igniter\Flame\Database\Builder<static>|Channel listFrontEnd(array $options = [])
- * @method static \Igniter\Flame\Database\Builder<static>|Channel lists(string $column, string $key = null)
- * @method static \Igniter\Flame\Database\Builder<static>|Channel newModelQuery()
- * @method static \Igniter\Flame\Database\Builder<static>|Channel newQuery()
- * @method static \Igniter\Flame\Database\Builder<static>|Channel orLike(string $column, string $value, string $side = 'both')
- * @method static \Igniter\Flame\Database\Builder<static>|Channel orSearch(string $term, string $columns = [], string $mode = 'all')
- * @method static \Igniter\Flame\Database\Builder<static>|Channel pluckDates(string $column, string $keyFormat = '%Y-%m', string $valueFormat = '%M %Y')
- * @method static \Igniter\Flame\Database\Builder<static>|Channel query()
- * @method static \Igniter\Flame\Database\Builder<static>|Channel search(string $term, string $columns = [], string $mode = 'all')
- * @method static \Igniter\Flame\Database\Builder<static>|Channel whereCode($value)
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder<static>|Channel applyFilters(array $options = [])
+ * @method static Builder<static>|Channel applySorts(array $sorts = [])
+ * @method static Builder<static>|Channel dropdown(string $column, string $key = null)
+ * @method static Builder<static>|Channel like(string $column, string $value, string $side = 'both', string $boolean = 'and')
+ * @method static Builder<static>|Channel listFrontEnd(array $options = [])
+ * @method static Builder<static>|Channel lists(string $column, string $key = null)
+ * @method static Builder<static>|Channel newModelQuery()
+ * @method static Builder<static>|Channel newQuery()
+ * @method static Builder<static>|Channel orLike(string $column, string $value, string $side = 'both')
+ * @method static Builder<static>|Channel orSearch(string $term, string $columns = [], string $mode = 'all')
+ * @method static Builder<static>|Channel pluckDates(string $column, string $keyFormat = '%Y-%m', string $valueFormat = '%M %Y')
+ * @method static Builder<static>|Channel query()
+ * @method static Builder<static>|Channel search(string $term, string $columns = [], string $mode = 'all')
+ * @method static Builder<static>|Channel whereCode($value)
  * @mixin Model
  */
 class Channel extends Model
@@ -82,15 +88,13 @@ class Channel extends Model
     public static function getConfig($channelCode = null, $default = null)
     {
         if (!self::$configCache) {
-            self::$configCache = self::whereIsEnabled()->get()->mapWithKeys(function(self $model) {
-                return [$model->code => $model->config_data];
-            })->all();
+            self::$configCache = self::whereIsEnabled()->get()->mapWithKeys(fn(self $model) => [$model->code => $model->config_data])->all();
         }
 
         return array_get(self::$configCache, $channelCode, $default);
     }
 
-    public static function clearStaticCache()
+    public static function clearStaticCache(): void
     {
         self::$configCache = null;
         self::$defaultChannel = null;
@@ -102,7 +106,7 @@ class Channel extends Model
             return $value;
         }
 
-        return ($channelObject = $this->getChannelObject()) ? lang($channelObject->getName()) : null;
+        return (($channelObject = $this->getChannelObject()) instanceof BaseChannel) ? lang($channelObject->getName()) : null;
     }
 
     public function getDescriptionAttribute($value)
@@ -111,13 +115,14 @@ class Channel extends Model
             return $value;
         }
 
-        return ($channelObject = $this->getChannelObject()) ? lang($channelObject->getDescription()) : null;
+        return (($channelObject = $this->getChannelObject()) instanceof BaseChannel) ? lang($channelObject->getDescription()) : null;
     }
 
     //
     // Events
     //
 
+    #[Override]
     protected function afterFetch()
     {
         $this->applyChannelClass();
@@ -127,6 +132,7 @@ class Channel extends Model
         }
     }
 
+    #[Override]
     protected function beforeSave()
     {
         if (!$this->exists) {
@@ -167,12 +173,10 @@ class Channel extends Model
     //
     // Manager
     //
-
     /**
      * Extends this model with the notification class
-     * @return bool
      */
-    public function applyChannelClass()
+    public function applyChannelClass(): bool
     {
         $className = $this->class_name;
         if (!$className || !class_exists($className)) {
@@ -188,10 +192,7 @@ class Channel extends Model
         return true;
     }
 
-    /**
-     * @return \IgniterLabs\SmsNotify\Classes\BaseChannel
-     */
-    public function getChannelObject()
+    public function getChannelObject(): ?BaseChannel
     {
         return $this->class_name ? $this->asExtension($this->class_name) : null;
     }
@@ -200,7 +201,7 @@ class Channel extends Model
     // Helpers
     //
 
-    public function makeDefault()
+    public function makeDefault(): void
     {
         throw_unless($this->is_enabled, ApplicationException::class, 'Cannot set default channel when disabled.');
 
@@ -252,9 +253,8 @@ class Channel extends Model
 
     /**
      * Synchronise all channels to the database.
-     * @return void
      */
-    public static function syncAll()
+    public static function syncAll(): void
     {
         $manager = resolve(Manager::class);
         $channels = self::pluck('code')->all();
@@ -265,7 +265,7 @@ class Channel extends Model
 
             $model = self::make([
                 'code' => $code,
-                'class_name' => get_class($channelObject),
+                'class_name' => $channelObject::class,
                 'name' => lang($channelObject->getName()),
                 'description' => lang($channelObject->getDescription()),
             ]);

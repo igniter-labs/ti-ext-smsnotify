@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
+use Override;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use Plivo\RestClient as PlivoClient;
 
 class Plivo extends BaseChannel
 {
-    public function channelDetails()
+    #[Override]
+    public function channelDetails(): array
     {
         return [
             'name' => 'igniterlabs.smsnotify::default.plivo.text_title',
@@ -16,7 +20,8 @@ class Plivo extends BaseChannel
         ];
     }
 
-    public function defineFormConfig()
+    #[Override]
+    public function defineFormConfig(): array
     {
         return [
             'fields' => [
@@ -40,7 +45,8 @@ class Plivo extends BaseChannel
         ];
     }
 
-    public function getConfigRules()
+    #[Override]
+    public function getConfigRules(): array
     {
         return [
             'auth_id' => ['required', 'string', 'max:128'],
@@ -49,9 +55,10 @@ class Plivo extends BaseChannel
         ];
     }
 
+    #[Override]
     public function send($to, $content)
     {
-        app()->resolving(PlivoClient::class, function() {
+        app()->resolving(PlivoClient::class, function(): void {
             config([
                 'igniterlabs-smsnotify.plivo.auth_id' => $this->model->auth_id,
                 'igniterlabs-smsnotify.plivo.auth_token' => $this->model->auth_token,
@@ -65,7 +72,7 @@ class Plivo extends BaseChannel
         ]);
 
         if ($response['status'] !== 202) {
-            throw new SystemException("SMS message was not sent. Plivo responded with `{$response['status']}: {$response['response']['error']}`");
+            throw new SystemException(sprintf('SMS message was not sent. Plivo responded with `%s: %s`', $response['status'], $response['response']['error']));
         }
 
         return $response;

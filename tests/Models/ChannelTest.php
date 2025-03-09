@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\Models;
 
 use Igniter\Flame\Database\Traits\Purgeable;
@@ -10,7 +12,7 @@ use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\Tests\Fixtures\TwilioChannel;
 
-it('returns correct config for enabled channel', function() {
+it('returns correct config for enabled channel', function(): void {
     Channel::clearStaticCache();
     $channel = Channel::create([
         'code' => 'test_channel',
@@ -29,7 +31,7 @@ it('returns correct config for enabled channel', function() {
     expect($config)->toBe($default);
 });
 
-it('returns correct name and description attribute', function() {
+it('returns correct name and description attribute', function(): void {
     Channel::flushEventListeners();
     $channel = Channel::create([
         'code' => 'test_channel',
@@ -41,7 +43,7 @@ it('returns correct name and description attribute', function() {
         ->and($channel->description)->toBe('Send notifications via Twilio');
 });
 
-it('throws exception when setting default on disabled channel', function() {
+it('throws exception when setting default on disabled channel', function(): void {
     $channel = Channel::create([
         'code' => 'test_channel',
         'is_enabled' => false,
@@ -50,7 +52,7 @@ it('throws exception when setting default on disabled channel', function() {
     expect(fn() => $channel->makeDefault())->toThrow(ApplicationException::class);
 });
 
-it('sets default channel correctly', function() {
+it('sets default channel correctly', function(): void {
     $channel = Channel::create([
         'code' => 'test_channel',
         'is_enabled' => true,
@@ -74,7 +76,7 @@ it('sets default channel correctly', function() {
         ->and($defaultChannel)->toEqual(Channel::getDefault());
 });
 
-it('lists enabled channels correctly', function() {
+it('lists enabled channels correctly', function(): void {
     Channel::clearStaticCache();
     $manager = mock(Manager::class);
     $manager->shouldReceive('listChannels')->andReturn([
@@ -101,7 +103,7 @@ it('lists enabled channels correctly', function() {
         ->and($channels)->not->toHaveKey('test_channel_2');
 });
 
-it('syncs all channels correctly', function() {
+it('syncs all channels correctly', function(): void {
     $manager = mock(Manager::class);
     $manager->shouldReceive('listChannelObjects')->andReturn([
         'test_channel_1' => new TwilioChannel(),

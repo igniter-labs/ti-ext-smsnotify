@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\SmsChannels;
 
+use Twilio\Rest\Client;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\SmsChannels\Twilio;
@@ -10,7 +13,7 @@ use Twilio\Rest\Api\V2010;
 use Twilio\Rest\Api\V2010\Account\MessageInstance;
 use Twilio\Rest\Api\V2010\Account\MessageList;
 
-it('returns correct channel details', function() {
+it('returns correct channel details', function(): void {
     $twilioChannel = new Twilio();
 
     $details = $twilioChannel->channelDetails();
@@ -20,7 +23,7 @@ it('returns correct channel details', function() {
         ->and($details['description'])->toBe('igniterlabs.smsnotify::default.twilio.text_desc');
 });
 
-it('returns correct form config', function() {
+it('returns correct form config', function(): void {
     $twilioChannel = new Twilio();
 
     $config = $twilioChannel->defineFormConfig();
@@ -40,7 +43,7 @@ it('returns correct form config', function() {
         ->and($config['fields']['from']['type'])->toBe('text');
 });
 
-it('returns correct config rules', function() {
+it('returns correct config rules', function(): void {
     $twilioChannel = new Twilio();
 
     $rules = $twilioChannel->getConfigRules();
@@ -51,9 +54,9 @@ it('returns correct config rules', function() {
         ->and($rules['from'])->toContain('required', 'string', 'max:128');
 });
 
-it('sends message successfully with from number', function() {
-    /** @var \Twilio\Rest\Client $twilioClient */
-    $twilioClient = mock(\Twilio\Rest\Client::class)->shouldAllowMockingProtectedMethods();
+it('sends message successfully with from number', function(): void {
+    /** @var Client $twilioClient */
+    $twilioClient = mock(Client::class)->shouldAllowMockingProtectedMethods();
     $twilioClient->shouldReceive('getMessages')->andReturn($messages = mock(MessageList::class));
     $messages->shouldReceive('create')->with('+1234567890', [
         'body' => 'Test message',
@@ -62,7 +65,7 @@ it('sends message successfully with from number', function() {
     ])->andReturn(new MessageInstance(new V2010(new Api($twilioClient)), [
         'sid' => 'SMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ], 'test_account_sid'));
-    app()->singleton(\Twilio\Rest\Client::class, fn() => $twilioClient);
+    app()->singleton(Client::class, fn() => $twilioClient);
 
     $channel = new Channel();
     $channel->forceFill([
@@ -78,7 +81,7 @@ it('sends message successfully with from number', function() {
     expect($response->sid)->toBe('SMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
 });
 
-it('throws exception when from number and service sid are missing', function() {
+it('throws exception when from number and service sid are missing', function(): void {
     $channel = new Channel();
     $channel->forceFill([
         'account_sid' => 'test_account_sid',
@@ -88,6 +91,6 @@ it('throws exception when from number and service sid are missing', function() {
     ]);
     $twilioChannel = new Twilio($channel);
 
-    expect(fn() => $twilioChannel->send('+1234567890', 'Test message'))
+    expect(fn(): MessageInstance => $twilioChannel->send('+1234567890', 'Test message'))
         ->toThrow(SystemException::class, 'SMS message was not sent. Missing `from` number.');
 });

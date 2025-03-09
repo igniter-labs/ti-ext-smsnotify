@@ -1,14 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
+use Override;
+use Vonage\Message\Message;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use Vonage\Client as VonageClient;
 
 class Vonage extends BaseChannel
 {
-    public function channelDetails()
+    #[Override]
+    public function channelDetails(): array
     {
         return [
             'name' => 'igniterlabs.smsnotify::default.vonage.text_title',
@@ -16,7 +21,8 @@ class Vonage extends BaseChannel
         ];
     }
 
-    public function defineFormConfig()
+    #[Override]
+    public function defineFormConfig(): array
     {
         return [
             'fields' => [
@@ -40,7 +46,8 @@ class Vonage extends BaseChannel
         ];
     }
 
-    public function getConfigRules()
+    #[Override]
+    public function getConfigRules(): array
     {
         return [
             'api_key' => ['required', 'string', 'max:128'],
@@ -49,13 +56,14 @@ class Vonage extends BaseChannel
         ];
     }
 
-    public function send($to, $content)
+    #[Override]
+    public function send($to, $content): Message
     {
         $payload = [
             'type' => 'text',
             'from' => $this->model->send_from, // @phpstan-ignore-line property.notFound
             'to' => $to,
-            'text' => trim($content),
+            'text' => trim((string) $content),
             'client-ref' => '',
         ];
 
@@ -68,7 +76,7 @@ class Vonage extends BaseChannel
             throw new SystemException('Please provide your Vonage API credentials. api_key + api_secret');
         }
 
-        app()->resolving(VonageClient::class, function() {
+        app()->resolving(VonageClient::class, function(): void {
             config([
                 'igniterlabs-smsnotify.vonage.api_key' => $this->model->api_key, // @phpstan-ignore-line property.notFound
                 'igniterlabs-smsnotify.vonage.api_secret' => $this->model->api_secret, // @phpstan-ignore-line property.notFound

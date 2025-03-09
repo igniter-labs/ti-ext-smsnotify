@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\SmsChannels;
 
+use Clickatell\Rest;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\SmsChannels\Clickatell;
 
-it('returns correct channel details', function() {
+it('returns correct channel details', function(): void {
     $clickatellChannel = new Clickatell();
 
     $details = $clickatellChannel->channelDetails();
@@ -16,7 +19,7 @@ it('returns correct channel details', function() {
         ->and($details['description'])->toBe('igniterlabs.smsnotify::default.clickatell.text_desc');
 });
 
-it('returns correct form config', function() {
+it('returns correct form config', function(): void {
     $clickatellChannel = new Clickatell();
 
     $config = $clickatellChannel->defineFormConfig();
@@ -33,7 +36,7 @@ it('returns correct form config', function() {
         ->and($config['fields']['api_id']['type'])->toBe('text');
 });
 
-it('returns correct config rules', function() {
+it('returns correct config rules', function(): void {
     $clickatellChannel = new Clickatell();
 
     $rules = $clickatellChannel->getConfigRules();
@@ -43,13 +46,13 @@ it('returns correct config rules', function() {
         ->and($rules['api_id'])->toContain('required', 'string', 'max:128');
 });
 
-it('sends message successfully', function() {
-    $clickatellClient = mock(\Clickatell\Rest::class);
+it('sends message successfully', function(): void {
+    $clickatellClient = mock(Rest::class);
     $clickatellClient->shouldReceive('sendMessage')->once()->with([
         'to' => ['+1234567890'],
         'content' => 'Test message',
     ])->andReturn([['errorCode' => 0]]);
-    app()->singleton(\Clickatell\Rest::class, fn() => $clickatellClient);
+    app()->singleton(Rest::class, fn() => $clickatellClient);
 
     $channel = new Channel();
     $channel->forceFill([
@@ -61,13 +64,13 @@ it('sends message successfully', function() {
     $clickatellChannel->send('+1234567890', 'Test message');
 });
 
-it('throws exception on failed message send', function() {
-    $clickatellClient = mock(\Clickatell\Rest::class);
+it('throws exception on failed message send', function(): void {
+    $clickatellClient = mock(Rest::class);
     $clickatellClient->shouldReceive('sendMessage')->once()->with([
         'to' => ['+1234567890'],
         'content' => 'Test message',
     ])->andReturn([['errorCode' => 1, 'error' => 'Some error']]);
-    app()->singleton(\Clickatell\Rest::class, fn() => $clickatellClient);
+    app()->singleton(Rest::class, fn() => $clickatellClient);
 
     $channel = new Channel();
     $channel->forceFill([

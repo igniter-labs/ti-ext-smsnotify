@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\Models;
 
 use Igniter\Flame\Database\Traits\Validation;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Template;
 
-it('returns correct name attribute', function() {
+it('returns correct name attribute', function(): void {
     $template = Template::create([
         'code' => 'test_template',
         'name' => 'Test Template',
@@ -17,7 +19,7 @@ it('returns correct name attribute', function() {
     expect($name)->toBe('Test Template');
 });
 
-it('returns translated name attribute', function() {
+it('returns translated name attribute', function(): void {
     $template = Template::create([
         'code' => 'test_template',
         'name' => 'igniter::default.test_template',
@@ -28,7 +30,7 @@ it('returns translated name attribute', function() {
     expect($name)->toBe(lang('igniter::default.test_template'));
 });
 
-it('fills content from view correctly', function() {
+it('fills content from view correctly', function(): void {
     $template = Template::create([
         'code' => 'test_template',
     ]);
@@ -38,7 +40,7 @@ it('fills content from view correctly', function() {
     expect($template->content)->toBe('<html>Test Content</html>');
 });
 
-it('syncs all templates correctly', function() {
+it('syncs all templates correctly', function(): void {
     $manager = mock(Manager::class);
     $manager->shouldReceive('getRegisteredTemplates')->andReturn([
         'new_template' => 'New Template',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Classes;
 
 use Igniter\Flame\Support\PagicHelper;
@@ -31,7 +33,7 @@ class Manager
      */
     protected static $callbacks = [];
 
-    public function buildContent($templateCode, $data = [])
+    public function buildContent($templateCode, $data = []): string
     {
         if (isset($this->messageTemplateCache[$templateCode])) {
             $template = $this->messageTemplateCache[$templateCode];
@@ -40,23 +42,23 @@ class Manager
         }
 
         $globalVars = ViewHelper::getGlobalVars();
-        if (!empty($globalVars)) {
+        if ($globalVars !== []) {
             $data = (array)$data + $globalVars;
         }
 
         return $this->renderTemplate($template, $data);
     }
 
-    public function renderTemplate($template, $data = [])
+    public function renderTemplate($template, $data = []): string
     {
         $content = PagicHelper::parse($template->content, $data);
 
         $content = (new StringParser)->parse($content, $data);
 
-        return html_entity_decode(preg_replace("/[\r\n]{2,}/", "\n\n", $content), ENT_QUOTES, 'UTF-8');
+        return html_entity_decode((string)preg_replace("/[\r\n]{2,}/", "\n\n", $content), ENT_QUOTES, 'UTF-8');
     }
 
-    public function notify($templateCode, $to, $data, $location = null)
+    public function notify($templateCode, $to, $data, $location = null): void
     {
         $content = $this->buildContent($templateCode, $data);
 
@@ -87,7 +89,7 @@ class Manager
     }
 
     /**
-     * @return \IgniterLabs\SmsNotify\Classes\BaseChannel[]
+     * @return BaseChannel[]
      */
     public function listChannelObjects()
     {
@@ -101,7 +103,7 @@ class Manager
 
     /**
      * @param $name
-     * @return \IgniterLabs\SmsNotify\Classes\BaseChannel
+     * @return BaseChannel
      */
     public function getChannel($code)
     {
@@ -148,9 +150,8 @@ class Manager
         }
 
         $templates = array_flip($templates);
-        if (isset($templates[$codeOrClass])) {
-            return $codeOrClass;
-        }
+
+        return isset($templates[$codeOrClass]) ? $codeOrClass : null;
     }
 
     protected function loadRegistered(string $methodName)

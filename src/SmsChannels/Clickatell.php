@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
+use Override;
 use Clickatell\Rest as ClickatellClient;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
@@ -10,7 +13,8 @@ class Clickatell extends BaseChannel
 {
     protected const int SUCCESSFUL_SEND = 0;
 
-    public function channelDetails()
+    #[Override]
+    public function channelDetails(): array
     {
         return [
             'name' => 'igniterlabs.smsnotify::default.clickatell.text_title',
@@ -18,7 +22,8 @@ class Clickatell extends BaseChannel
         ];
     }
 
-    public function defineFormConfig()
+    #[Override]
+    public function defineFormConfig(): array
     {
         return [
             'fields' => [
@@ -38,7 +43,8 @@ class Clickatell extends BaseChannel
         ];
     }
 
-    public function getConfigRules()
+    #[Override]
+    public function getConfigRules(): array
     {
         return [
             'api_key' => ['required', 'string', 'max:128'],
@@ -46,9 +52,10 @@ class Clickatell extends BaseChannel
         ];
     }
 
-    public function send($to, $content)
+    #[Override]
+    public function send($to, $content): void
     {
-        app()->resolving(ClickatellClient::class, function() {
+        app()->resolving(ClickatellClient::class, function(): void {
             config([
                 'igniterlabs-smsnotify.clickatell.api_key' => $this->model->api_key,
             ]);
@@ -59,7 +66,7 @@ class Clickatell extends BaseChannel
             'content' => $content,
         ]);
 
-        collect($responses)->each(function($response) {
+        collect($responses)->each(function($response): void {
             $errorCode = (int)array_get($response, 'errorCode');
 
             if ($errorCode != self::SUCCESSFUL_SEND) {

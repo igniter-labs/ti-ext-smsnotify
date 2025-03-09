@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\Classes;
 
 use Igniter\System\Classes\ExtensionManager;
@@ -8,18 +10,18 @@ use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\Models\Template;
 use IgniterLabs\SmsNotify\Tests\Fixtures\TwilioChannel;
 
-beforeEach(function() {
+beforeEach(function(): void {
     $this->extensionManager = mock(ExtensionManager::class);
     app()->instance(ExtensionManager::class, $this->extensionManager);
     $this->manager = new Manager();
 });
 
-it('lists registered channels', function() {
+it('lists registered channels', function(): void {
     $this->extensionManager->shouldReceive('getRegistrationMethodValues')
         ->with('registerSmsChannels')
         ->andReturn([
             'test.extension' => [
-                'twilio' => \IgniterLabs\SmsNotify\Tests\Fixtures\TwilioChannel::class,
+                'twilio' => TwilioChannel::class,
                 'invalid-class' => 'InvalidClass',
             ],
         ]);
@@ -28,7 +30,7 @@ it('lists registered channels', function() {
         ->and($this->manager->listChannelObjects())->toBeArray()->toHaveKey('twilio');
 });
 
-it('gets a specific channel', function() {
+it('gets a specific channel', function(): void {
     $this->extensionManager->shouldReceive('getRegistrationMethodValues')
         ->with('registerSmsChannels')
         ->andReturn([
@@ -40,7 +42,7 @@ it('gets a specific channel', function() {
     expect($this->manager->getChannel('twilio'))->toBe(TwilioChannel::class);
 });
 
-it('lists registered templates', function() {
+it('lists registered templates', function(): void {
     $this->extensionManager->shouldReceive('getRegistrationMethodValues')
         ->with('registerSmsTemplates')
         ->andReturn([
@@ -59,7 +61,7 @@ it('lists registered templates', function() {
         ->and($this->manager->getTemplate('order_confirmation'))->toBe('Order Confirmation Template');
 });
 
-it('resolves template code from code or class', function() {
+it('resolves template code from code or class', function(): void {
     $this->extensionManager->shouldReceive('getRegistrationMethodValues')
         ->with('registerSmsTemplates')
         ->andReturn([
@@ -77,7 +79,7 @@ it('resolves template code from code or class', function() {
     expect($template)->toBe('Order Confirmation Template');
 });
 
-it('builds content from a template', function() {
+it('builds content from a template', function(): void {
     $data = [
         'order_type' => 'Delivery',
         'location_name' => 'Location Name',
@@ -91,7 +93,7 @@ it('builds content from a template', function() {
         ->and($content)->toBe($this->manager->buildContent('igniterlabs.smsnotify::_sms.new_order', $data)); // Cache hit
 });
 
-it('renders a template with provided data', function() {
+it('renders a template with provided data', function(): void {
     $template = new Template();
     $template->content = 'Hello {{$name}}, welcome to {{$site_name}}!';
 
@@ -105,7 +107,7 @@ it('renders a template with provided data', function() {
     expect($content)->toBe('Hello John, welcome to Our Website!');
 });
 
-it('sends a notification to a recipient', function() {
+it('sends a notification to a recipient', function(): void {
     Channel::flushEventListeners();
     $channel = new Channel([
         'name' => 'Twilio',

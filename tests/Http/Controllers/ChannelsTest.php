@@ -1,24 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\Http\Controllers;
 
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\SmsChannels\Twilio;
 use IgniterLabs\SmsNotify\Tests\Fixtures\TwilioChannel;
 
-it('loads channels page', function() {
+it('loads channels page', function(): void {
     actingAsSuperUser()
         ->get(route('igniterlabs.smsnotify.channels'))
         ->assertOk();
 });
 
-it('loads create channel page', function() {
+it('loads create channel page', function(): void {
     actingAsSuperUser()
         ->get(route('igniterlabs.smsnotify.channels', ['slug' => 'create']))
         ->assertOk();
 });
 
-it('loads edit channel page', function() {
+it('loads edit channel page', function(): void {
     Channel::flushEventListeners();
     $channel = Channel::create([
         'name' => 'Twilio',
@@ -52,7 +54,7 @@ it('loads channel preview page', function(): void {
         ->assertOk();
 });
 
-it('creates channel', function() {
+it('creates channel', function(): void {
     actingAsSuperUser()
         ->post(route('igniterlabs.smsnotify.channels', ['slug' => 'create']), [
             'Channel' => [
@@ -72,7 +74,7 @@ it('creates channel', function() {
 
 });
 
-it('updates channel', function() {
+it('updates channel', function(): void {
     Channel::flushEventListeners();
     $channel = Channel::create([
         'name' => 'Twilio',
@@ -102,7 +104,7 @@ it('updates channel', function() {
     expect(Channel::where('description', 'Updated Description')->exists())->toBeTrue();
 });
 
-it('deletes channel', function() {
+it('deletes channel', function(): void {
     Channel::flushEventListeners();
     $channel = Channel::create([
         'name' => 'Twilio',

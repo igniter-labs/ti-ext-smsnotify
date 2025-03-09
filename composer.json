@@ -14,17 +14,21 @@
         "notification"
     ],
     "require": {
-        "tastyigniter/core": "^v4.0@beta || ^v4.0@dev",
-        "tastyigniter/ti-ext-automation": "^v4.0@beta || ^v4.0@dev",
-        "vonage/client": "^2.0",
+        "arcturial/clickatell": "~3.0",
+        "aws/aws-sdk-php": "^3.69.11",
+        "plivo/plivo-php": "^4.66",
+        "tastyigniter/core": "^v4.0",
+        "tastyigniter/ti-ext-automation": "^v4.0",
         "twilio/sdk": "~6.0",
-        "arcturial/clickatell": "~3.0"
+        "vonage/client": "^2.0"
     },
     "require-dev": {
-        "laravel/pint": "^1.2",
+        "barryvdh/laravel-ide-helper": "^3.5",
         "larastan/larastan": "^2.4.0",
-        "sampoyigi/testbench": "dev-main as 1.0",
-        "pestphp/pest-plugin-laravel": "^2.0"
+        "laravel/pint": "^1.2",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "rector/rector": "^1.2",
+        "sampoyigi/testbench": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -62,19 +66,16 @@
         "sort-packages": true
     },
     "scripts": {
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint",
-        "static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M"
-    },
-    "repositories": {
-        "core": {
-            "type": "path",
-            "url": "../../../core/"
-        },
-        "packages": {
-            "type": "path",
-            "url": "../../../packages/*/*/"
-        }
+        "format": "vendor/bin/pint --ansi",
+        "test:refactor": "vendor/bin/rector process --dry-run --ansi",
+        "test:static": "vendor/bin/phpstan analyse --ansi --memory-limit 1056M",
+        "test:pest": "vendor/bin/pest",
+        "test:coverage": "vendor/bin/pest --coverage --exactly=100 --compact",
+        "test:type-coverage": "vendor/bin/pest --type-coverage --min=100",
+        "test": [
+            "@test:refactor",
+            "@test:static",
+            "@test:coverage"
+        ]
     }
 }

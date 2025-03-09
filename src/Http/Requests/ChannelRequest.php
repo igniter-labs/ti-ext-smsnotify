@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Http\Requests;
 
+use Override;
 use Igniter\System\Classes\FormRequest;
 
 class ChannelRequest extends FormRequest
 {
+    #[Override]
     public function attributes(): array
     {
         return [

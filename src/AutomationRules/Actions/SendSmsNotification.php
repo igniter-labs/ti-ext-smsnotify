@@ -1,15 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\AutomationRules\Actions;
 
 use Igniter\Automation\AutomationException;
 use Igniter\Automation\Classes\BaseAction;
+use Igniter\Cart\Models\Order;
+use Igniter\Reservation\Models\Reservation;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Template;
 use Illuminate\Database\Eloquent\Model;
+use Override;
 
 class SendSmsNotification extends BaseAction
 {
+    #[Override]
     public function actionDetails()
     {
         return [
@@ -18,6 +24,7 @@ class SendSmsNotification extends BaseAction
         ];
     }
 
+    #[Override]
     public function defineFormFields()
     {
         return [
@@ -44,7 +51,8 @@ class SendSmsNotification extends BaseAction
         ];
     }
 
-    public function triggerAction($params)
+    #[Override]
+    public function triggerAction($params): void
     {
         if (!$object = $this->shouldTrigger($params)) {
             return;
@@ -66,7 +74,7 @@ class SendSmsNotification extends BaseAction
         return Template::get()->pluck('name', 'code');
     }
 
-    public function getSendToOptions()
+    public function getSendToOptions(): array
     {
         return [
             'location' => 'igniterlabs.smsnotify::default.text_send_to_location_tel',
@@ -77,7 +85,7 @@ class SendSmsNotification extends BaseAction
         ];
     }
 
-    protected function shouldTrigger($params)
+    protected function shouldTrigger($params): Order|Reservation|false
     {
         $object = array_get($params, 'order', array_get($params, 'reservation'));
 
@@ -88,16 +96,12 @@ class SendSmsNotification extends BaseAction
     {
         $mode = $this->model->send_to;
 
-        switch ($mode) {
-            case 'custom':
-                return $this->model->custom;
-            case 'location':
-                return optional($object->location)->location_telephone;
-            case 'customer':
-                return optional($object->customer)->telephone ?? $object->telephone;
-            case 'order':
-            case 'reservation':
-                return $object->telephone;
-        }
+        return match ($mode) {
+            'custom' => $this->model->custom,
+            'location' => optional($object->location)->location_telephone,
+            'customer' => optional($object->customer)->telephone ?? $object->telephone,
+            'order', 'reservation' => $object->telephone,
+            default => null,
+        };
     }
 }

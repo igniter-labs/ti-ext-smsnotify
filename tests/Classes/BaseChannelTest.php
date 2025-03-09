@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\Classes;
 
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use IgniterLabs\SmsNotify\Models\Channel;
 
-it('initializes correctly', function() {
+it('initializes correctly', function(): void {
     $channel = new class extends BaseChannel
     {
-        public function defineFormConfig()
+        public function defineFormConfig(): string
         {
             return __DIR__.'/../_fixtures/fields';
         }
 
-        public function send($to, $content) {}
+        public function send($to, $content): void {}
     };
 
     expect($channel->getName())->toBe('Notification channel')
@@ -25,20 +27,20 @@ it('initializes correctly', function() {
         ->and($channel->getConfigRules())->toBeArray();
 });
 
-it('send method is abstract and must be implemented', function() {
+it('send method is abstract and must be implemented', function(): void {
     $model = new Channel();
     $channel = new class($model) extends BaseChannel
     {
-        public function defineFormConfig()
+        public function defineFormConfig(): string
         {
             parent::defineFormConfig();
 
             return __DIR__.'/../_fixtures/fields';
         }
 
-        public function send($to, $content)
+        public function send($to, $content): string
         {
-            return "Sending to $to: $content";
+            return sprintf('Sending to %s: %s', $to, $content);
         }
     };
 

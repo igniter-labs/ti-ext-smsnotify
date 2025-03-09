@@ -1,7 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Http\Controllers;
 
+use Igniter\Admin\Http\Actions\FormController;
+use Igniter\Admin\Http\Actions\ListController;
+use Igniter\Local\Http\Actions\LocationAwareController;
+use IgniterLabs\SmsNotify\Http\Requests\ChannelRequest;
 use Igniter\Admin\Classes\AdminController;
 use Igniter\Admin\Facades\AdminMenu;
 use Igniter\Flame\Exception\FlashException;
@@ -11,14 +17,14 @@ use IgniterLabs\SmsNotify\Models\Channel;
 class Channels extends AdminController
 {
     public array $implement = [
-        \Igniter\Admin\Http\Actions\FormController::class,
-        \Igniter\Admin\Http\Actions\ListController::class,
-        \Igniter\Local\Http\Actions\LocationAwareController::class,
+        FormController::class,
+        ListController::class,
+        LocationAwareController::class,
     ];
 
     public array $listConfig = [
         'list' => [
-            'model' => \IgniterLabs\SmsNotify\Models\Channel::class,
+            'model' => Channel::class,
             'title' => 'igniterlabs.smsnotify::default.channel.text_title',
             'emptyMessage' => 'igniterlabs.smsnotify::default.channel.text_empty',
             'defaultSort' => ['id', 'DESC'],
@@ -29,8 +35,8 @@ class Channels extends AdminController
 
     public array $formConfig = [
         'name' => 'igniterlabs.smsnotify::default.channel.text_title',
-        'model' => \IgniterLabs\SmsNotify\Models\Channel::class,
-        'request' => \IgniterLabs\SmsNotify\Http\Requests\ChannelRequest::class,
+        'model' => Channel::class,
+        'request' => ChannelRequest::class,
         'create' => [
             'title' => 'igniterlabs.smsnotify::default.channel.text_new_title',
             'redirect' => 'igniterlabs/smsnotify/channels/edit/{id}',
@@ -57,7 +63,7 @@ class Channels extends AdminController
         AdminMenu::setContext('settings', 'system');
     }
 
-    public function index()
+    public function index(): void
     {
         if ($this->getUser()->hasPermission('IgniterLabs.SmsNotify.ManageChannels')) {
             Channel::syncAll();
@@ -75,7 +81,7 @@ class Channels extends AdminController
         return $model;
     }
 
-    public function formExtendFields($form)
+    public function formExtendFields($form): void
     {
         $model = $form->model;
         if ($model->exists) {
@@ -88,9 +94,9 @@ class Channels extends AdminController
         }
     }
 
-    public function formBeforeCreate($model)
+    public function formBeforeCreate($model): void
     {
-        throw_unless(strlen($code = post('Channel.channel')),
+        throw_unless(strlen((string) ($code = post('Channel.channel'))),
             new FlashException('Invalid channel code selected'),
         );
 

@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests;
 
+use IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification;
+use Igniter\Cart\AutomationRules\Events\NewOrderStatus;
 use Aws\Sns\SnsClient;
 use Clickatell\Rest as ClickatellClient;
 use IgniterLabs\SmsNotify\Extension;
@@ -14,8 +18,8 @@ use Plivo\RestClient as PlivoClient;
 use Twilio\Rest\Client as TwilioClient;
 use Vonage\Client as VonageClient;
 
-it('resolves aws sns client correctly', function() {
-    app()->resolving(SnsClient::class, function() {
+it('resolves aws sns client correctly', function(): void {
+    app()->resolving(SnsClient::class, function(): void {
         config([
             'igniterlabs-smsnotify.aws.key' => 'test_key',
             'igniterlabs-smsnotify.aws.secret' => 'test_secret',
@@ -25,8 +29,8 @@ it('resolves aws sns client correctly', function() {
     expect(resolve(SnsClient::class))->toBeInstanceOf(SnsClient::class);
 });
 
-it('resolves clickatell client correctly', function() {
-    app()->resolving(ClickatellClient::class, function() {
+it('resolves clickatell client correctly', function(): void {
+    app()->resolving(ClickatellClient::class, function(): void {
         config([
             'igniterlabs-smsnotify.clickatell.api_key' => 'test_api_key',
             'igniterlabs-smsnotify.clickatell.api_id' => 'test_api_id',
@@ -36,8 +40,8 @@ it('resolves clickatell client correctly', function() {
     expect(resolve(ClickatellClient::class))->toBeInstanceOf(ClickatellClient::class);
 });
 
-it('resolves plivo client correctly', function() {
-    app()->resolving(PlivoClient::class, function() {
+it('resolves plivo client correctly', function(): void {
+    app()->resolving(PlivoClient::class, function(): void {
         config([
             'igniterlabs-smsnotify.plivo.auth_id' => 'test_auth_id',
             'igniterlabs-smsnotify.plivo.auth_token' => 'test_auth_token',
@@ -47,8 +51,8 @@ it('resolves plivo client correctly', function() {
     expect(resolve(PlivoClient::class))->toBeInstanceOf(PlivoClient::class);
 });
 
-it('resolves vonage client correctly', function() {
-    app()->resolving(VonageClient::class, function() {
+it('resolves vonage client correctly', function(): void {
+    app()->resolving(VonageClient::class, function(): void {
         config([
             'igniterlabs-smsnotify.vonage.api_key' => 'test_api_key',
             'igniterlabs-smsnotify.vonage.api_secret' => 'test_api_secret',
@@ -58,7 +62,7 @@ it('resolves vonage client correctly', function() {
     expect(resolve(VonageClient::class))->toBeInstanceOf(VonageClient::class);
 });
 
-it('resolves twilio client correctly', function() {
+it('resolves twilio client correctly', function(): void {
     config([
         'igniterlabs-smsnotify.twilio.account_sid' => 'test_account_sid',
         'igniterlabs-smsnotify.twilio.auth_token' => 'test_auth_token',
@@ -67,7 +71,7 @@ it('resolves twilio client correctly', function() {
     expect(resolve(TwilioClient::class))->toBeInstanceOf(TwilioClient::class);
 });
 
-it('registers permissions correctly', function() {
+it('registers permissions correctly', function(): void {
     $extension = new Extension(app());
     $permissions = $extension->registerPermissions();
 
@@ -77,7 +81,7 @@ it('registers permissions correctly', function() {
         ->and($permissions['IgniterLabs.SmsNotify.Manage']['group'])->toBe('igniter::admin.permissions.name');
 });
 
-it('registers navigation correctly', function() {
+it('registers navigation correctly', function(): void {
     $extension = new Extension(app());
     $navigation = $extension->registerNavigation();
 
@@ -87,7 +91,7 @@ it('registers navigation correctly', function() {
         ->and($navigation['design']['child']['notification_templates']['permission'])->toBe('IgniterLabs.SmsNotify.Manage');
 });
 
-it('registers settings correctly', function() {
+it('registers settings correctly', function(): void {
     $extension = new Extension(app());
     $settings = $extension->registerSettings();
 
@@ -97,17 +101,17 @@ it('registers settings correctly', function() {
         ->and($settings['settings']['permission'])->toBe('IgniterLabs.SmsNotify.Manage');
 });
 
-it('registers automation rules correctly', function() {
+it('registers automation rules correctly', function(): void {
     $extension = new Extension(app());
     $rules = $extension->registerAutomationRules();
 
     expect($rules)->toBeArray()
-        ->and($rules['actions'])->toContain(\IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification::class)
+        ->and($rules['actions'])->toContain(SendSmsNotification::class)
         ->and($rules['presets']['smsnotify_new_order_status']['name'])->toBe('Send an SMS message when an order status is updated')
-        ->and($rules['presets']['smsnotify_new_order_status']['event'])->toBe(\Igniter\Cart\AutomationRules\Events\NewOrderStatus::class);
+        ->and($rules['presets']['smsnotify_new_order_status']['event'])->toBe(NewOrderStatus::class);
 });
 
-it('registers sms channels correctly', function() {
+it('registers sms channels correctly', function(): void {
     $extension = new Extension(app());
     $channels = $extension->registerSmsChannels();
 
@@ -120,7 +124,7 @@ it('registers sms channels correctly', function() {
         ->toHaveKey('aws', Aws::class);
 });
 
-it('registers sms templates correctly', function() {
+it('registers sms templates correctly', function(): void {
     $extension = new Extension(app());
     $templates = $extension->registerSmsTemplates();
 

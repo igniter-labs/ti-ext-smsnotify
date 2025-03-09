@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
+use Override;
 use Aws\Sns\SnsClient;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 
 class Aws extends BaseChannel
 {
-    public function channelDetails()
+    #[Override]
+    public function channelDetails(): array
     {
         return [
             'name' => 'igniterlabs.smsnotify::default.aws.text_title',
@@ -15,7 +19,8 @@ class Aws extends BaseChannel
         ];
     }
 
-    public function defineFormConfig()
+    #[Override]
+    public function defineFormConfig(): array
     {
         return [
             'fields' => [
@@ -39,7 +44,8 @@ class Aws extends BaseChannel
         ];
     }
 
-    public function getConfigRules()
+    #[Override]
+    public function getConfigRules(): array
     {
         return [
             'key' => ['required', 'string', 'max:128'],
@@ -48,14 +54,15 @@ class Aws extends BaseChannel
         ];
     }
 
-    public function send($to, $content)
+    #[Override]
+    public function send($to, $content): void
     {
         // if not starting with + sign, use default country code
-        if (!str_starts_with($to, '+')) {
+        if (!str_starts_with((string) $to, '+')) {
             $to = $this->model->country_code.$to;
         }
 
-        app()->resolving(SnsClient::class, function() {
+        app()->resolving(SnsClient::class, function(): void {
             config([
                 'igniterlabs-smsnotify.aws.key' => $this->model->key,
                 'igniterlabs-smsnotify.aws.secret' => $this->model->secret,

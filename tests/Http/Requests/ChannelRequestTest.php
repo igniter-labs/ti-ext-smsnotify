@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\Http\Requests;
 
 use IgniterLabs\SmsNotify\Http\Requests\ChannelRequest;
 
-it('returns correct attribute labels', function() {
+it('returns correct attribute labels', function(): void {
     $request = new ChannelRequest();
 
     expect($request->attributes())
@@ -17,7 +19,7 @@ it('returns correct attribute labels', function() {
         ->toHaveKey('is_enabled', lang('igniter::admin.label_status'));
 });
 
-it('returns correct validation rules', function() {
+it('returns correct validation rules', function(): void {
     $request = new ChannelRequest();
 
     expect($request->rules())

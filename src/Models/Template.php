@@ -1,7 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Models;
 
+use Override;
+use Illuminate\Support\Carbon;
+use Igniter\Flame\Database\Builder;
 use Igniter\Flame\Database\Model;
 use Igniter\Flame\Database\Traits\Validation;
 use Igniter\Flame\Mail\MailParser;
@@ -16,21 +21,21 @@ use Illuminate\Support\Facades\View;
  * @property string|null $name
  * @property string|null $content
  * @property int|null $is_custom
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Igniter\Flame\Database\Builder<static>|Template applyFilters(array $options = [])
- * @method static \Igniter\Flame\Database\Builder<static>|Template applySorts(array $sorts = [])
- * @method static \Igniter\Flame\Database\Builder<static>|Template dropdown(string $column, string $key = null)
- * @method static \Igniter\Flame\Database\Builder<static>|Template like(string $column, string $value, string $side = 'both', string $boolean = 'and')
- * @method static \Igniter\Flame\Database\Builder<static>|Template listFrontEnd(array $options = [])
- * @method static \Igniter\Flame\Database\Builder<static>|Template lists(string $column, string $key = null)
- * @method static \Igniter\Flame\Database\Builder<static>|Template newModelQuery()
- * @method static \Igniter\Flame\Database\Builder<static>|Template newQuery()
- * @method static \Igniter\Flame\Database\Builder<static>|Template orLike(string $column, string $value, string $side = 'both')
- * @method static \Igniter\Flame\Database\Builder<static>|Template orSearch(string $term, string $columns = [], string $mode = 'all')
- * @method static \Igniter\Flame\Database\Builder<static>|Template pluckDates(string $column, string $keyFormat = '%Y-%m', string $valueFormat = '%M %Y')
- * @method static \Igniter\Flame\Database\Builder<static>|Template query()
- * @method static \Igniter\Flame\Database\Builder<static>|Template search(string $term, string $columns = [], string $mode = 'all')
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder<static>|Template applyFilters(array $options = [])
+ * @method static Builder<static>|Template applySorts(array $sorts = [])
+ * @method static Builder<static>|Template dropdown(string $column, string $key = null)
+ * @method static Builder<static>|Template like(string $column, string $value, string $side = 'both', string $boolean = 'and')
+ * @method static Builder<static>|Template listFrontEnd(array $options = [])
+ * @method static Builder<static>|Template lists(string $column, string $key = null)
+ * @method static Builder<static>|Template newModelQuery()
+ * @method static Builder<static>|Template newQuery()
+ * @method static Builder<static>|Template orLike(string $column, string $value, string $side = 'both')
+ * @method static Builder<static>|Template orSearch(string $term, string $columns = [], string $mode = 'all')
+ * @method static Builder<static>|Template pluckDates(string $column, string $keyFormat = '%Y-%m', string $valueFormat = '%M %Y')
+ * @method static Builder<static>|Template query()
+ * @method static Builder<static>|Template search(string $term, string $columns = [], string $mode = 'all')
  * @mixin Model
  */
 class Template extends Model
@@ -59,7 +64,7 @@ class Template extends Model
 
     public function getNameAttribute($value)
     {
-        $name = !empty($this->attributes['name']) ? $this->attributes['name'] : '';
+        $name = empty($this->attributes['name']) ? '' : $this->attributes['name'];
 
         return is_lang_key($name) ? lang($name) : $name;
     }
@@ -68,6 +73,7 @@ class Template extends Model
     // Events
     //
 
+    #[Override]
     protected function afterFetch()
     {
         if (!$this->is_custom) {
@@ -79,12 +85,12 @@ class Template extends Model
     // Helpers
     //
 
-    public function fillFromContent($content)
+    public function fillFromContent($content): void
     {
         $this->fillFromSections(MailParser::parse($content));
     }
 
-    public function fillFromView()
+    public function fillFromView(): void
     {
         $this->fillFromSections(self::getTemplateSections($this->code));
     }
@@ -94,7 +100,7 @@ class Template extends Model
         $this->content = array_get($sections, 'html');
     }
 
-    protected static function getTemplateSections($code)
+    protected static function getTemplateSections($code): array
     {
         return MailParser::parse(File::get(View::make($code)->getPath()));
     }
@@ -116,9 +122,8 @@ class Template extends Model
 
     /**
      * Synchronise all templates to the database.
-     * @return void
      */
-    public static function syncAll()
+    public static function syncAll(): void
     {
         $templates = (array)resolve(Manager::class)->getRegisteredTemplates();
         $dbTemplates = self::pluck('is_custom', 'code')->all();

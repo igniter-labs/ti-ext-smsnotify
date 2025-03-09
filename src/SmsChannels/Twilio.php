@@ -1,14 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
+use Override;
+use Twilio\Rest\Api\V2010\Account\MessageInstance;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use Twilio\Rest\Client as TwilioClient;
 
 class Twilio extends BaseChannel
 {
-    public function channelDetails()
+    #[Override]
+    public function channelDetails(): array
     {
         return [
             'name' => 'igniterlabs.smsnotify::default.twilio.text_title',
@@ -16,7 +21,8 @@ class Twilio extends BaseChannel
         ];
     }
 
-    public function defineFormConfig()
+    #[Override]
+    public function defineFormConfig(): array
     {
         return [
             'fields' => [
@@ -40,7 +46,8 @@ class Twilio extends BaseChannel
         ];
     }
 
-    public function getConfigRules()
+    #[Override]
+    public function getConfigRules(): array
     {
         return [
             'account_sid' => ['required', 'string', 'max:128'],
@@ -49,17 +56,18 @@ class Twilio extends BaseChannel
         ];
     }
 
-    public function send($to, $content)
+    #[Override]
+    public function send($to, $content): MessageInstance
     {
         $params = [
-            'body' => trim($content),
+            'body' => trim((string) $content),
         ];
 
-        if (strlen($this->model->service_sid)) {
+        if (strlen($this->model->service_sid) !== 0) {
             $params['messagingServiceSid'] = $this->model->service_sid;
         }
 
-        if (strlen($this->model->from)) {
+        if (strlen($this->model->from) !== 0) {
             $params['from'] = $this->model->from;
         }
 

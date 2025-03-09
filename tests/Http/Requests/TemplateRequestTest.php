@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\Http\Requests;
 
 use IgniterLabs\SmsNotify\Http\Requests\TemplateRequest;
 
-it('returns correct attribute labels', function() {
+it('returns correct attribute labels', function(): void {
     $request = new TemplateRequest();
 
     expect($request->attributes())
@@ -12,7 +14,7 @@ it('returns correct attribute labels', function() {
         ->toHaveKey('content', lang('igniterlabs.smsnotify::default.template.label_content'));
 });
 
-it('returns correct validation rules', function() {
+it('returns correct validation rules', function(): void {
     $request = new TemplateRequest();
 
     expect($request->rules())

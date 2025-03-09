@@ -1,22 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\Fixtures;
 
+use Override;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 
 class TwilioChannel extends BaseChannel
 {
-    public function send($to, $content)
+    #[Override]
+    public function send($to, $content): string
     {
-        return "Sent via Twilio to {$to}: {$content}";
+        return sprintf('Sent via Twilio to %s: %s', $to, $content);
     }
 
-    public function defineFormConfig()
+    #[Override]
+    public function defineFormConfig(): string
     {
         return __DIR__.'/../_fixtures/fields';
     }
 
-    public function channelDetails()
+    #[Override]
+    public function channelDetails(): array
     {
         return [
             'name' => 'Twilio',

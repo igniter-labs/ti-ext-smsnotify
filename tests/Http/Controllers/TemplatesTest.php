@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\Http\Controllers;
 
+use Exception;
 use IgniterLabs\SmsNotify\Classes\Manager;
 use IgniterLabs\SmsNotify\Models\Template;
 
-it('loads templates page', function() {
+it('loads templates page', function(): void {
     actingAsSuperUser()
         ->get(route('igniterlabs.smsnotify.templates'))
         ->assertOk();
 });
 
-it('loads edit template page', function() {
+it('loads edit template page', function(): void {
     $template = Template::create([
         'code' => 'test_template',
         'name' => 'Test Template',
@@ -37,7 +40,7 @@ it('loads template preview page', function(): void {
         ->assertOk();
 });
 
-it('updates template', function() {
+it('updates template', function(): void {
     $template = Template::create([
         'code' => 'test_template',
         'name' => 'Test Template',
@@ -60,7 +63,7 @@ it('updates template', function() {
     expect(Template::where('name', 'Test Template Updated')->exists())->toBeTrue();
 });
 
-it('sends test template', function() {
+it('sends test template', function(): void {
     Template::flushEventListeners();
     $template = Template::create([
         'code' => 'test_template',
@@ -78,7 +81,7 @@ it('sends test template', function() {
         ]);
 });
 
-it('throws exception when sending test template fails', function() {
+it('throws exception when sending test template fails', function(): void {
     Template::flushEventListeners();
     $template = Template::create([
         'code' => 'test_template',
@@ -87,7 +90,7 @@ it('throws exception when sending test template fails', function() {
         'is_custom' => true,
     ]);
     app()->instance(Manager::class, $manager = mock(Manager::class));
-    $manager->shouldReceive('notify')->once()->andThrow(new \Exception('Test exception'));
+    $manager->shouldReceive('notify')->once()->andThrow(new Exception('Test exception'));
 
     actingAsSuperUser()
         ->post(route('igniterlabs.smsnotify.templates', ['slug' => 'edit/'.$template->getKey()]), [], [

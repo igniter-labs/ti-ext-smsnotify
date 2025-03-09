@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IgniterLabs\SmsNotify\Tests\SmsChannels;
 
+use Plivo\RestClient;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\SmsChannels\Plivo;
 use Plivo\Resources\Message\MessageInterface;
 
-it('returns correct channel details', function() {
+it('returns correct channel details', function(): void {
     $plivoChannel = new Plivo();
 
     $details = $plivoChannel->channelDetails();
@@ -17,7 +20,7 @@ it('returns correct channel details', function() {
         ->and($details['description'])->toBe('igniterlabs.smsnotify::default.plivo.text_desc');
 });
 
-it('returns correct form config', function() {
+it('returns correct form config', function(): void {
     $plivoChannel = new Plivo();
 
     $config = $plivoChannel->defineFormConfig();
@@ -37,7 +40,7 @@ it('returns correct form config', function() {
         ->and($config['fields']['from_number']['type'])->toBe('text');
 });
 
-it('returns correct config rules', function() {
+it('returns correct config rules', function(): void {
     $plivoChannel = new Plivo();
 
     $rules = $plivoChannel->getConfigRules();
@@ -48,15 +51,15 @@ it('returns correct config rules', function() {
         ->and($rules['from_number'])->toContain('required', 'string', 'max:128');
 });
 
-it('sends message successfully', function() {
-    $plivoClient = mock(\Plivo\RestClient::class)->shouldAllowMockingProtectedMethods();
+it('sends message successfully', function(): void {
+    $plivoClient = mock(RestClient::class)->shouldAllowMockingProtectedMethods();
     $plivoClient->shouldReceive('getMessages')->andReturn($messages = mock(MessageInterface::class));
     $messages->shouldReceive('create')->with([
         'src' => '12345',
         'dst' => '67890',
         'text' => 'Test message',
     ])->andReturn(['status' => 202]);
-    app()->singleton(\Plivo\RestClient::class, fn() => $plivoClient);
+    app()->singleton(RestClient::class, fn() => $plivoClient);
 
     $channel = new Channel();
     $channel->forceFill([
@@ -71,15 +74,15 @@ it('sends message successfully', function() {
     expect($response['status'])->toBe(202);
 });
 
-it('throws exception on failed message send', function() {
-    $plivoClient = mock(\Plivo\RestClient::class)->shouldAllowMockingProtectedMethods();
+it('throws exception on failed message send', function(): void {
+    $plivoClient = mock(RestClient::class)->shouldAllowMockingProtectedMethods();
     $plivoClient->shouldReceive('getMessages')->andReturn($messages = mock(MessageInterface::class));
     $messages->shouldReceive('create')->with([
         'src' => '12345',
         'dst' => '67890',
         'text' => 'Test message',
     ])->andReturn(['status' => 400, 'response' => ['error' => 'Some error']]);
-    app()->singleton(\Plivo\RestClient::class, fn() => $plivoClient);
+    app()->singleton(RestClient::class, fn() => $plivoClient);
 
     $channel = new Channel();
     $channel->forceFill([
