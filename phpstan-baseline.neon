@@ -31,6 +31,11 @@ parameters:
 			path: src/Models/Channel.php
 
 		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int,Illuminate\\\\Database\\\\Eloquent\\\\Model\\>\\:\\:mapWithKeys\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Model, int\\)\\: array\\<string, array\\|null\\>, Closure\\(IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\)\\: non\\-empty\\-array\\<string, array\\|null\\> given\\.$#"
+			count: 1
+			path: src/Models/Channel.php
+
+		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$code\\.$#"
 			count: 1
 			path: src/Models/Template.php

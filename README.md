@@ -1,3 +1,10 @@
+<p align="center">
+    <a href="https://github.com/igniter-labs/ti-ext-smsnotify/actions"><img src="https://github.com/igniter-labs/ti-ext-smsnotify/actions/workflows/pipeline.yml/badge.svg" alt="Build Status"></a>
+    <a href="https://packagist.org/packages/igniterlabs/ti-ext-smsnotify"><img src="https://img.shields.io/packagist/dt/igniterlabs/ti-ext-smsnotify" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/igniterlabs/ti-ext-smsnotify"><img src="https://img.shields.io/packagist/v/igniterlabs/ti-ext-smsnotify" alt="Latest Stable Version"></a>
+    <a href="https://packagist.org/packages/igniterlabs/ti-ext-smsnotify"><img src="https://img.shields.io/packagist/l/igniterlabs/ti-ext-smsnotify" alt="License"></a>
+</p>
+
 ## SMS Notification channels and messages for TastyIgniter
 
 This extension allows admins to configure sms notifications to be sent out when certain events happen in TastyIgniter. 

@@ -14,17 +14,17 @@ use IgniterLabs\SmsNotify\Models\Template;
 class Manager
 {
     /**
-     * @var array An array of channel types.
+     * @var null|array An array of channel types.
      */
     protected $channelCache;
 
     /**
-     * @var array An array of template types.
+     * @var null|array An array of template types.
      */
     protected $templateCache;
 
     /**
-     * @var array An array of template types.
+     * @var null|array An array of template types.
      */
     protected $messageTemplateCache;
 

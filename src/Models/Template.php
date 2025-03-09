@@ -49,7 +49,7 @@ class Template extends Model
     public $timestamps = true;
 
     /**
-     * @var array fillable fields
+     * @var array<string>|bool fillable fields
      */
     protected $guarded = [];
 
