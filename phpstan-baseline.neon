@@ -1,0 +1,106 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$custom\\.$#"
+			count: 1
+			path: src/AutomationRules/Actions/SendSmsNotification.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$send_to\\.$#"
+			count: 1
+			path: src/AutomationRules/Actions/SendSmsNotification.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$template\\.$#"
+			count: 1
+			path: src/AutomationRules/Actions/SendSmsNotification.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Http\\\\Controllers\\\\Templates\\:\\:formFindModelObject\\(\\)\\.$#"
+			count: 1
+			path: src/Http/Controllers/Templates.php
+
+		-
+			message: "#^Call to an undefined method IgniterLabs\\\\SmsNotify\\\\Models\\\\Channel\\:\\:getConfigFields\\(\\)\\.$#"
+			count: 1
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:applyChannelClass\\(\\)\\.$#"
+			count: 1
+			path: src/Models/Channel.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$code\\.$#"
+			count: 1
+			path: src/Models/Template.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$is_custom\\.$#"
+			count: 1
+			path: src/Models/Template.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$name\\.$#"
+			count: 1
+			path: src/Models/Template.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\View\\\\View\\:\\:getPath\\(\\)\\.$#"
+			count: 1
+			path: src/Models/Template.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$country_code\\.$#"
+			count: 1
+			path: src/SmsChannels/Aws.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$key\\.$#"
+			count: 1
+			path: src/SmsChannels/Aws.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$secret\\.$#"
+			count: 1
+			path: src/SmsChannels/Aws.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$api_key\\.$#"
+			count: 1
+			path: src/SmsChannels/Clickatell.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$auth_id\\.$#"
+			count: 1
+			path: src/SmsChannels/Plivo.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$auth_token\\.$#"
+			count: 1
+			path: src/SmsChannels/Plivo.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$from_number\\.$#"
+			count: 1
+			path: src/SmsChannels/Plivo.php
+
+		-
+			message: "#^Access to an undefined property Plivo\\\\RestClient\\:\\:\\$messages\\.$#"
+			count: 1
+			path: src/SmsChannels/Plivo.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$from\\.$#"
+			count: 1
+			path: src/SmsChannels/Twilio.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$service_sid\\.$#"
+			count: 1
+			path: src/SmsChannels/Twilio.php
+
+		-
+			message: "#^Access to an undefined property Igniter\\\\Flame\\\\Database\\\\Model\\:\\:\\$api_secret\\.$#"
+			count: 1
+			path: src/SmsChannels/Vonage.php

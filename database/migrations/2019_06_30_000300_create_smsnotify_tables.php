@@ -1,6 +1,6 @@
 <?php
 
-namespace IgniterLabs\SmsNotify\Database\Migrations;
+declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Create templates table
  */
-class CreateSmsNotifyTables extends Migration
+return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('igniterlabs_smsnotify_templates', function (Blueprint $table) {
+        Schema::create('igniterlabs_smsnotify_templates', function(Blueprint $table): void {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('code')->unique()->index();
@@ -23,7 +23,7 @@ class CreateSmsNotifyTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('igniterlabs_smsnotify_channels', function (Blueprint $table) {
+        Schema::create('igniterlabs_smsnotify_channels', function(Blueprint $table): void {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('code')->unique()->index();
@@ -34,7 +34,7 @@ class CreateSmsNotifyTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('igniterlabs_smsnotify_logs', function (Blueprint $table) {
+        Schema::create('igniterlabs_smsnotify_logs', function(Blueprint $table): void {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('channel')->nullable();
@@ -48,10 +48,10 @@ class CreateSmsNotifyTables extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('igniterlabs_smsnotify_templates');
         Schema::dropIfExists('igniterlabs_smsnotify_channels');
         Schema::dropIfExists('igniterlabs_smsnotify_logs');
     }
-}
+};
