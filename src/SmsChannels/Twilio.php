@@ -2,6 +2,7 @@
 
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
+use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use Twilio\Rest\Client as TwilioClient;
 
@@ -63,7 +64,7 @@ class Twilio extends BaseChannel
         }
 
         if (empty($params['from']) && empty($params['messagingServiceSid'])) {
-            throw new \RuntimeException('SMS message was not sent. Missing `from` number.');
+            throw new SystemException('SMS message was not sent. Missing `from` number.');
         }
 
         $this->fillOptionalParams($params, [
@@ -76,10 +77,12 @@ class Twilio extends BaseChannel
             'validityPeriod',
         ]);
 
-        return (new TwilioClient(
-            $this->model->account_sid,
-            $this->model->auth_token
-        ))->messages->create($to, $params);
+        config([
+            'igniterlabs-smsnotify.twilio.account_sid' => $this->model->auth_id, // @phpstan-ignore-line property.notFound
+            'igniterlabs-smsnotify.twilio.auth_token' => $this->model->auth_token, // @phpstan-ignore-line property.notFound
+        ]);
+
+        return resolve(TwilioClient::class)->messages->create($to, $params);
     }
 
     protected function fillOptionalParams(&$params, $optionalParams): self

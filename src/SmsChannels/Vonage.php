@@ -2,18 +2,17 @@
 
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
+use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
-use RuntimeException;
 use Vonage\Client as VonageClient;
-use Vonage\Client\Credentials\Basic;
 
-class Nexmo extends BaseChannel
+class Vonage extends BaseChannel
 {
     public function channelDetails()
     {
         return [
-            'name' => 'igniterlabs.smsnotify::default.nexmo.text_title',
-            'description' => 'igniterlabs.smsnotify::default.nexmo.text_desc',
+            'name' => 'igniterlabs.smsnotify::default.vonage.text_title',
+            'description' => 'igniterlabs.smsnotify::default.vonage.text_desc',
         ];
     }
 
@@ -54,27 +53,28 @@ class Nexmo extends BaseChannel
     {
         $payload = [
             'type' => 'text',
-            'from' => $this->model->send_from,
+            'from' => $this->model->send_from, // @phpstan-ignore-line property.notFound
             'to' => $to,
             'text' => trim($content),
             'client-ref' => '',
         ];
 
-        if ($this->model->status_callback) {
+        if ($this->model->status_callback) { // @phpstan-ignore-line property.notFound
             $payload['callback'] = $this->model->status_callback;
         }
 
-        return $this->client()->message()->send($payload);
-    }
-
-    protected function client(): VonageClient
-    {
+        // @phpstan-ignore property.notFound
         if (!strlen($this->model->api_key) || !strlen($this->model->api_secret)) {
-            throw new RuntimeException('Please provide your Vonage API credentials. api_key + api_secret');
+            throw new SystemException('Please provide your Vonage API credentials. api_key + api_secret');
         }
 
-        return new VonageClient(
-            new Basic($this->model->api_key, $this->model->api_secret)
-        );
+        app()->resolving(VonageClient::class, function() {
+            config([
+                'igniterlabs-smsnotify.vonage.api_key' => $this->model->api_key, // @phpstan-ignore-line property.notFound
+                'igniterlabs-smsnotify.vonage.api_secret' => $this->model->api_secret, // @phpstan-ignore-line property.notFound
+            ]);
+        });
+
+        return resolve(VonageClient::class)->message()->send($payload);
     }
 }

@@ -21,6 +21,9 @@ class Manager
      */
     protected $templateCache;
 
+    /**
+     * @var array An array of template types.
+     */
     protected $messageTemplateCache;
 
     /**
@@ -31,9 +34,9 @@ class Manager
     public function buildContent($templateCode, $data = [])
     {
         if (isset($this->messageTemplateCache[$templateCode])) {
-            $template = $this->templateCache[$templateCode];
+            $template = $this->messageTemplateCache[$templateCode];
         } else {
-            $this->templateCache[$templateCode] = $template = Template::findOrMakeTemplate($templateCode);
+            $this->messageTemplateCache[$templateCode] = $template = Template::findOrMakeTemplate($templateCode);
         }
 
         $globalVars = ViewHelper::getGlobalVars();
@@ -155,7 +158,7 @@ class Manager
         $results = [];
         $manager = resolve(ExtensionManager::class);
         $bundles = $manager->getRegistrationMethodValues($methodName);
-        foreach ($bundles as $owner => $definitions) {
+        foreach ($bundles as $definitions) {
             foreach ($definitions as $index => $value) {
                 if (is_string($index)) {
                     $results[$index] = $value;

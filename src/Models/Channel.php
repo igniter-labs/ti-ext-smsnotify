@@ -9,6 +9,36 @@ use Igniter\Local\Models\Concerns\Locationable;
 use Igniter\Local\Models\Location;
 use IgniterLabs\SmsNotify\Classes\Manager;
 
+/**
+ *
+ *
+ * @property int $id
+ * @property int|null $location_id
+ * @property string $code
+ * @property string|null $class_name
+ * @property string|null $name
+ * @property string|null $description
+ * @property array<array-key, mixed>|null $config_data
+ * @property bool|null $is_enabled
+ * @property bool|null $is_default
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel applyFilters(array $options = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel applySorts(array $sorts = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel dropdown(string $column, string $key = null)
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel like(string $column, string $value, string $side = 'both', string $boolean = 'and')
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel listFrontEnd(array $options = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel lists(string $column, string $key = null)
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel newModelQuery()
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel newQuery()
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel orLike(string $column, string $value, string $side = 'both')
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel orSearch(string $term, string $columns = [], string $mode = 'all')
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel pluckDates(string $column, string $keyFormat = '%Y-%m', string $valueFormat = '%M %Y')
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel query()
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel search(string $term, string $columns = [], string $mode = 'all')
+ * @method static \Igniter\Flame\Database\Builder<static>|Channel whereCode($value)
+ * @mixin Model
+ */
 class Channel extends Model
 {
     use Locationable;
@@ -52,12 +82,18 @@ class Channel extends Model
     public static function getConfig($channelCode = null, $default = null)
     {
         if (!self::$configCache) {
-            self::$configCache = self::whereIsEnabled()->get()->mapWithKeys(function($model) {
+            self::$configCache = self::whereIsEnabled()->get()->mapWithKeys(function(self $model) {
                 return [$model->code => $model->config_data];
             })->all();
         }
 
         return array_get(self::$configCache, $channelCode, $default);
+    }
+
+    public static function clearStaticCache()
+    {
+        self::$configCache = null;
+        self::$defaultChannel = null;
     }
 
     public function getNameAttribute($value)
@@ -104,17 +140,15 @@ class Channel extends Model
         $data = [];
         $fields = $this->getConfigFields();
         foreach ($fields as $name => $config) {
-            if (!array_key_exists($name, $this->attributes)) {
-                continue;
+            if (array_key_exists($name, $this->attributes)) {
+                $data[$name] = $this->attributes[$name];
             }
-            $data[$name] = $this->attributes[$name];
         }
 
         foreach ($this->attributes as $name => $value) {
-            if (array_key_exists($name, $this->original)) {
-                continue;
+            if (!array_key_exists($name, $this->original)) {
+                unset($this->attributes[$name]);
             }
-            unset($this->attributes[$name]);
         }
 
         $this->config_data = $data;
@@ -159,9 +193,7 @@ class Channel extends Model
      */
     public function getChannelObject()
     {
-        return $this->class_name
-            ? $this->asExtension($this->class_name)
-            : null;
+        return $this->class_name ? $this->asExtension($this->class_name) : null;
     }
 
     //
@@ -178,7 +210,7 @@ class Channel extends Model
         $this->timestamps = true;
     }
 
-    public static function getDefault($locationId = null)
+    public static function getDefault($locationId = null): ?self
     {
         if (self::$defaultChannel !== null) {
             return self::$defaultChannel;
@@ -192,10 +224,12 @@ class Channel extends Model
             $query->whereHasOrDoesntHaveLocation($locationId);
 
             if ($defaultChannel = $query->first()) {
+                /** @var Channel $defaultChannel */
                 $defaultChannel->makeDefault();
             }
         }
 
+        /** @var Channel $defaultChannel */
         return self::$defaultChannel = $defaultChannel;
     }
 
@@ -209,7 +243,8 @@ class Channel extends Model
                 continue;
             }
 
-            $result[$code] = $channel->getName();
+            /** @var Channel $channel */
+            $result[$code] = $channel->name;
         }
 
         return $result;

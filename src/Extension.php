@@ -2,8 +2,15 @@
 
 namespace IgniterLabs\SmsNotify;
 
+use Aws\Credentials\Credentials;
+use Aws\Sns\SnsClient;
+use Clickatell\Rest as ClickatellClient;
 use Igniter\System\Classes\BaseExtension;
 use IgniterLabs\SmsNotify\Classes\Manager;
+use Plivo\RestClient as PlivoClient;
+use Twilio\Rest\Client as TwilioClient;
+use Vonage\Client as VonageClient;
+use Vonage\Client\Credentials\Basic;
 
 /**
  * SmsNotify Extension Information File
@@ -13,6 +20,17 @@ class Extension extends BaseExtension
     public $singletons = [
         Manager::class,
     ];
+
+    public function boot()
+    {
+        $this->mergeConfigFrom(__DIR__.'/../config/channels.php', 'igniterlabs-smsnotify');
+
+        $this->registerSnsClient();
+        $this->registerClickatellClient();
+        $this->registerPlivoClient();
+        $this->registerVonageClient();
+        $this->registerTwilioClient();
+    }
 
     public function registerPermissions(): array
     {
@@ -81,7 +99,7 @@ class Extension extends BaseExtension
     {
         return [
             'twilio' => \IgniterLabs\SmsNotify\SmsChannels\Twilio::class,
-            'nexmo' => \IgniterLabs\SmsNotify\SmsChannels\Nexmo::class,
+            'vonage' => \IgniterLabs\SmsNotify\SmsChannels\Vonage::class,
             'clickatell' => \IgniterLabs\SmsNotify\SmsChannels\Clickatell::class,
             'plivo' => \IgniterLabs\SmsNotify\SmsChannels\Plivo::class,
             'aws' => \IgniterLabs\SmsNotify\SmsChannels\Aws::class,
@@ -100,5 +118,57 @@ class Extension extends BaseExtension
             'igniterlabs.smsnotify::_sms.reservation_confirmed' => 'igniterlabs.smsnotify::default.template.text_reservation_confirmed',
             'igniterlabs.smsnotify::_sms.reservation_status_changed' => 'igniterlabs.smsnotify::default.template.text_reservation_status_changed',
         ];
+    }
+
+    protected function registerSnsClient(): void
+    {
+        $this->app->singleton(SnsClient::class, function($app) {
+            return new SnsClient([
+                'credentials' => new Credentials(
+                    $app['config']['igniterlabs-smsnotify.aws.key'],
+                    $app['config']['igniterlabs-smsnotify.aws.secret'],
+                ),
+                'use_aws_shared_config_files' => false,
+                'region' => 'us-east-1',
+                'version' => '2010-03-31',
+            ]);
+        });
+    }
+
+    protected function registerClickatellClient(): void
+    {
+        $this->app->singleton(ClickatellClient::class, function($app) {
+            return new ClickatellClient($app['config']['igniterlabs-smsnotify.clickatell.api_key']);
+        });
+    }
+
+    protected function registerPlivoClient(): void
+    {
+        $this->app->singleton(PlivoClient::class, function($app) {
+            return new PlivoClient(
+                $app['config']['igniterlabs-smsnotify.plivo.auth_id'],
+                $app['config']['igniterlabs-smsnotify.plivo.auth_token'],
+            );
+        });
+    }
+
+    protected function registerVonageClient(): void
+    {
+        $this->app->singleton(VonageClient::class, function($app) {
+            return new VonageClient(new Basic(
+                $app['config']['igniterlabs-smsnotify.vonage.api_key'],
+                $app['config']['igniterlabs-smsnotify.vonage.api_secret'],
+            ));
+        });
+    }
+
+    protected function registerTwilioClient(): void
+    {
+        $this->app->singleton(TwilioClient::class, function($app) {
+            return new TwilioClient(
+                $app['config']['igniterlabs-smsnotify.twilio.account_sid'],
+                $app['config']['igniterlabs-smsnotify.twilio.auth_token'],
+            );
+        });
     }
 }

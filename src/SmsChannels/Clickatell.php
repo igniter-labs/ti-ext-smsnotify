@@ -3,11 +3,12 @@
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
 use Clickatell\Rest as ClickatellClient;
+use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 
 class Clickatell extends BaseChannel
 {
-    const SUCCESSFUL_SEND = 0;
+    protected const int SUCCESSFUL_SEND = 0;
 
     public function channelDetails()
     {
@@ -47,19 +48,24 @@ class Clickatell extends BaseChannel
 
     public function send($to, $content)
     {
-        $responses = (new ClickatellClient($this->model->api_key))
-            ->sendMessage([
-                'to' => [$to],
-                'content' => $content,
+        app()->resolving(ClickatellClient::class, function() {
+            config([
+                'igniterlabs-smsnotify.clickatell.api_key' => $this->model->api_key,
             ]);
+        });
+
+        $responses = resolve(ClickatellClient::class)->sendMessage([
+            'to' => [$to],
+            'content' => $content,
+        ]);
 
         collect($responses)->each(function($response) {
             $errorCode = (int)array_get($response, 'errorCode');
 
             if ($errorCode != self::SUCCESSFUL_SEND) {
-                throw new \RuntimeException(sprintf("Clickatell responded with an error '{%s}: {%s}'",
+                throw new SystemException(sprintf("Clickatell responded with an error '%s: %s'",
                     (string)array_get($response, 'error'),
-                    $errorCode
+                    $errorCode,
                 ));
             }
         });

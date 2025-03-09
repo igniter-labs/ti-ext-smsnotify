@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'clickatell' => [
-        'user' => env('CLICKATELL_USER'),
-        'pass' => env('CLICKATELL_PASS'),
+        'api_key' => env('CLICKATELL_API_KEY'),
         'api_id' => env('CLICKATELL_API_ID'),
     ],
     'plivo' => [
@@ -18,7 +19,9 @@ return [
         'account_sid' => env('TWILIO_ACCOUNT_SID'),
         'from' => env('TWILIO_FROM'),
     ],
-    'nexmo' => [
+    'vonage' => [
+        'api_key' => env('VONAGE_API_KEY'),
+        'api_secret' => env('VONAGE_API_SECRET'),
         'send_from' => '',
     ],
     'aws' => [

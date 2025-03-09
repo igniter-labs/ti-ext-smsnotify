@@ -9,6 +9,30 @@ use IgniterLabs\SmsNotify\Classes\Manager;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 
+/**
+ *
+ * @property int $id
+ * @property string $code
+ * @property string|null $name
+ * @property string|null $content
+ * @property int|null $is_custom
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Igniter\Flame\Database\Builder<static>|Template applyFilters(array $options = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|Template applySorts(array $sorts = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|Template dropdown(string $column, string $key = null)
+ * @method static \Igniter\Flame\Database\Builder<static>|Template like(string $column, string $value, string $side = 'both', string $boolean = 'and')
+ * @method static \Igniter\Flame\Database\Builder<static>|Template listFrontEnd(array $options = [])
+ * @method static \Igniter\Flame\Database\Builder<static>|Template lists(string $column, string $key = null)
+ * @method static \Igniter\Flame\Database\Builder<static>|Template newModelQuery()
+ * @method static \Igniter\Flame\Database\Builder<static>|Template newQuery()
+ * @method static \Igniter\Flame\Database\Builder<static>|Template orLike(string $column, string $value, string $side = 'both')
+ * @method static \Igniter\Flame\Database\Builder<static>|Template orSearch(string $term, string $columns = [], string $mode = 'all')
+ * @method static \Igniter\Flame\Database\Builder<static>|Template pluckDates(string $column, string $keyFormat = '%Y-%m', string $valueFormat = '%M %Y')
+ * @method static \Igniter\Flame\Database\Builder<static>|Template query()
+ * @method static \Igniter\Flame\Database\Builder<static>|Template search(string $term, string $columns = [], string $mode = 'all')
+ * @mixin Model
+ */
 class Template extends Model
 {
     use Validation;

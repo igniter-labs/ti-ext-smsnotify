@@ -79,9 +79,4 @@ abstract class BaseChannel extends ModelAction
     {
         return array_get($this->channelDetails(), 'description');
     }
-
-    public function getChannelClassName()
-    {
-        return $this->channelClassName;
-    }
 }

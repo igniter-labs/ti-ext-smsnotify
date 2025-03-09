@@ -91,28 +91,10 @@ class Channels extends AdminController
     public function formBeforeCreate($model)
     {
         throw_unless(strlen($code = post('Channel.channel')),
-            new FlashException('Invalid channel code selected')
+            new FlashException('Invalid channel code selected'),
         );
 
         $model->class_name = resolve(Manager::class)->getChannel($code);
         $model->applyChannelClass();
-    }
-
-    public function formValidate($model, $form)
-    {
-        $rules = [
-            ['channel', 'lang:igniter.payregister::default.label_payments', 'sometimes|required|alpha_dash'],
-            ['name', 'lang:admin::lang.label_name', 'sometimes|required|min:2|max:128'],
-            ['code', 'lang:igniter.payregister::default.label_code', 'sometimes|required|alpha_dash|unique:igniterlabs_smsnotify_channels,code'],
-            ['description', 'lang:admin::lang.label_description', 'sometimes|required|max:255'],
-            ['is_default', 'lang:igniter.payregister::default.label_default', 'required|integer'],
-            ['is_enabled', 'lang:admin::lang.label_status', 'required|integer'],
-        ];
-
-        if ($mergeRules = $form->model->getConfigRules()) {
-            array_push($rules, ...$mergeRules);
-        }
-
-        return $this->validatePasses($form->getSaveData(), $rules);
     }
 }

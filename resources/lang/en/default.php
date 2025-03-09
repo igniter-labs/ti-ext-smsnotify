@@ -18,9 +18,9 @@ return [
 
     'help_template' => 'To customize SMS Templates, go to Design -> SMS Templates.',
 
-    'nexmo' => [
-        'text_title' => 'Nexmo SMS Channel',
-        'text_desc' => 'Sending SMS notifications using Nexmo.',
+    'vonage' => [
+        'text_title' => 'Vonage SMS Channel',
+        'text_desc' => 'Sending SMS notifications using Vonage.',
     ],
 
     'twilio' => [

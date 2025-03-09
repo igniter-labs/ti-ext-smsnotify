@@ -2,7 +2,6 @@
 
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
-use Aws\Credentials\Credentials;
 use Aws\Sns\SnsClient;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 
@@ -52,16 +51,18 @@ class Aws extends BaseChannel
     public function send($to, $content)
     {
         // if not starting with + sign, use default country code
-        if (substr($to, 0, 1) != '+') {
+        if (!str_starts_with($to, '+')) {
             $to = $this->model->country_code.$to;
         }
 
-        (new SnsClient([
-            'credentials' => new Credentials($this->model->key, $this->model->secret),
-            'use_aws_shared_config_files' => false,
-            'region' => 'us-east-1',
-            'version' => '2010-03-31',
-        ]))->publish([
+        app()->resolving(SnsClient::class, function() {
+            config([
+                'igniterlabs-smsnotify.aws.key' => $this->model->key,
+                'igniterlabs-smsnotify.aws.secret' => $this->model->secret,
+            ]);
+        });
+
+        resolve(SnsClient::class)->publish([
             'Message' => $content,
             'PhoneNumber' => $to,
         ]);

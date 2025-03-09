@@ -37,6 +37,6 @@ class ChannelRequest extends FormRequest
 
     protected function isEditFormContext(): bool
     {
-        return $this->route()->getController()->getFormContext() === 'edit';
+        return $this->route()?->getController()->getFormContext() === 'edit';
     }
 }
