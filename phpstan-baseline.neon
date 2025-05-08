@@ -1,12 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Called ''env'' outside of the config directory which returns null when the config is cached, use ''config''\.$#'
-			identifier: larastan.noEnvCallsOutsideOfConfig
-			count: 14
-			path: config/channels.php
-
-		-
 			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$custom\.$#'
 			identifier: property.notFound
 			count: 1
@@ -39,12 +33,6 @@ parameters:
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:applyChannelClass\(\)\.$#'
 			identifier: method.notFound
-			count: 1
-			path: src/Models/Channel.php
-
-		-
-			message: '#^PHPDoc type array\<int, string\> of property IgniterLabs\\SmsNotify\\Models\\Channel\:\:\$fillable is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$fillable\.$#'
-			identifier: property.phpDocType
 			count: 1
 			path: src/Models/Channel.php
 
@@ -82,19 +70,19 @@ parameters:
 			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$country_code\.$#'
 			identifier: property.notFound
 			count: 1
-			path: src/SmsChannels/Aws.php
+			path: src/SmsChannels/AwsSns.php
 
 		-
 			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$key\.$#'
 			identifier: property.notFound
 			count: 1
-			path: src/SmsChannels/Aws.php
+			path: src/SmsChannels/AwsSns.php
 
 		-
 			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$secret\.$#'
 			identifier: property.notFound
 			count: 1
-			path: src/SmsChannels/Aws.php
+			path: src/SmsChannels/AwsSns.php
 
 		-
 			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$api_key\.$#'
@@ -103,16 +91,10 @@ parameters:
 			path: src/SmsChannels/Clickatell.php
 
 		-
-			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$auth_id\.$#'
+			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$from\.$#'
 			identifier: property.notFound
 			count: 1
-			path: src/SmsChannels/Plivo.php
-
-		-
-			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$auth_token\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/SmsChannels/Plivo.php
+			path: src/SmsChannels/Clickatell.php
 
 		-
 			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$from_number\.$#'
@@ -135,7 +117,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Igniter\\Flame\\Database\\Model\:\:\$service_sid\.$#'
 			identifier: property.notFound
-			count: 1
+			count: 2
 			path: src/SmsChannels/Twilio.php
 
 		-

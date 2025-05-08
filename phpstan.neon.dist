@@ -11,3 +11,4 @@ parameters:
         - resources/
     ignoreErrors:
         - identifier: generics.notGeneric
+        - identifier: larastan.noEnvCallsOutsideOfConfig

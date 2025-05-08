@@ -55,9 +55,6 @@ class Channel extends Model
 
     public $timestamps = true;
 
-    /**
-     * @var array<int, string> fillable fields
-     */
     protected $fillable = ['id', 'name', 'description', 'code', 'class_name', 'config_data', 'is_enabled', 'is_default', 'location_id'];
 
     public $relation = [

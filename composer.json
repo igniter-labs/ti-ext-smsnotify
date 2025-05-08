@@ -14,7 +14,6 @@
         "notification"
     ],
     "require": {
-        "arcturial/clickatell": "~3.0",
         "aws/aws-sdk-php": "^3.69.11",
         "plivo/plivo-php": "^4.66",
         "tastyigniter/core": "^v4.0",
