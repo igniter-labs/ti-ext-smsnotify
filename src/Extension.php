@@ -11,7 +11,7 @@ use Igniter\Cart\AutomationRules\Events\NewOrderStatus;
 use Igniter\System\Classes\BaseExtension;
 use IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification;
 use IgniterLabs\SmsNotify\Classes\Manager;
-use IgniterLabs\SmsNotify\SmsChannels\Aws;
+use IgniterLabs\SmsNotify\SmsChannels\AwsSns;
 use IgniterLabs\SmsNotify\SmsChannels\Clickatell;
 use IgniterLabs\SmsNotify\SmsChannels\Plivo;
 use IgniterLabs\SmsNotify\SmsChannels\Twilio;
@@ -116,7 +116,7 @@ class Extension extends BaseExtension
             'vonage' => Vonage::class,
             'clickatell' => Clickatell::class,
             'plivo' => Plivo::class,
-            'aws' => Aws::class,
+            'awssns' => AwsSns::class,
         ];
     }
 

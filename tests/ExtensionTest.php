@@ -9,7 +9,7 @@ use Clickatell\Rest as ClickatellClient;
 use Igniter\Cart\AutomationRules\Events\NewOrderStatus;
 use IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification;
 use IgniterLabs\SmsNotify\Extension;
-use IgniterLabs\SmsNotify\SmsChannels\Aws;
+use IgniterLabs\SmsNotify\SmsChannels\AwsSns;
 use IgniterLabs\SmsNotify\SmsChannels\Clickatell;
 use IgniterLabs\SmsNotify\SmsChannels\Plivo;
 use IgniterLabs\SmsNotify\SmsChannels\Twilio;
@@ -121,7 +121,7 @@ it('registers sms channels correctly', function(): void {
         ->toHaveKey('vonage', Vonage::class)
         ->toHaveKey('clickatell', Clickatell::class)
         ->toHaveKey('plivo', Plivo::class)
-        ->toHaveKey('aws', Aws::class);
+        ->toHaveKey('awssns', AwsSns::class);
 });
 
 it('registers sms templates correctly', function(): void {

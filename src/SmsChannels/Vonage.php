@@ -28,7 +28,7 @@ class Vonage extends BaseChannel
             'fields' => [
                 'setup' => [
                     'type' => 'partial',
-                    'path' => 'nexmo/info',
+                    'path' => 'vonage/info',
                 ],
                 'api_key' => [
                     'label' => 'API Key',

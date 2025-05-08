@@ -28,8 +28,8 @@ return [
         'text_desc' => 'Sending SMS notifications using Twilio.',
     ],
 
-    'aws' => [
-        'text_title' => 'AWS SMS Channel',
+    'awssns' => [
+        'text_title' => 'AWS SNS SMS Channel',
         'text_desc' => 'Sending SMS notifications using AWS SNS.',
     ],
 

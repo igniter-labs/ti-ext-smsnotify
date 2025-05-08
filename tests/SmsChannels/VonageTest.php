@@ -26,7 +26,7 @@ it('returns correct form config', function(): void {
     expect($config)->toBeArray()
         ->and($config['fields'])->toHaveKey('setup')
         ->and($config['fields']['setup']['type'])->toBe('partial')
-        ->and($config['fields']['setup']['path'])->toBe('nexmo/info')
+        ->and($config['fields']['setup']['path'])->toBe('vonage/info')
         ->and($config['fields'])->toHaveKey('api_key')
         ->and($config['fields']['api_key']['label'])->toBe('API Key')
         ->and($config['fields']['api_key']['type'])->toBe('text')
@@ -51,10 +51,11 @@ it('returns correct config rules', function(): void {
 
 it('sends message successfully', function(): void {
     $vonageClient = Mockery::mock(Client::class);
-    $vonageClient->shouldReceive('message->send')->once()->withArgs(fn($payload): bool => $payload['type'] === 'text' &&
+    $vonageClient->shouldReceive('message->send')->once()->withArgs(fn($payload): bool => $payload['message_type'] === 'text' &&
         $payload['from'] === '12345' &&
         $payload['to'] === '67890' &&
         $payload['text'] === 'Test message' &&
+        $payload['channel'] === 'sms' &&
         $payload['client-ref'] === '',
     )->andReturn(mock(Message::class));
     app()->singleton(Client::class, fn() => $vonageClient);
