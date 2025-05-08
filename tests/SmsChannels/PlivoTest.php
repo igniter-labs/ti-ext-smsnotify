@@ -58,7 +58,7 @@ it('sends message successfully', function(): void {
         'src' => '12345',
         'dst' => '67890',
         'text' => 'Test message',
-    ])->andReturn(['status' => 202]);
+    ])->andReturn((object)['statusCode' => 202]);
     app()->singleton(RestClient::class, fn() => $plivoClient);
 
     $channel = new Channel;
@@ -71,7 +71,7 @@ it('sends message successfully', function(): void {
 
     $response = $plivoChannel->send('67890', 'Test message');
 
-    expect($response['status'])->toBe(202);
+    expect($response->statusCode)->toBe(202);
 });
 
 it('throws exception on failed message send', function(): void {
@@ -81,7 +81,7 @@ it('throws exception on failed message send', function(): void {
         'src' => '12345',
         'dst' => '67890',
         'text' => 'Test message',
-    ])->andReturn(['status' => 400, 'response' => ['error' => 'Some error']]);
+    ])->andReturn((object)['statusCode' => 400, 'error' => 'Some error']);
     app()->singleton(RestClient::class, fn() => $plivoClient);
 
     $channel = new Channel;

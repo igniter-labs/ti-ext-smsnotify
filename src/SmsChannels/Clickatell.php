@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify\SmsChannels;
 
-use Clickatell\Rest as ClickatellClient;
 use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
+use Illuminate\Support\Facades\Http;
 use Override;
 
 class Clickatell extends BaseChannel
 {
+    protected const string API_URL = 'https://platform.clickatell.com';
+
     protected const int SUCCESSFUL_SEND = 0;
 
     #[Override]
@@ -39,6 +41,10 @@ class Clickatell extends BaseChannel
                     'label' => 'API ID',
                     'type' => 'text',
                 ],
+                'from' => [
+                    'label' => 'Send from (optional)',
+                    'type' => 'text',
+                ],
             ],
         ];
     }
@@ -49,32 +55,39 @@ class Clickatell extends BaseChannel
         return [
             'api_key' => ['required', 'string', 'max:128'],
             'api_id' => ['required', 'string', 'max:128'],
+            'from' => ['nullable', 'string', 'max:128'],
         ];
     }
 
     #[Override]
     public function send($to, $content): void
     {
-        app()->resolving(ClickatellClient::class, function(): void {
-            config([
-                'igniterlabs-smsnotify.clickatell.api_key' => $this->model->api_key,
+        $response = Http::withHeaders(['Authorization' => $this->model->api_key])
+            ->asJson()
+            ->acceptJson()
+            ->post(self::API_URL.'/v1/message', [
+                'messages' => [
+                    array_filter([
+                        'channel' => 'sms',
+                        'to' => $to,
+                        'content' => $content,
+                        'from' => $this->model->from,
+                    ]),
+                ],
             ]);
-        });
 
-        $responses = resolve(ClickatellClient::class)->sendMessage([
-            'to' => [$to],
-            'content' => $content,
-        ]);
+        $errorMessages = collect($response->json('messages'))->map(function($message): string {
+            $errorCode = (int)array_get($message, 'error.code');
 
-        collect($responses)->each(function($response): void {
-            $errorCode = (int)array_get($response, 'errorCode');
+            return $errorCode != self::SUCCESSFUL_SEND
+                ? $errorCode.': '.array_get($message, 'error.description')
+                : '';
+        })
+            ->filter()
+            ->implode(', ');
 
-            if ($errorCode != self::SUCCESSFUL_SEND) {
-                throw new SystemException(sprintf("Clickatell responded with an error '%s: %s'",
-                    (string)array_get($response, 'error'),
-                    $errorCode,
-                ));
-            }
-        });
+        throw_unless($response->getStatusCode() === 202, SystemException::class, sprintf(
+            'Clickatell responded with an error: %s', $errorMessages
+        ));
     }
 }

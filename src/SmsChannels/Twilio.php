@@ -63,7 +63,7 @@ class Twilio extends BaseChannel
             'body' => trim((string) $content),
         ];
 
-        if (strlen($this->model->service_sid) !== 0) {
+        if (strlen((string) $this->model->service_sid) !== 0) {
             $params['messagingServiceSid'] = $this->model->service_sid;
         }
 
@@ -72,7 +72,7 @@ class Twilio extends BaseChannel
         }
 
         if (empty($params['from']) && empty($params['messagingServiceSid'])) {
-            throw new SystemException('SMS message was not sent. Missing `from` number.');
+            throw new SystemException('SMS message was not sent. Missing `from` number or `messagingServiceSid`.');
         }
 
         $this->fillOptionalParams($params, [
@@ -85,12 +85,10 @@ class Twilio extends BaseChannel
             'validityPeriod',
         ]);
 
-        config([
-            'igniterlabs-smsnotify.twilio.account_sid' => $this->model->auth_id, // @phpstan-ignore-line property.notFound
-            'igniterlabs-smsnotify.twilio.auth_token' => $this->model->auth_token, // @phpstan-ignore-line property.notFound
-        ]);
-
-        return resolve(TwilioClient::class)->messages->create($to, $params);
+        return $this->sendUsingConfig([
+            'twilio.account_sid' => $this->model->account_sid, // @phpstan-ignore-line property.notFound
+            'twilio.auth_token' => $this->model->auth_token, // @phpstan-ignore-line property.notFound
+        ], fn() => resolve(TwilioClient::class)->messages->create($to, $params));
     }
 
     protected function fillOptionalParams(&$params, $optionalParams): self
