@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify\Classes;
 
+use Igniter\Flame\Exception\FlashException;
 use Igniter\Flame\Support\PagicHelper;
 use Igniter\Flame\Support\StringParser;
 use Igniter\System\Classes\ExtensionManager;
@@ -62,7 +63,12 @@ class Manager
     {
         $content = $this->buildContent($templateCode, $data);
 
-        Channel::getDefault(optional($location)->location_id)
+        throw_unless(
+            $defaultChannel = Channel::getDefault(optional($location)->location_id),
+            new FlashException(lang('igniterlabs.smsnotify::default.alert_no_default_channel')),
+        );
+
+        $defaultChannel
             ->getChannelObject()
             ->send($to, $content);
     }

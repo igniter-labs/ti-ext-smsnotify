@@ -28,7 +28,7 @@ class Vonage extends BaseChannel
             'fields' => [
                 'setup' => [
                     'type' => 'partial',
-                    'path' => 'nexmo/info',
+                    'path' => 'vonage/info',
                 ],
                 'api_key' => [
                     'label' => 'API Key',
@@ -60,29 +60,22 @@ class Vonage extends BaseChannel
     public function send($to, $content): Message
     {
         $payload = [
-            'type' => 'text',
+            'message_type' => 'text',
             'from' => $this->model->send_from, // @phpstan-ignore-line property.notFound
             'to' => $to,
             'text' => trim((string) $content),
+            'channel' => 'sms',
             'client-ref' => '',
         ];
-
-        if ($this->model->status_callback) { // @phpstan-ignore-line property.notFound
-            $payload['callback'] = $this->model->status_callback;
-        }
 
         // @phpstan-ignore property.notFound
         if (!strlen($this->model->api_key) || !strlen($this->model->api_secret)) {
             throw new SystemException('Please provide your Vonage API credentials. api_key + api_secret');
         }
 
-        app()->resolving(VonageClient::class, function(): void {
-            config([
-                'igniterlabs-smsnotify.vonage.api_key' => $this->model->api_key, // @phpstan-ignore-line property.notFound
-                'igniterlabs-smsnotify.vonage.api_secret' => $this->model->api_secret, // @phpstan-ignore-line property.notFound
-            ]);
-        });
-
-        return resolve(VonageClient::class)->message()->send($payload);
+        return $this->sendUsingConfig([
+            'vonage.api_key' => $this->model->api_key, // @phpstan-ignore-line property.notFound
+            'vonage.api_secret' => $this->model->api_secret, // @phpstan-ignore-line property.notFound
+        ], fn() => resolve(VonageClient::class)->message()->send($payload));
     }
 }

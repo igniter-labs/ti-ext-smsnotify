@@ -16,7 +16,7 @@ use Override;
 class SendSmsNotification extends BaseAction
 {
     #[Override]
-    public function actionDetails()
+    public function actionDetails(): array
     {
         return [
             'name' => 'Send an SMS notification',
@@ -25,7 +25,7 @@ class SendSmsNotification extends BaseAction
     }
 
     #[Override]
-    public function defineFormFields()
+    public function defineFormFields(): array
     {
         return [
             'fields' => [

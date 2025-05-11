@@ -6,12 +6,11 @@ namespace IgniterLabs\SmsNotify;
 
 use Aws\Credentials\Credentials;
 use Aws\Sns\SnsClient;
-use Clickatell\Rest as ClickatellClient;
 use Igniter\Cart\AutomationRules\Events\NewOrderStatus;
 use Igniter\System\Classes\BaseExtension;
 use IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification;
 use IgniterLabs\SmsNotify\Classes\Manager;
-use IgniterLabs\SmsNotify\SmsChannels\Aws;
+use IgniterLabs\SmsNotify\SmsChannels\AwsSns;
 use IgniterLabs\SmsNotify\SmsChannels\Clickatell;
 use IgniterLabs\SmsNotify\SmsChannels\Plivo;
 use IgniterLabs\SmsNotify\SmsChannels\Twilio;
@@ -37,7 +36,6 @@ class Extension extends BaseExtension
         $this->mergeConfigFrom(__DIR__.'/../config/channels.php', 'igniterlabs-smsnotify');
 
         $this->registerSnsClient();
-        $this->registerClickatellClient();
         $this->registerPlivoClient();
         $this->registerVonageClient();
         $this->registerTwilioClient();
@@ -116,7 +114,7 @@ class Extension extends BaseExtension
             'vonage' => Vonage::class,
             'clickatell' => Clickatell::class,
             'plivo' => Plivo::class,
-            'aws' => Aws::class,
+            'awssns' => AwsSns::class,
         ];
     }
 
@@ -145,11 +143,6 @@ class Extension extends BaseExtension
             'region' => 'us-east-1',
             'version' => '2010-03-31',
         ]));
-    }
-
-    protected function registerClickatellClient(): void
-    {
-        $this->app->singleton(ClickatellClient::class, fn($app): ClickatellClient => new ClickatellClient($app['config']['igniterlabs-smsnotify.clickatell.api_key']));
     }
 
     protected function registerPlivoClient(): void

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace IgniterLabs\SmsNotify\Classes;
 
+use Closure;
 use Igniter\Flame\Database\Model;
 use Igniter\System\Actions\ModelAction;
 
@@ -81,5 +82,17 @@ abstract class BaseChannel extends ModelAction
     public function getDescription()
     {
         return array_get($this->channelDetails(), 'description');
+    }
+
+    protected function sendUsingConfig(array $config, Closure $callback)
+    {
+        $oldConfig = config('igniterlabs-smsnotify');
+        config()->set('igniterlabs-smsnotify', array_merge($oldConfig, array_undot($config)));
+
+        $response = $callback();
+
+        config()->set('igniterlabs-smsnotify', $oldConfig);
+
+        return $response;
     }
 }

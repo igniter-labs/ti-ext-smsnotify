@@ -58,23 +58,21 @@ class Plivo extends BaseChannel
     #[Override]
     public function send($to, $content)
     {
-        app()->resolving(PlivoClient::class, function(): void {
-            config([
-                'igniterlabs-smsnotify.plivo.auth_id' => $this->model->auth_id,
-                'igniterlabs-smsnotify.plivo.auth_token' => $this->model->auth_token,
+        return $this->sendUsingConfig([
+            'plivo.auth_id' => $this->model->auth_id, // @phpstan-ignore-line property.notFound
+            'plivo.auth_token' => $this->model->auth_token, // @phpstan-ignore-line property.notFound
+        ], function() use ($to, $content) {
+            $response = resolve(PlivoClient::class)->messages->create([
+                'src' => $this->model->from_number,
+                'dst' => $to,
+                'text' => $content,
             ]);
+
+            if ($response->statusCode !== 202) {
+                throw new SystemException(sprintf('SMS message was not sent. Plivo responded with `%s: %s`', $response->statusCode, $response->error));
+            }
+
+            return $response;
         });
-
-        $response = resolve(PlivoClient::class)->messages->create([
-            'src' => $this->model->from_number,
-            'dst' => $to,
-            'text' => $content,
-        ]);
-
-        if ($response['status'] !== 202) {
-            throw new SystemException(sprintf('SMS message was not sent. Plivo responded with `%s: %s`', $response['status'], $response['response']['error']));
-        }
-
-        return $response;
     }
 }

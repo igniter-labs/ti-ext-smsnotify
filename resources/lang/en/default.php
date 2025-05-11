@@ -18,6 +18,8 @@ return [
 
     'help_template' => 'To customize SMS Templates, go to Design -> SMS Templates.',
 
+    'alert_no_default_channel' => 'No default SMS channel is set. Please set a default SMS channel in the settings.',
+
     'vonage' => [
         'text_title' => 'Vonage SMS Channel',
         'text_desc' => 'Sending SMS notifications using Vonage.',
@@ -28,8 +30,8 @@ return [
         'text_desc' => 'Sending SMS notifications using Twilio.',
     ],
 
-    'aws' => [
-        'text_title' => 'AWS SMS Channel',
+    'awssns' => [
+        'text_title' => 'AWS SNS SMS Channel',
         'text_desc' => 'Sending SMS notifications using AWS SNS.',
     ],
 

@@ -34,6 +34,7 @@ class ChannelRequest extends FormRequest
             'name' => ['sometimes', 'required', 'min:2', 'max:128'],
             'code' => ['sometimes', 'required', 'alpha_dash', 'unique:igniterlabs_smsnotify_channels,code'],
             'description' => ['sometimes', 'required', 'max:255'],
+            'location_id' => ['nullable', 'integer'],
             'is_default' => ['required', 'integer'],
             'is_enabled' => ['required', 'integer'],
         ], $rules);

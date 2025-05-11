@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace IgniterLabs\SmsNotify\Tests;
 
 use Aws\Sns\SnsClient;
-use Clickatell\Rest as ClickatellClient;
 use Igniter\Cart\AutomationRules\Events\NewOrderStatus;
 use IgniterLabs\SmsNotify\AutomationRules\Actions\SendSmsNotification;
 use IgniterLabs\SmsNotify\Extension;
-use IgniterLabs\SmsNotify\SmsChannels\Aws;
+use IgniterLabs\SmsNotify\SmsChannels\AwsSns;
 use IgniterLabs\SmsNotify\SmsChannels\Clickatell;
 use IgniterLabs\SmsNotify\SmsChannels\Plivo;
 use IgniterLabs\SmsNotify\SmsChannels\Twilio;
@@ -27,17 +26,6 @@ it('resolves aws sns client correctly', function(): void {
     });
 
     expect(resolve(SnsClient::class))->toBeInstanceOf(SnsClient::class);
-});
-
-it('resolves clickatell client correctly', function(): void {
-    app()->resolving(ClickatellClient::class, function(): void {
-        config([
-            'igniterlabs-smsnotify.clickatell.api_key' => 'test_api_key',
-            'igniterlabs-smsnotify.clickatell.api_id' => 'test_api_id',
-        ]);
-    });
-
-    expect(resolve(ClickatellClient::class))->toBeInstanceOf(ClickatellClient::class);
 });
 
 it('resolves plivo client correctly', function(): void {
@@ -121,7 +109,7 @@ it('registers sms channels correctly', function(): void {
         ->toHaveKey('vonage', Vonage::class)
         ->toHaveKey('clickatell', Clickatell::class)
         ->toHaveKey('plivo', Plivo::class)
-        ->toHaveKey('aws', Aws::class);
+        ->toHaveKey('awssns', AwsSns::class);
 });
 
 it('registers sms templates correctly', function(): void {

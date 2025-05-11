@@ -8,14 +8,14 @@ use Aws\Sns\SnsClient;
 use IgniterLabs\SmsNotify\Classes\BaseChannel;
 use Override;
 
-class Aws extends BaseChannel
+class AwsSns extends BaseChannel
 {
     #[Override]
     public function channelDetails(): array
     {
         return [
-            'name' => 'igniterlabs.smsnotify::default.aws.text_title',
-            'description' => 'igniterlabs.smsnotify::default.aws.text_desc',
+            'name' => 'igniterlabs.smsnotify::default.awssns.text_title',
+            'description' => 'igniterlabs.smsnotify::default.awssns.text_desc',
         ];
     }
 
@@ -26,7 +26,7 @@ class Aws extends BaseChannel
             'fields' => [
                 'setup' => [
                     'type' => 'partial',
-                    'path' => 'aws/info',
+                    'path' => 'awssns/info',
                 ],
                 'key' => [
                     'label' => 'Key',

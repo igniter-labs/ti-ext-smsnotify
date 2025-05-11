@@ -6,27 +6,27 @@ namespace IgniterLabs\SmsNotify\Tests\SmsChannels;
 
 use Aws\Sns\SnsClient;
 use IgniterLabs\SmsNotify\Models\Channel;
-use IgniterLabs\SmsNotify\SmsChannels\Aws;
+use IgniterLabs\SmsNotify\SmsChannels\AwsSns;
 
 it('returns correct channel details', function(): void {
-    $awsChannel = new Aws;
+    $awsChannel = new AwsSns;
 
     $details = $awsChannel->channelDetails();
 
     expect($details)->toBeArray()
-        ->and($details['name'])->toBe('igniterlabs.smsnotify::default.aws.text_title')
-        ->and($details['description'])->toBe('igniterlabs.smsnotify::default.aws.text_desc');
+        ->and($details['name'])->toBe('igniterlabs.smsnotify::default.awssns.text_title')
+        ->and($details['description'])->toBe('igniterlabs.smsnotify::default.awssns.text_desc');
 });
 
 it('returns correct form config', function(): void {
-    $awsChannel = new Aws;
+    $awsChannel = new AwsSns;
 
     $config = $awsChannel->defineFormConfig();
 
     expect($config)->toBeArray()
         ->and($config['fields'])->toHaveKey('setup')
         ->and($config['fields']['setup']['type'])->toBe('partial')
-        ->and($config['fields']['setup']['path'])->toBe('aws/info')
+        ->and($config['fields']['setup']['path'])->toBe('awssns/info')
         ->and($config['fields'])->toHaveKey('key')
         ->and($config['fields']['key']['label'])->toBe('Key')
         ->and($config['fields']['key']['type'])->toBe('text')
@@ -39,7 +39,7 @@ it('returns correct form config', function(): void {
 });
 
 it('returns correct config rules', function(): void {
-    $awsChannel = new Aws;
+    $awsChannel = new AwsSns;
 
     $rules = $awsChannel->getConfigRules();
 
@@ -63,7 +63,7 @@ it('sends message with default country code', function(): void {
         'secret' => 'test_secret',
         'country_code' => '+1',
     ]);
-    $awsChannel = new Aws($channel);
+    $awsChannel = new AwsSns($channel);
 
     $awsChannel->send('234567890', 'Test message');
 });
@@ -82,7 +82,7 @@ it('sends message with provided country code', function(): void {
         'secret' => 'test_secret',
         'country_code' => '+1',
     ]);
-    $awsChannel = new Aws($channel);
+    $awsChannel = new AwsSns($channel);
 
     $awsChannel->send('+1234567890', 'Test message');
 });

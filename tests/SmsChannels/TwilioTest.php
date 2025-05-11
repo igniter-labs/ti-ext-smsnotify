@@ -92,5 +92,5 @@ it('throws exception when from number and service sid are missing', function(): 
     $twilioChannel = new Twilio($channel);
 
     expect(fn(): MessageInstance => $twilioChannel->send('+1234567890', 'Test message'))
-        ->toThrow(SystemException::class, 'SMS message was not sent. Missing `from` number.');
+        ->toThrow(SystemException::class, 'SMS message was not sent. Missing `from` number or `messagingServiceSid`.');
 });
