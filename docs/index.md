@@ -28,7 +28,7 @@ You can use the `SendSmsNotification` Automation rule action to send out notific
 
 You can use the `SendSmsNotification` Automation rule action to send SMS notifications when certain events occur in your TastyIgniter platform. This action can be configured in the **Tools > Automations** admin page. You can specify the SMS template to use and the recipient.
 
-The `SendSmsNotification` action will automatically resolve the appropriate SMS channel based on the location from the event payload, if available. If no location is provided, it will use the default SMS channel configured in the settings. 
+The `SendSmsNotification` action will automatically resolve the appropriate SMS channel based on the location from the event payload, if available. If no location is provided, it will use the default SMS channel configured in the settings.
 
 Follow these steps to set up the action:
 
