@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('igniterlabs_smsnotify_templates', function(Blueprint $table): void {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('code')->unique()->index('igniterlabs_smsnotify_templates_code_index');
+            $table->string('code')->unique()->index('smsnotify_templates_code_index');
             $table->string('name')->nullable();
             $table->text('content')->nullable();
             $table->boolean('is_custom')->nullable();
@@ -26,8 +26,8 @@ return new class extends Migration
         Schema::create('igniterlabs_smsnotify_channels', function(Blueprint $table): void {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('code')->unique()->index('igniterlabs_smsnotify_channels_code_index');
-            $table->string('class_name')->nullable()->index('igniterlabs_smsnotify_channels_class_name_index');
+            $table->string('code')->unique()->index('smsnotify_channels_code_index');
+            $table->string('class_name')->nullable()->index('smsnotify_channels_class_name_index');
             $table->text('config_data')->nullable();
             $table->boolean('is_enabled')->default(0)->nullable();
             $table->boolean('is_default')->default(0)->nullable();
