@@ -5,82 +5,39 @@
     <a href="https://packagist.org/packages/igniterlabs/ti-ext-smsnotify"><img src="https://img.shields.io/packagist/l/igniterlabs/ti-ext-smsnotify" alt="License"></a>
 </p>
 
-## SMS Notification channels and messages for TastyIgniter
+## Introduction
 
-This extension allows admins to configure sms notifications to be sent out when certain events happen in TastyIgniter. 
+The TastyIgniter SMS Notify extension provides a simple way to send SMS notifications for various events in your TastyIgniter application. Whether it's notifying customers about their order status or alerting admins about new orders, this extension makes it easy to keep everyone informed via SMS.
 
 ## Features
-- Receive SMS notifications whenever a new order has been placed
-- SMS alert to your customers about their order or reservation status
-- Customizable SMS Messages
-- **Supported channels:** twilio, nexmo, clickatell and plivo
-- Add your own custom SMS notification channel.
 
-### Admin Panel
+- Send SMS notifications for new orders placed in your restaurant
+- Notify customers about their order or reservation status via SMS
+- Customizable SMS messages to suit your needs
+- Supports multiple SMS channels including Twilio, Nexmo, Clickatell, AWS SNS, and Plivo
+- Ability to add your own custom SMS notification channel
+- Easy configuration through the TastyIgniter admin panel
 
-Go to **Manage > Settings > Configure SMS Channels** to manage notification channels.
-Notification messages can be customized in the admin panel by navigating to **Design > SMS Templates**.
+## Documentation
 
-Use the `SendSmsNotification` Automation rule action to send out notification when certain events happen by navigating to **Tools > Automations**.
+More documentation can be found on [here](https://github.com/igniter-labs/ti-ext-smsnotify/blob/master/docs/index.md).
 
-### Usage
+## Changelog
 
-**Example of Registering Notification channel and/or template**
+Please see [CHANGELOG](https://github.com/igniter-labs/ti-ext-smsnotify/blob/master/CHANGELOG.md) for more information on what has changed recently.
 
-```
-public function registerSmsNotifications()
-{
-    return [
-        'channels' => [
-            'twilio' => \IgniterLabs\SmsNotify\Notifications\Channels\Twilio::class,
-        ],
-        'template' => [
-            'igniterlabs.smsnotify::_sms.new_order' => 'igniterlabs.smsnotify::default.template.text_order_placed',
-        ],
-    ];
-}
-```
+## Reporting issues
 
-**Example of a Notification Channel Class**
+If you encounter a bug in this extension, please report it using the [Issue Tracker](https://github.com/igniter-labs/ti-ext-smsnotify/issues) on GitHub.
 
-A notification channel class is responsible for building the settings form and setting the required configuration values.
+## Contributing
 
-```
-class Twilio extends \IgniterLabs\SmsNotify\Classes\BaseChannel
-{
-    /**
-     * Returns information about this channel, including name and description.
-     */
-    public function channelDetails()
-    {
-        return [
-            'name'        => 'Twilio SMS Channel',
-            'description' => '',
-        ];
-    }
+Contributions are welcome! Please read [TastyIgniter's contributing guide](https://tastyigniter.com/docs/resources/contribution-guide).
 
-    public function defineFormConfig()
-    {
-        return [
-            'status' => [
-                'label' => 'Status',
-                'type' => 'switch',
-                'default' => FALSE,
-                'span' => 'left',
-                'tab' => 'Twilio',
-            ],
-            'account_sid' => [
-                'label' => 'Account SID',
-                'type' => 'text',
-                'tab' => 'Twilio',
-            ],
-            ...
-        ];
-    }
-    
-    public function send($to, $content)
-    {
-        //
-    }
-}
-```
+## Security vulnerabilities
+
+For reporting security vulnerabilities, please see [our security policy](https://github.com/igniter-labs/ti-ext-smsnotify/security/policy).
+
+## License
+
+TastyIgniter SMS Notify extension is open-source software licensed under the [MIT license](https://github.com/igniter-labs/ti-ext-smsnotify/blob/master/LICENSE.md).
