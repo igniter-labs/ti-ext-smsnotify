@@ -52,7 +52,7 @@ it('returns correct config rules', function(): void {
 
 it('sends message successfully', function(): void {
     $vonageClient = Mockery::mock(Client::class);
-    $vonageClient->shouldReceive('sms->send')->once()->andReturn(mock(Collection::class, function($mock) {
+    $vonageClient->shouldReceive('sms->send')->once()->andReturn(mock(Collection::class, function($mock): void {
         $mock->shouldReceive('current')->andReturn(mock(SentSMS::class));
     }));
     app()->singleton(Client::class, fn() => $vonageClient);
