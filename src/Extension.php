@@ -155,7 +155,7 @@ class Extension extends BaseExtension
 
     protected function registerVonageClient(): void
     {
-        $this->app->singleton(VonageClient::class, fn($app): \Vonage\Client => new VonageClient(new Basic(
+        $this->app->singleton(VonageClient::class, fn($app): VonageClient => new VonageClient(new Basic(
             $app['config']['igniterlabs-smsnotify.vonage.api_key'],
             $app['config']['igniterlabs-smsnotify.vonage.api_secret'],
         )));

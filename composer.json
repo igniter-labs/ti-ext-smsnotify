@@ -19,7 +19,7 @@
         "tastyigniter/core": "^v4.0",
         "tastyigniter/ti-ext-automation": "^v4.0",
         "twilio/sdk": "~6.0",
-        "vonage/client": "^2.0"
+        "vonage/client-core": "^4.11"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.5",

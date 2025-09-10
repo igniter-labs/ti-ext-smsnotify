@@ -83,7 +83,7 @@ class Channel extends Model
     public static function getConfig($channelCode = null, $default = null)
     {
         if (!self::$configCache) {
-            self::$configCache = self::whereIsEnabled()->get()->mapWithKeys(fn(self $model) => [$model->code => $model->config_data])->all();
+            self::$configCache = self::whereIsEnabled()->get()->mapWithKeys(fn(self $model): array => [$model->code => $model->config_data])->all();
         }
 
         return array_get(self::$configCache, $channelCode, $default);

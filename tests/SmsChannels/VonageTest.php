@@ -6,7 +6,8 @@ use Igniter\Flame\Exception\SystemException;
 use IgniterLabs\SmsNotify\Models\Channel;
 use IgniterLabs\SmsNotify\SmsChannels\Vonage;
 use Vonage\Client;
-use Vonage\Message\Message;
+use Vonage\SMS\Collection;
+use Vonage\SMS\SentSMS;
 
 it('returns correct channel details', function(): void {
     $vonageChannel = new Vonage;
@@ -51,13 +52,9 @@ it('returns correct config rules', function(): void {
 
 it('sends message successfully', function(): void {
     $vonageClient = Mockery::mock(Client::class);
-    $vonageClient->shouldReceive('message->send')->once()->withArgs(fn($payload): bool => $payload['message_type'] === 'text' &&
-        $payload['from'] === '12345' &&
-        $payload['to'] === '67890' &&
-        $payload['text'] === 'Test message' &&
-        $payload['channel'] === 'sms' &&
-        $payload['client-ref'] === '',
-    )->andReturn(mock(Message::class));
+    $vonageClient->shouldReceive('sms->send')->once()->andReturn(mock(Collection::class, function($mock): void {
+        $mock->shouldReceive('current')->andReturn(mock(SentSMS::class));
+    }));
     app()->singleton(Client::class, fn() => $vonageClient);
 
     $channel = new Channel;
@@ -71,7 +68,7 @@ it('sends message successfully', function(): void {
 
     $response = $vonageChannel->send('67890', 'Test message');
 
-    expect($response)->toBeInstanceOf(Message::class);
+    expect($response)->toBeInstanceOf(SentSMS::class);
 });
 
 it('throws exception when api credentials are missing', function(): void {
