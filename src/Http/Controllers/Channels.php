@@ -96,7 +96,7 @@ class Channels extends AdminController
 
     public function formBeforeCreate($model): void
     {
-        throw_unless(strlen((string) ($code = post('Channel.channel'))),
+        throw_unless(strlen((string)($code = post('Channel.channel'))),
             new FlashException('Invalid channel code selected'),
         );
 
