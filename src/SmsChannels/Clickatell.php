@@ -79,7 +79,7 @@ class Clickatell extends BaseChannel
         $errorMessages = collect($response->json('messages'))->map(function($message): string {
             $errorCode = (int)array_get($message, 'error.code');
 
-            return $errorCode != self::SUCCESSFUL_SEND
+            return $errorCode !== self::SUCCESSFUL_SEND
                 ? $errorCode.': '.array_get($message, 'error.description')
                 : '';
         })

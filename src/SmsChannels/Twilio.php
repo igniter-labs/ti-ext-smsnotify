@@ -60,10 +60,10 @@ class Twilio extends BaseChannel
     public function send($to, $content): MessageInstance
     {
         $params = [
-            'body' => trim((string) $content),
+            'body' => trim((string)$content),
         ];
 
-        if (strlen((string) $this->model->service_sid) !== 0) {
+        if (strlen((string)$this->model->service_sid) !== 0) {
             $params['messagingServiceSid'] = $this->model->service_sid;
         }
 

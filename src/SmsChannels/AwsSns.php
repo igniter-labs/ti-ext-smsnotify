@@ -58,7 +58,7 @@ class AwsSns extends BaseChannel
     public function send($to, $content): void
     {
         // if not starting with + sign, use default country code
-        if (!str_starts_with((string) $to, '+')) {
+        if (!str_starts_with((string)$to, '+')) {
             $to = $this->model->country_code.$to;
         }
 

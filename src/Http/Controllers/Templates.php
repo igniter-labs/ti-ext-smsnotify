@@ -84,7 +84,7 @@ class Templates extends AdminController
 
     public function onTestTemplate($context, $recordId): array
     {
-        throw_unless(strlen((string) $recordId), new FlashException('Template id not found'));
+        throw_unless(strlen((string)$recordId), new FlashException('Template id not found'));
 
         throw_unless($model = $this->formFindModelObject($recordId),
             new FlashException('Template not found')

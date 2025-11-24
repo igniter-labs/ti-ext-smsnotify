@@ -63,7 +63,7 @@ class Vonage extends BaseChannel
         $text = new SMS(
             $to,
             $this->model->send_from, // @phpstan-ignore-line property.notFound
-            trim((string) $content),
+            trim((string)$content),
         );
 
         // @phpstan-ignore property.notFound
