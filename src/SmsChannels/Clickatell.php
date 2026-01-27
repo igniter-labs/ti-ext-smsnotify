@@ -76,17 +76,18 @@ class Clickatell extends BaseChannel
                 ],
             ]);
 
-        $errorMessages = collect($response->json('messages'))->map(function($message): string {
-            $errorCode = (int)array_get($message, 'error.code');
+        $errorMessages = collect($response->json('messages'))
+            ->map(function($message): string {
+                $errorCode = (int)array_get($message, 'error.code');
 
-            return $errorCode !== self::SUCCESSFUL_SEND
-                ? $errorCode.': '.array_get($message, 'error.description')
-                : '';
-        })
+                return $errorCode !== self::SUCCESSFUL_SEND
+                    ? $errorCode.': '.array_get($message, 'error.description')
+                    : '';
+            })
             ->filter()
             ->implode(', ');
 
-        throw_unless($response->getStatusCode() === 202, SystemException::class, sprintf(
+        throw_unless($response->status() === 202, SystemException::class, sprintf(
             'Clickatell responded with an error: %s', $errorMessages
         ));
     }

@@ -41,16 +41,10 @@ class Template extends Model
 {
     use Validation;
 
-    /**
-     * @var string The database table used by the model.
-     */
     public $table = 'igniterlabs_smsnotify_templates';
 
     public $timestamps = true;
 
-    /**
-     * @var array<string>|bool fillable fields
-     */
     protected $guarded = [];
 
     public $rules = [
