@@ -28,7 +28,7 @@ Please see [CHANGELOG](https://github.com/igniter-labs/ti-ext-smsnotify/blob/mas
 
 ## Reporting issues
 
-If you encounter a bug in this extension, please report it using the [Issue Tracker](https://github.com/igniter-labs/ti-ext-smsnotify/issues) on GitHub.
+If you encounter a bug in this extension, please report it using the [Issue Tracker](https://github.com/tastyigniter/TastyIgniter/issues) on GitHub.
 
 ## Contributing
 
