@@ -1,5 +1,7 @@
 <?php
 
+use Igniter\System\Models\MailTemplate;
+
 return [
     'list' => [
         'toolbar' => [
@@ -78,7 +80,7 @@ return [
                     'path' => 'igniter.system::/mailtemplates/variables',
                     'span' => 'right',
                     'cssClass' => 'col-md-4 pr-0',
-                    'options' => [\Igniter\System\Models\MailTemplate::class, 'getVariableOptions'],
+                    'options' => [MailTemplate::class, 'getVariableOptions'],
                 ],
             ],
         ],
