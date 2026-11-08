@@ -258,7 +258,7 @@ class Channel extends Model
                 continue;
             }
 
-            $model = self::make([
+            $model = new self([
                 'code' => $code,
                 'class_name' => $channelObject::class,
                 'name' => lang($channelObject->getName()),

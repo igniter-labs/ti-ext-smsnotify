@@ -31,34 +31,10 @@ parameters:
 			path: src/Models/Channel.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:applyChannelClass\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Models/Channel.php
-
-		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Illuminate\\Database\\Eloquent\\Model\>\:\:mapWithKeys\(\) expects callable\(Illuminate\\Database\\Eloquent\\Model, int\)\: array\<string, array\<mixed\>\|null\>, Closure\(IgniterLabs\\SmsNotify\\Models\\Channel\)\: non\-empty\-array\<string, array\<mixed\>\|null\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/Models/Channel.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$code\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Models/Template.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$is_custom\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Models/Template.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Models/Template.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Contracts\\View\\View\:\:getPath\(\)\.$#'
