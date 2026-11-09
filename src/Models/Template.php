@@ -133,7 +133,7 @@ class Template extends Model
         }
 
         foreach ($newTemplates as $code => $name) {
-            $model = self::make();
+            $model = new self;
             $model->code = $code;
             $model->name = $name;
             $model->is_custom = 0;

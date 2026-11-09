@@ -62,7 +62,7 @@ class Templates extends AdminController
 
     public function index(): void
     {
-        if ($this->getUser()->hasPermission('IgniterLabs.SmsNotify.ManageTemplates')) {
+        if ($this->getUser()->hasPermission('IgniterLabs.SmsNotify.Manage')) {
             Template::syncAll();
         }
 

@@ -65,7 +65,7 @@ class Channels extends AdminController
 
     public function index(): void
     {
-        if ($this->getUser()->hasPermission('IgniterLabs.SmsNotify.ManageChannels')) {
+        if ($this->getUser()->hasPermission('IgniterLabs.SmsNotify.Manage')) {
             Channel::syncAll();
         }
 
