@@ -1,8 +1,6 @@
 <?php
 
 return [
-    'text_tab_sms' => 'SMS',
-    'text_tab_alert' => 'Alert (eg. slack)',
     'text_send_to_location_tel' => 'Location phone number (if available)',
     'text_send_to_customer_tel' => 'Customer phone number (if available)',
     'text_send_to_order_tel' => 'Order phone number (if available)',
@@ -50,7 +48,6 @@ return [
         'text_new_title' => 'SMS Channel: New',
         'text_edit_title' => 'SMS Channel: Update',
         'text_preview_title' => 'SMS Channel: Preview',
-        'text_form_name' => 'SMS Channel',
         'text_empty' => 'No added sms channel',
 
         'column_label' => 'Label',
@@ -65,10 +62,8 @@ return [
 
     'template' => [
         'text_title' => 'SMS Templates',
-        'text_new_title' => 'SMS Template: New',
         'text_edit_title' => 'SMS Template: Update',
         'text_preview_title' => 'SMS Template: Preview',
-        'text_form_name' => 'SMS Template',
         'text_empty' => 'No added sms template',
         'text_order_placed' => 'Order confirmation sms notification to staff.',
         'text_order_status_changed' => 'Order status changed sms notification to customer.',
@@ -79,7 +74,6 @@ return [
         'text_order_confirmed' => 'Order confirmed sms notification to customer.',
         'text_reservation_confirmed' => 'Reservation confirmed sms notification to customer.',
 
-        'column_name' => 'Name',
         'column_updated_at' => 'Updated At',
         'column_created_at' => 'Created At',
 
