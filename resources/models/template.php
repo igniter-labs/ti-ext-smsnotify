@@ -1,7 +1,5 @@
 <?php
 
-use Igniter\System\Models\MailTemplate;
-
 return [
     'list' => [
         'toolbar' => [
@@ -77,10 +75,9 @@ return [
                 '_variables' => [
                     'tab' => 'igniterlabs.smsnotify::default.template.label_content',
                     'type' => 'partial',
-                    'path' => 'igniter.system::/mailtemplates/variables',
+                    'path' => 'igniterlabs.smsnotify::_partials.templates.variables',
                     'span' => 'right',
                     'cssClass' => 'col-md-4 pr-0',
-                    'options' => [MailTemplate::class, 'getVariableOptions'],
                 ],
             ],
         ],
